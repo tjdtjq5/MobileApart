@@ -54,11 +54,8 @@ public class TransformSkin : MonoBehaviour
                 skinList.RemoveAt(i);
             }
         }
-        Debug.Log(skinList.Count);
         skinList.Add(skinName);
         SetEquip(skinList);
-
-       
     }
 
     public void Hair_b(string skinName)

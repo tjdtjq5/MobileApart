@@ -4083,7 +4083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: fb50d3a6a0fb6544db3698dd1d340384, type: 2}
-  initialSkinName: 
+  initialSkinName: outer/jacket_01
   initialFlipX: 0
   initialFlipY: 0
   separatorSlotNames: []
@@ -4124,6 +4124,12 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: af006d7e746ac0e48be5faed2b4ea467, type: 2}
+  - {fileID: 2100000, guid: f71ef6442aeda854aaad17cc25301533, type: 2}
+  - {fileID: 2100000, guid: af006d7e746ac0e48be5faed2b4ea467, type: 2}
+  - {fileID: 2100000, guid: f71ef6442aeda854aaad17cc25301533, type: 2}
+  - {fileID: 2100000, guid: af006d7e746ac0e48be5faed2b4ea467, type: 2}
+  - {fileID: 2100000, guid: f71ef6442aeda854aaad17cc25301533, type: 2}
   - {fileID: 2100000, guid: af006d7e746ac0e48be5faed2b4ea467, type: 2}
   - {fileID: 2100000, guid: f71ef6442aeda854aaad17cc25301533, type: 2}
   - {fileID: 2100000, guid: af006d7e746ac0e48be5faed2b4ea467, type: 2}
