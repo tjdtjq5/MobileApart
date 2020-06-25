@@ -30,6 +30,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Assertions.Must;
 
 namespace Spine.Unity.Deprecated {
 
@@ -164,6 +165,7 @@ namespace Spine.Unity.Deprecated {
 			slotsWithCustomMaterial = new SlotMaterialTextureTuple[numSlotsWithCustomMaterial];
 			int storedSlotIndex = 0;
 			foreach (var s in skeletonRenderer.Skeleton.Slots) {
+		
 				switch (s.data.blendMode) {
 				case BlendMode.Multiply:
 					if (multiplyMaterialSource != null) {

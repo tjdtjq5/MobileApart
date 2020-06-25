@@ -10,37 +10,80 @@ public class TransformSkin : MonoBehaviour
 {
     SkeletonAnimation skeletonAnimation;
     List<string> skinList = new List<string>();
-    //public Color color;
-    public Slider R;
-    public Slider G;
-    public Slider B;
+    Color current_hair_Color = Color.white;
+    Color current_eye_Color = Color.white;
 
-    public void SetColor()
+    private void Start()
+    {
+        skeletonAnimation = transform.GetComponent<SkeletonAnimation>();
+        Hair_f("hair_f/hair_f_01");
+        Hair_b("hair_b/hair_b_01");
+        Face("face/face_01");
+        Eye("eye/eye_01");
+        Clo_Under("clo_under/clo_under_01");
+        Clo_Top("clo_top/clo_top01");
+        Body("body");
+    }
+
+    public void SetColor(string slotName , Color color)
     {
         foreach (Spine.Slot slot in skeletonAnimation.skeleton.Slots)
         {
             if (slot.Attachment != null)
             {
-                if (slot.Attachment.Name.Contains("hair"))
+                if (slot.Attachment.Name.Contains("hair") && slot.Attachment.Name.Contains("color_01"))
                 {
-                    Color color = new Color((R.value), (G.value), (B.value), 1);
                     slot.SetColor(color);
+                    current_hair_Color = color;
                 }
             }
         }
     }
 
-    private void Start()
+    public void RandomSetColor(string slotName)
     {
-        skeletonAnimation = transform.GetComponent<SkeletonAnimation>();
-        Hair_f("hair_f/hair_01");
-        Hair_b("hair_b/hair_01");
-        Face("face/face_01");
-        Eye("eye/eye_01");
-        Clo_Under("clo_under/clo_under_01");
-        Clo_Top("clo_top/clo_top01");
+        float randR = (float)Random.RandomRange(0, 255) / 255;
+        float randB = (float)Random.RandomRange(0, 255) / 255;
+        float randG = (float)Random.RandomRange(0, 255) / 255;
+
+        foreach (Spine.Slot slot in skeletonAnimation.skeleton.Slots)
+        {
+            if (slot.Attachment != null)
+            {
+                if (slot.Attachment.Name.Contains(slotName) && slot.Attachment.Name.Contains("color_01"))
+                {
+
+                    Color color = new Color((randR), (randG), (randB), 1);
+                    slot.SetColor(color);
+                    current_hair_Color = color;
+                }
+            }
+        }
     }
 
+    void ColorAllSet()
+    {
+        SetColor("hair", current_hair_Color);
+        SetColor("eye", current_hair_Color);
+    }
+ 
+    public void Body(string skinName)
+    {
+        skeletonAnimation.skeleton.Skin = null;
+        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
+        skeletonAnimation.LateUpdate();
+
+        for (int i = 0; i < skinList.Count; i++)
+        {
+            if (skinList[i].Contains("body"))
+            {
+                skinList.RemoveAt(i);
+            }
+        }
+        skinList.Add(skinName);
+        SetEquip(skinList);
+
+    }
     public void Hair_f(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
@@ -206,5 +249,6 @@ public class TransformSkin : MonoBehaviour
 
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.skeleton.SetSkin(combined);
+        ColorAllSet();
     }
 }
