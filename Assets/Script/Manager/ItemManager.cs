@@ -6,6 +6,17 @@ using System;
 public class ItemManager : MonoBehaviour
 {
     [Header("컬러 아이템 리스트")] public ColorItem[] colorItemList;
+    public ColorItem GetColorItem(string name)
+    {
+        for (int i = 0; i < colorItemList.Length; i++)
+        {
+            if (colorItemList[i].name == name)
+            {
+                return colorItemList[i];
+            }
+        }
+        return new ColorItem();
+    }
 }
 
 [Serializable]
