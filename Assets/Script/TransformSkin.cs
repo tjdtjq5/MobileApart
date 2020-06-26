@@ -46,7 +46,6 @@ public class TransformSkin : MonoBehaviour
 
                     ChangeAttachmentColor(attachment, color);
 
-                    GameManager.instance.userInfoManager.PushSkinColor(slotName, color);
                 }
             }
         }
@@ -79,7 +78,7 @@ public class TransformSkin : MonoBehaviour
 
                     ChangeAttachmentColor(attachment, color);
 
-                    GameManager.instance.userInfoManager.PushSkinColor(slotName, color);
+                  
                 }
             }
         }
@@ -134,10 +133,6 @@ public class TransformSkin : MonoBehaviour
         skinList.Add(skinName);
         SetEquip(skinList);
 
-        if (GameManager.instance.userInfoManager.ExistSkinColor("hair"))
-        {
-            SetColor("hair", GameManager.instance.userInfoManager.GetUserSkinColor("hair"));
-        }
     }
 
     public void Hair_b(string skinName)
@@ -155,10 +150,7 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
-        if (GameManager.instance.userInfoManager.ExistSkinColor("hair"))
-        {
-            SetColor("hair", GameManager.instance.userInfoManager.GetUserSkinColor("hair"));
-        }
+     
     }
 
     public void Face(string skinName)
@@ -193,10 +185,7 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
-        if (GameManager.instance.userInfoManager.ExistSkinColor("eye"))
-        {
-            SetColor("eye", GameManager.instance.userInfoManager.GetUserSkinColor("eye"));
-        }
+      
     }
 
     public void Clo_Under(string skinName)
@@ -214,10 +203,7 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
-        if (GameManager.instance.userInfoManager.ExistSkinColor(skinName))
-        {
-            SetColor(skinName, GameManager.instance.userInfoManager.GetUserSkinColor(skinName));
-        }
+      
     }
     public void Clo_Top(string skinName)
     {
@@ -234,10 +220,7 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
-        if (GameManager.instance.userInfoManager.ExistSkinColor(skinName))
-        {
-            SetColor(skinName, GameManager.instance.userInfoManager.GetUserSkinColor(skinName));
-        }
+      
     }
     public void Outer(string skinName)
     {
@@ -254,10 +237,7 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
-        if (GameManager.instance.userInfoManager.ExistSkinColor(skinName))
-        {
-            SetColor(skinName, GameManager.instance.userInfoManager.GetUserSkinColor(skinName));
-        }
+     
     }
     public void Acc(string skinName)
     {
@@ -274,10 +254,7 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
-        if (GameManager.instance.userInfoManager.ExistSkinColor(skinName))
-        {
-            SetColor(skinName, GameManager.instance.userInfoManager.GetUserSkinColor(skinName));
-        }
+      
     }
     public void Race(string skinName)
     {
@@ -294,10 +271,7 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
-        if (GameManager.instance.userInfoManager.ExistSkinColor(skinName))
-        {
-            SetColor(skinName, GameManager.instance.userInfoManager.GetUserSkinColor(skinName));
-        }
+     
     }
 
     public void SetEquip(List<string> SkinList)

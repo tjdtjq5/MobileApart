@@ -75,7 +75,6 @@
     <Compile Include="Assets\Script\Manager\DatabaseManager.cs" />
     <Compile Include="Assets\Script\Manager\GameManager.cs" />
     <Compile Include="Assets\Script\Manager\IconManager.cs" />
-    <Compile Include="Assets\Script\Manager\ItemManager.cs" />
     <Compile Include="Assets\Script\Manager\SpineSkinInfoManager.cs" />
     <Compile Include="Assets\Script\Manager\UserInfoManager.cs" />
     <Compile Include="Assets\Script\Slide\SlideCustom.cs" />

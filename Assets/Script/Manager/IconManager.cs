@@ -7,6 +7,14 @@ public class IconManager : MonoBehaviour
 {
     public Icon[] iconList;
 
+    private void Awake()
+    {
+        for (int i = 0; i < iconList.Length; i++)
+        {
+            iconList[i].itemName = iconList[i].iconObj.name;
+        }
+    }
+
     public GameObject GetIcon(string itemName)
     {
         for (int i = 0; i < iconList.Length; i++)

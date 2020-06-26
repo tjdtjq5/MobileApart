@@ -68,3 +68,10 @@ public enum SkinKind
     outt,
     sho
 }
+
+public enum Grade
+{
+    HR,
+    SR,
+    SSR
+}

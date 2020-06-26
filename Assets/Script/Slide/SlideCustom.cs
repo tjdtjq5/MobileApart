@@ -62,23 +62,21 @@ public class SlideCustom : MonoBehaviour
     float moveSpeed = 0.3f;
     IEnumerator SlideCoroutine(int currentState)
     {
-
         switch (currentState)
         {
             case 1:
-             
-
+                DestroyIconObjList();
                 Transform Temptransform = slideTransform_01.GetChild(0).GetChild(0).GetChild(0);
                 for (int i = 0; i < Temptransform.childCount; i++)
                 {
                     GameObject tempIconObj = GameManager.instance.iconManager.GetIcon(Temptransform.GetChild(i).name);
                     IconObjList.Add(Instantiate(tempIconObj, Temptransform.GetChild(i).position, Quaternion.identity, Temptransform.GetChild(i)));
                 }
-
                 slideBtnTransform.DOMoveX(originSlideBtnPos.x - 200F, moveSpeed);
                 slideTransform_01.DOMoveX(originSlidePos_01.x - 200F, moveSpeed);
                 slideTransform_02.DOMoveX(originSlidePos_02.x, moveSpeed);
                 slideTransform_03.DOMoveX(originSlidePos_03.x, moveSpeed);
+                yield return new WaitForSeconds(moveSpeed);
                 theCam.DOMoveX(originCamPos.x + 1f, moveSpeed).OnComplete(() => { backBtnPannel.SetActive(true); });
                 break;
             case 2:
@@ -86,7 +84,7 @@ public class SlideCustom : MonoBehaviour
                 slideTransform_01.DOMoveX(originSlidePos_01.x, moveSpeed);
                 slideTransform_03.DOMoveX(originSlidePos_03.x, moveSpeed);
                 yield return new WaitForSeconds(moveSpeed);
-                DestroyIconObjList();
+               
                 slideBtnTransform.DOMoveX(originSlideBtnPos.x - 200F, moveSpeed);
                 slideTransform_02.DOMoveX(originSlidePos_02.x - 200F, moveSpeed);
                 break;
@@ -100,6 +98,7 @@ public class SlideCustom : MonoBehaviour
                 slideTransform_03.DOMoveX(originSlidePos_03.x - 200F, moveSpeed);
                 break;
             default:
+                DestroyIconObjList();
                 slideTransform_01.DOMoveX(originSlidePos_01.x, moveSpeed);
                 slideTransform_02.DOMoveX(originSlidePos_02.x, moveSpeed);
                 slideTransform_03.DOMoveX(originSlidePos_03.x, moveSpeed);
@@ -109,6 +108,7 @@ public class SlideCustom : MonoBehaviour
         }
     }
 
+    // pannel_02 아래 스킨종류로 이름을 바꾼다,아이콘도 생성 ,해당 종류의 스킨 수 만큼 setActive  
     public void SelectBtn_01(string skinKindString)
     {
         Transform Temptransform = slideTransform_02.GetChild(0).GetChild(0).GetChild(0);
@@ -124,6 +124,10 @@ public class SlideCustom : MonoBehaviour
         for (int i = 0; i < spineInfo.Count; i++)
         {
             Temptransform.GetChild(i).gameObject.SetActive(true);
+            Temptransform.GetChild(i).name = spineInfo[i].skinName;
+            Debug.Log(spineInfo[i].skinName);
+            GameObject tempIconObj = GameManager.instance.iconManager.GetIcon(spineInfo[i].skinName);
+            IconObjList.Add(Instantiate(tempIconObj, Temptransform.GetChild(i).position, Quaternion.identity, Temptransform.GetChild(i)));
         }
     }
 
