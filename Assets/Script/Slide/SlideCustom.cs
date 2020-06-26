@@ -20,7 +20,10 @@ public class SlideCustom : MonoBehaviour
     public GameObject backBtnPannel;
 
     int currentState;
-    int currentClickState;
+
+    SkinKind slectType;
+
+    List<GameObject> IconObjList = new List<GameObject>();
 
     public void Start()
     {
@@ -33,14 +36,9 @@ public class SlideCustom : MonoBehaviour
 
     public void SlideOpen()
     {
-        currentClickState = 0;
         currentState = 1;
         SlideState(1);
-    }
 
-    public void SelectBtn(int currentClickState)
-    {
-        this.currentClickState = currentClickState;
     }
 
     public void NextBtn()
@@ -64,9 +62,19 @@ public class SlideCustom : MonoBehaviour
     float moveSpeed = 0.3f;
     IEnumerator SlideCoroutine(int currentState)
     {
+
         switch (currentState)
         {
             case 1:
+             
+
+                Transform Temptransform = slideTransform_01.GetChild(0).GetChild(0).GetChild(0);
+                for (int i = 0; i < Temptransform.childCount; i++)
+                {
+                    GameObject tempIconObj = GameManager.instance.iconManager.GetIcon(Temptransform.GetChild(i).name);
+                    IconObjList.Add(Instantiate(tempIconObj, Temptransform.GetChild(i).position, Quaternion.identity, Temptransform.GetChild(i)));
+                }
+
                 slideBtnTransform.DOMoveX(originSlideBtnPos.x - 200F, moveSpeed);
                 slideTransform_01.DOMoveX(originSlidePos_01.x - 200F, moveSpeed);
                 slideTransform_02.DOMoveX(originSlidePos_02.x, moveSpeed);
@@ -78,6 +86,7 @@ public class SlideCustom : MonoBehaviour
                 slideTransform_01.DOMoveX(originSlidePos_01.x, moveSpeed);
                 slideTransform_03.DOMoveX(originSlidePos_03.x, moveSpeed);
                 yield return new WaitForSeconds(moveSpeed);
+                DestroyIconObjList();
                 slideBtnTransform.DOMoveX(originSlideBtnPos.x - 200F, moveSpeed);
                 slideTransform_02.DOMoveX(originSlidePos_02.x - 200F, moveSpeed);
                 break;
@@ -86,6 +95,7 @@ public class SlideCustom : MonoBehaviour
                 slideTransform_01.DOMoveX(originSlidePos_01.x, moveSpeed);
                 slideTransform_02.DOMoveX(originSlidePos_02.x, moveSpeed);
                 yield return new WaitForSeconds(moveSpeed);
+                DestroyIconObjList();
                 slideBtnTransform.DOMoveX(originSlideBtnPos.x - 200F, moveSpeed);
                 slideTransform_03.DOMoveX(originSlidePos_03.x - 200F, moveSpeed);
                 break;
@@ -94,9 +104,35 @@ public class SlideCustom : MonoBehaviour
                 slideTransform_02.DOMoveX(originSlidePos_02.x, moveSpeed);
                 slideTransform_03.DOMoveX(originSlidePos_03.x, moveSpeed);
                 slideBtnTransform.DOMoveX(originSlideBtnPos.x, moveSpeed);
-                theCam.DOMoveX(originCamPos.x, moveSpeed).OnComplete(() => { backBtnPannel.SetActive(false); });
+                theCam.DOMoveX(originCamPos.x, moveSpeed).OnComplete(() => { backBtnPannel.SetActive(false); DestroyIconObjList(); });
                 break;
         }
     }
 
+    public void SelectBtn_01(string skinKindString)
+    {
+        Transform Temptransform = slideTransform_02.GetChild(0).GetChild(0).GetChild(0);
+        for (int i = 0; i < Temptransform.childCount; i++)
+        {
+            Temptransform.GetChild(i).gameObject.SetActive(false);
+        }
+
+        SkinKind skinKine = (SkinKind)System.Enum.Parse(typeof(SkinKind), skinKindString);
+        slectType = skinKine;
+        List<SpineSkinInfo> spineInfo = GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(skinKine);
+
+        for (int i = 0; i < spineInfo.Count; i++)
+        {
+            Temptransform.GetChild(i).gameObject.SetActive(true);
+        }
+    }
+
+    void DestroyIconObjList()
+    {
+        for (int i = IconObjList.Count -1; i >= 0; i--)
+        {
+            Destroy(IconObjList[i]);
+            IconObjList.RemoveAt(i);
+        }
+    }
 }

@@ -113,10 +113,10 @@ public class UserInfoManager : MonoBehaviour
     {
         for (int i = 0; i < GameManager.instance.spineSkinInfoManager.SpineSkinInfoList.Length; i++)
         {
-            if (PlayerPrefs.HasKey(GameManager.instance.spineSkinInfoManager.SpineSkinInfoList[i].skinKind))
+            if (PlayerPrefs.HasKey(GameManager.instance.spineSkinInfoManager.SpineSkinInfoList[i].skinName))
             {
-                string key = GameManager.instance.spineSkinInfoManager.SpineSkinInfoList[i].skinKind;
-                skinColor.Add(key, StringToColor(PlayerPrefs.GetString(key)));
+                string key = GameManager.instance.spineSkinInfoManager.SpineSkinInfoList[i].skinName;
+               // skinColor.Add(key, StringToColor(PlayerPrefs.GetString(key)));
             }
         }
     }

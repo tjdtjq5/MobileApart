@@ -72,7 +72,9 @@
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Script\Album.cs" />
     <Compile Include="Assets\Script\Camera\ScreenShotHandler.cs" />
+    <Compile Include="Assets\Script\Manager\DatabaseManager.cs" />
     <Compile Include="Assets\Script\Manager\GameManager.cs" />
+    <Compile Include="Assets\Script\Manager\IconManager.cs" />
     <Compile Include="Assets\Script\Manager\ItemManager.cs" />
     <Compile Include="Assets\Script\Manager\SpineSkinInfoManager.cs" />
     <Compile Include="Assets\Script\Manager\UserInfoManager.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Test\TestReporter.cs" />
     <Compile Include="Assets\test.cs" />
     <None Include="Assets\Spine\version.txt" />
+    <None Include="Assets\Script\TxT\스킨 정보_DB.txt" />
     <None Include="Assets\Character\bodya.atlas.txt" />
     <None Include="Assets\Demigiant\DOTween\readme.txt" />
     <Reference Include="Unity.Timeline.Editor">

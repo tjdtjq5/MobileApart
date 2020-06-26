@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public ItemManager itemManager;
     public UserInfoManager userInfoManager;
     public SpineSkinInfoManager spineSkinInfoManager;
+    public DatabaseManager databaseManager;
+    public IconManager iconManager;
     void Awake()
     {
         instance = this;
