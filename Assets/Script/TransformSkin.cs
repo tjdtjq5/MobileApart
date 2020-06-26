@@ -4,6 +4,7 @@ using Spine.Unity;
 using Spine.Unity.AttachmentTools;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
@@ -24,15 +25,18 @@ public class TransformSkin : MonoBehaviour
         Clo_Under("clo_under/clo_under_01");
         Clo_Top("clo_top/clo_top01");
         Body("body");
+
+       
     }
 
     public void SetColor(string slotName , Color color)
     {
+       
         foreach (Spine.Slot slot in skeletonAnimation.skeleton.Slots)
         {
             if (slot.Attachment != null)
             {
-                if (slot.Attachment.Name.Contains(slotName) && slot.Attachment.Name.Contains("color_01"))
+                if (slot.Data.Name.Contains(slotName) && slot.Attachment.Name.Contains("color_01"))
                 {
                     int slotIndex = slot.Data.Index;
                     Attachment attachment = skeletonAnimation.Skeleton.GetAttachment(slotIndex, slot.Attachment.Name);
@@ -42,6 +46,7 @@ public class TransformSkin : MonoBehaviour
 
                     ChangeAttachmentColor(attachment, color);
 
+                    GameManager.instance.userInfoManager.PushSkinColor(slotName, color);
                 }
             }
         }
@@ -72,7 +77,9 @@ public class TransformSkin : MonoBehaviour
                     var slot2 = skeletonAnimation.Skeleton.Slots.Items[slotIndex];
                     slot.Attachment = attachment;
 
-                    ChangeAttachmentColor(attachment, Color.white);
+                    ChangeAttachmentColor(attachment, color);
+
+                    GameManager.instance.userInfoManager.PushSkinColor(slotName, color);
                 }
             }
         }
@@ -92,10 +99,7 @@ public class TransformSkin : MonoBehaviour
         }
     }
 
-    void ColorAllSet()
-    {
-     
-    }
+    
  
     public void Body(string skinName)
     {
@@ -129,6 +133,11 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
+
+        if (GameManager.instance.userInfoManager.ExistSkinColor("hair"))
+        {
+            SetColor("hair", GameManager.instance.userInfoManager.GetUserSkinColor("hair"));
+        }
     }
 
     public void Hair_b(string skinName)
@@ -146,6 +155,10 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
+        if (GameManager.instance.userInfoManager.ExistSkinColor("hair"))
+        {
+            SetColor("hair", GameManager.instance.userInfoManager.GetUserSkinColor("hair"));
+        }
     }
 
     public void Face(string skinName)
@@ -180,6 +193,10 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
+        if (GameManager.instance.userInfoManager.ExistSkinColor("eye"))
+        {
+            SetColor("eye", GameManager.instance.userInfoManager.GetUserSkinColor("eye"));
+        }
     }
 
     public void Clo_Under(string skinName)
@@ -197,6 +214,10 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
+        if (GameManager.instance.userInfoManager.ExistSkinColor(skinName))
+        {
+            SetColor(skinName, GameManager.instance.userInfoManager.GetUserSkinColor(skinName));
+        }
     }
     public void Clo_Top(string skinName)
     {
@@ -213,6 +234,10 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
+        if (GameManager.instance.userInfoManager.ExistSkinColor(skinName))
+        {
+            SetColor(skinName, GameManager.instance.userInfoManager.GetUserSkinColor(skinName));
+        }
     }
     public void Outer(string skinName)
     {
@@ -229,6 +254,10 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
+        if (GameManager.instance.userInfoManager.ExistSkinColor(skinName))
+        {
+            SetColor(skinName, GameManager.instance.userInfoManager.GetUserSkinColor(skinName));
+        }
     }
     public void Acc(string skinName)
     {
@@ -245,6 +274,10 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
+        if (GameManager.instance.userInfoManager.ExistSkinColor(skinName))
+        {
+            SetColor(skinName, GameManager.instance.userInfoManager.GetUserSkinColor(skinName));
+        }
     }
     public void Race(string skinName)
     {
@@ -261,6 +294,10 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
+        if (GameManager.instance.userInfoManager.ExistSkinColor(skinName))
+        {
+            SetColor(skinName, GameManager.instance.userInfoManager.GetUserSkinColor(skinName));
+        }
     }
 
     public void SetEquip(List<string> SkinList)
@@ -279,7 +316,6 @@ public class TransformSkin : MonoBehaviour
 
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.skeleton.SetSkin(combined);
-        ColorAllSet();
     }
 
     // 이거를 Skin.cs 스크립트에 넣어줘야한다. 

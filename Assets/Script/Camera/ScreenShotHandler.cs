@@ -14,7 +14,6 @@ public class ScreenShotHandler : MonoBehaviour
     int currentNum;
 
     public Image screenshot_img;
-    public Image scTestImag;
   
 
     private void Awake()

@@ -16,7 +16,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 603a8c33b7b570c4d9b76d40c44606c1, type: 2}
   scale: 0.01
   skeletonJSON: {fileID: 4900000, guid: 464b4ed7a44e607419bc853f74d20cbc, type: 3}
-  skeletonDataModifiers: []
+  skeletonDataModifiers:
+  - {fileID: 11400000, guid: 1d704a9f7df0fcc4d8ae63dddd386e0a, type: 2}
   fromAnimation: []
   toAnimation: []
   duration: []
