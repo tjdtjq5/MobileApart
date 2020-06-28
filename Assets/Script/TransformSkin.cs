@@ -13,19 +13,13 @@ public class TransformSkin : MonoBehaviour
 {
     SkeletonAnimation skeletonAnimation;
     List<string> skinList = new List<string>();
- 
+    
 
     private void Start()
     {
         skeletonAnimation = transform.GetComponent<SkeletonAnimation>();
-        Hair_f("hair_f/hair_f_01");
-        Hair_b("hair_b/hair_b_01");
-        Face("face/face_01");
-        Eye("eye/eye_01");
-        Clo_Under("clo_under/clo_under_01");
-        Clo_Top("clo_top/clo_top01");
-        Body("body");
 
+        Body("body");
        
     }
 
@@ -49,10 +43,6 @@ public class TransformSkin : MonoBehaviour
                 }
             }
         }
-       
-
-
-      
     }
 
     public void RandomSetColor(string slotName)
@@ -98,9 +88,52 @@ public class TransformSkin : MonoBehaviour
         }
     }
 
-    
+    public void SkinChange(SkinKind skinKind, string skinName )
+    {
+        switch (skinKind)
+        {
+            case SkinKind.acc:
+                acc(skinName);
+                break;
+            case SkinKind.top:
+                top(skinName);
+                break;
+            case SkinKind.pan:
+                pan(skinName);
+                break;
+            case SkinKind.eye:
+                eye(skinName);
+                break;
+            case SkinKind.face:
+                face(skinName);
+                break;
+            case SkinKind.haF:
+                haF(skinName);
+                break;
+            case SkinKind.haB:
+                haB(skinName);
+                break;
+            case SkinKind.outt:
+                outt(skinName);
+                break;
+            case SkinKind.sho:
+                sho(skinName);
+                break;
+            case SkinKind.cap:
+                cap(skinName);
+                break;
+            case SkinKind.set:
+                set(skinName);
+                break;
+            default:
+                break;
+        }
+
+
+
+    }
  
-    public void Body(string skinName)
+    void Body(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -117,7 +150,7 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
 
     }
-    public void Hair_f(string skinName)
+    void acc(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -125,7 +158,7 @@ public class TransformSkin : MonoBehaviour
 
         for (int i = 0; i < skinList.Count; i++)
         {
-            if (skinList[i].Contains("hair_f"))
+            if (skinList[i].Contains("acc"))
             {
                 skinList.RemoveAt(i);
             }
@@ -135,7 +168,7 @@ public class TransformSkin : MonoBehaviour
 
     }
 
-    public void Hair_b(string skinName)
+    void top(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -143,7 +176,7 @@ public class TransformSkin : MonoBehaviour
 
         for (int i = 0; i < skinList.Count; i++)
         {
-            if (skinList[i].Contains("hair_b"))
+            if (skinList[i].Contains("top"))
             {
                 skinList.RemoveAt(i);
             }
@@ -153,7 +186,7 @@ public class TransformSkin : MonoBehaviour
      
     }
 
-    public void Face(string skinName)
+    void pan(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -161,7 +194,7 @@ public class TransformSkin : MonoBehaviour
 
         for (int i = 0; i < skinList.Count; i++)
         {
-            if (skinList[i].Contains("face"))
+            if (skinList[i].Contains("pan"))
             {
                 skinList.RemoveAt(i);
             }
@@ -170,7 +203,7 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
     }
 
-    public void Eye(string skinName)
+    void eye(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -188,7 +221,7 @@ public class TransformSkin : MonoBehaviour
       
     }
 
-    public void Clo_Under(string skinName)
+    void face(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -196,7 +229,7 @@ public class TransformSkin : MonoBehaviour
 
         for (int i = 0; i < skinList.Count; i++)
         {
-            if (skinList[i].Contains("clo_under"))
+            if (skinList[i].Contains("face"))
             {
                 skinList.RemoveAt(i);
             }
@@ -205,7 +238,7 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
       
     }
-    public void Clo_Top(string skinName)
+    void haF(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -213,7 +246,7 @@ public class TransformSkin : MonoBehaviour
 
         for (int i = 0; i < skinList.Count; i++)
         {
-            if (skinList[i].Contains("clo_top"))
+            if (skinList[i].Contains("haF"))
             {
                 skinList.RemoveAt(i);
             }
@@ -222,7 +255,7 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
       
     }
-    public void Outer(string skinName)
+    void haB(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -230,7 +263,7 @@ public class TransformSkin : MonoBehaviour
 
         for (int i = 0; i < skinList.Count; i++)
         {
-            if (skinList[i].Contains("outer"))
+            if (skinList[i].Contains("haB"))
             {
                 skinList.RemoveAt(i);
             }
@@ -239,7 +272,7 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
      
     }
-    public void Acc(string skinName)
+    void outt(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -247,7 +280,7 @@ public class TransformSkin : MonoBehaviour
 
         for (int i = 0; i < skinList.Count; i++)
         {
-            if (skinList[i].Contains("acc"))
+            if (skinList[i].Contains("outt"))
             {
                 skinList.RemoveAt(i);
             }
@@ -256,7 +289,7 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
       
     }
-    public void Race(string skinName)
+    void sho(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -264,17 +297,50 @@ public class TransformSkin : MonoBehaviour
 
         for (int i = 0; i < skinList.Count; i++)
         {
-            if (skinList[i].Contains("race"))
+            if (skinList[i].Contains("sho"))
             {
                 skinList.RemoveAt(i);
             }
         }
         skinList.Add(skinName);
         SetEquip(skinList);
-     
     }
 
-    public void SetEquip(List<string> SkinList)
+    void cap(string skinName)
+    {
+        skeletonAnimation.skeleton.Skin = null;
+        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
+        skeletonAnimation.LateUpdate();
+
+        for (int i = 0; i < skinList.Count; i++)
+        {
+            if (skinList[i].Contains("cap"))
+            {
+                skinList.RemoveAt(i);
+            }
+        }
+        skinList.Add(skinName);
+        SetEquip(skinList);
+    }
+
+    void set(string skinName)
+    {
+        skeletonAnimation.skeleton.Skin = null;
+        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
+        skeletonAnimation.LateUpdate();
+
+        for (int i = 0; i < skinList.Count; i++)
+        {
+            if (skinList[i].Contains("set"))
+            {
+                skinList.RemoveAt(i);
+            }
+        }
+        skinList.Add(skinName);
+        SetEquip(skinList);
+    }
+
+    void SetEquip(List<string> SkinList)
     {
         Skin combined = new Skin("combined");
 

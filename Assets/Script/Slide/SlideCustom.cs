@@ -2,141 +2,212 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Spine;
+using System;
+using Unity.Mathematics;
 
 public class SlideCustom : MonoBehaviour
 {
-    public Transform slideTransform_01; // 스킨 종류 선택
-    public Transform slideTransform_02; // 옷 종류 선택
-    public Transform slideTransform_03; // 색상 선택 
-    public Transform slideBtnTransform;
-    Vector2 originSlidePos_01;
-    Vector2 originSlidePos_02;
-    Vector2 originSlidePos_03;
-    Vector2 originSlideBtnPos;
+    public Transform slidePannel;   Vector2 originSlidePannel;
+    public Transform theCam;        Vector2 originTheCam;
+    public Transform backPannel; 
+    public Transform context;
+    public TransformSkin transformSkin;
 
-    public Transform theCam;
-    Vector2 originCamPos;
+    public float context_Height = 150;
 
-    public GameObject backBtnPannel;
-
+    float slideMoveSpeed = 0.3f;
     int currentState;
 
-    SkinKind slectType;
+    List<GameObject> iConList = new List<GameObject>();
 
-    List<GameObject> IconObjList = new List<GameObject>();
-
-    public void Start()
+    private void Start()
     {
-        originSlidePos_01 = slideTransform_01.position;
-        originSlidePos_02 = slideTransform_02.position;
-        originSlidePos_03 = slideTransform_03.position;
-        originSlideBtnPos = slideBtnTransform.position;
-        originCamPos = theCam.position;
+        originSlidePannel = slidePannel.position;
+        originTheCam = theCam.position;
+        State0();
     }
 
-    public void SlideOpen()
+    public void OpenkSlide()
     {
-        currentState = 1;
-        SlideState(1);
-
+        if (currentState == 0)
+        {
+            State1();
+        }
     }
 
-    public void NextBtn()
-    {
-        currentState++;
-        SlideState(currentState);
-    }
+    int[] backNum = new int[5];
+    string[] selectString = new string[5];
 
-    public void BackBtn()
+    public void BackPannelBtn()
     {
         currentState--;
-        SlideState(currentState);
-    }
-
-    public void SlideState(int currentState)
-    {
-        this.currentState = currentState;
-        StartCoroutine(SlideCoroutine(currentState));
-    }
-
-    float moveSpeed = 0.3f;
-    IEnumerator SlideCoroutine(int currentState)
-    {
         switch (currentState)
         {
             case 1:
-                DestroyIconObjList();
-                Transform Temptransform = slideTransform_01.GetChild(0).GetChild(0).GetChild(0);
-                for (int i = 0; i < Temptransform.childCount; i++)
-                {
-                    GameObject tempIconObj = GameManager.instance.iconManager.GetIcon(Temptransform.GetChild(i).name);
-                    IconObjList.Add(Instantiate(tempIconObj, Temptransform.GetChild(i).position, Quaternion.identity, Temptransform.GetChild(i)));
-                }
-                slideBtnTransform.DOMoveX(originSlideBtnPos.x - 200F, moveSpeed);
-                slideTransform_01.DOMoveX(originSlidePos_01.x - 200F, moveSpeed);
-                slideTransform_02.DOMoveX(originSlidePos_02.x, moveSpeed);
-                slideTransform_03.DOMoveX(originSlidePos_03.x, moveSpeed);
-                yield return new WaitForSeconds(moveSpeed);
-                theCam.DOMoveX(originCamPos.x + 1f, moveSpeed).OnComplete(() => { backBtnPannel.SetActive(true); });
+                State1();
                 break;
             case 2:
-                slideBtnTransform.DOMoveX(originSlideBtnPos.x, moveSpeed);
-                slideTransform_01.DOMoveX(originSlidePos_01.x, moveSpeed);
-                slideTransform_03.DOMoveX(originSlidePos_03.x, moveSpeed);
-                yield return new WaitForSeconds(moveSpeed);
-               
-                slideBtnTransform.DOMoveX(originSlideBtnPos.x - 200F, moveSpeed);
-                slideTransform_02.DOMoveX(originSlidePos_02.x - 200F, moveSpeed);
+                State2(backNum[currentState]);
                 break;
             case 3:
-                slideBtnTransform.DOMoveX(originSlideBtnPos.x, moveSpeed);
-                slideTransform_01.DOMoveX(originSlidePos_01.x, moveSpeed);
-                slideTransform_02.DOMoveX(originSlidePos_02.x, moveSpeed);
-                yield return new WaitForSeconds(moveSpeed);
-                DestroyIconObjList();
-                slideBtnTransform.DOMoveX(originSlideBtnPos.x - 200F, moveSpeed);
-                slideTransform_03.DOMoveX(originSlidePos_03.x - 200F, moveSpeed);
+                State3(backNum[currentState]);
                 break;
             default:
-                DestroyIconObjList();
-                slideTransform_01.DOMoveX(originSlidePos_01.x, moveSpeed);
-                slideTransform_02.DOMoveX(originSlidePos_02.x, moveSpeed);
-                slideTransform_03.DOMoveX(originSlidePos_03.x, moveSpeed);
-                slideBtnTransform.DOMoveX(originSlideBtnPos.x, moveSpeed);
-                theCam.DOMoveX(originCamPos.x, moveSpeed).OnComplete(() => { backBtnPannel.SetActive(false); DestroyIconObjList(); });
+                State0();
                 break;
         }
     }
 
-    // pannel_02 아래 스킨종류로 이름을 바꾼다,아이콘도 생성 ,해당 종류의 스킨 수 만큼 setActive  
-    public void SelectBtn_01(string skinKindString)
+    IEnumerator SlideMoveCoroutine(Action callBack = null)
     {
-        Transform Temptransform = slideTransform_02.GetChild(0).GetChild(0).GetChild(0);
-        for (int i = 0; i < Temptransform.childCount; i++)
+        if (slidePannel.transform.position.x == originSlidePannel.x)
         {
-            Temptransform.GetChild(i).gameObject.SetActive(false);
+            if (callBack != null)
+            {
+                callBack();
+            }
+            slidePannel.transform.DOMoveX(originSlidePannel.x - 200f, slideMoveSpeed);
         }
 
-        SkinKind skinKine = (SkinKind)System.Enum.Parse(typeof(SkinKind), skinKindString);
-        slectType = skinKine;
-        List<SpineSkinInfo> spineInfo = GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(skinKine);
-
-        for (int i = 0; i < spineInfo.Count; i++)
+        if (slidePannel.transform.position.x == originSlidePannel.x - 200f)
         {
-            Temptransform.GetChild(i).gameObject.SetActive(true);
-            Temptransform.GetChild(i).name = spineInfo[i].skinName;
-            Debug.Log(spineInfo[i].skinName);
-            GameObject tempIconObj = GameManager.instance.iconManager.GetIcon(spineInfo[i].skinName);
-            IconObjList.Add(Instantiate(tempIconObj, Temptransform.GetChild(i).position, Quaternion.identity, Temptransform.GetChild(i)));
+            slidePannel.transform.DOMoveX(originSlidePannel.x, slideMoveSpeed);
+            yield return new WaitForSeconds(slideMoveSpeed);
+            if (callBack != null)
+            {
+                callBack();
+            }
+            slidePannel.transform.DOMoveX(originSlidePannel.x - 200f, slideMoveSpeed);
         }
     }
 
-    void DestroyIconObjList()
+    public void SelectBtn(int num)
     {
-        for (int i = IconObjList.Count -1; i >= 0; i--)
+      
+        currentState++;
+    
+        switch (currentState)
         {
-            Destroy(IconObjList[i]);
-            IconObjList.RemoveAt(i);
+            case 1:
+                backNum[currentState] = num;
+                selectString[currentState] = context.GetChild(num).name;
+                State1();
+                break;
+            case 2:
+                backNum[currentState] = num;
+                selectString[currentState] = context.GetChild(num).name;
+                State2(num);
+                break;
+            case 3:
+                backNum[currentState] = num;
+                selectString[currentState] = context.GetChild(num).name;
+                State3(num);
+                break;
+            case 4:
+                backNum[currentState] = num;
+                selectString[currentState] = context.GetChild(num).name;
+                // 선택 완료 
+                string skinName = selectString[2] + "/" + selectString[3];
+                transformSkin.SkinChange((SkinKind)Enum.Parse(typeof(SkinKind), selectString[2]) , skinName);
+                State0();
+                break;
+            default:
+                State0();
+                break;
         }
+    }
+
+    // 원래 상태
+    public void State0()
+    {
+        for (int i = 0; i < context.childCount; i++)
+        {
+            context.GetChild(i).gameObject.SetActive(false);
+        }
+
+        for (int i = 0; i < iConList.Count; i++)
+        {
+            Destroy(iConList[i]);
+        }
+        iConList.Clear();
+
+    
+
+        currentState = 0;
+        theCam.transform.DOMoveX(originTheCam.x, slideMoveSpeed);
+        slidePannel.transform.DOMoveX(originSlidePannel.x, slideMoveSpeed);
+        backPannel.gameObject.SetActive(false);
+    }
+    // 스킨 대분류
+    public void State1()
+    {
+        backPannel.gameObject.SetActive(true);
+        currentState = 1;
+        theCam.transform.DOMoveX(originTheCam.x + 1f, slideMoveSpeed);
+        StartCoroutine(SlideMoveCoroutine(()=> {
+            context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, 0);
+            List<SkinKind> tempSkinKindList = GameManager.instance.spineSkinInfoManager.GetSkinKindList();
+            for (int i = 0; i < tempSkinKindList.Count; i++)
+            {
+                context.GetChild(i).gameObject.SetActive(true);
+                context.GetChild(i).name = tempSkinKindList[i].ToString();
+                GameObject tempIcon = GameManager.instance.iconManager.GetIcon(context.GetChild(i).name);
+                iConList.Add(Instantiate(tempIcon, context.GetChild(i).position, quaternion.identity, context.GetChild(i)));
+                context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * context_Height);
+            }
+        }));
+    }
+    // 스킨 종류
+    public void State2(int num)
+    {
+        currentState = 2;
+        StartCoroutine(SlideMoveCoroutine(()=> {
+            if (num != -1)
+            {
+                for (int i = 0; i < context.childCount; i++)
+                {
+                    context.GetChild(i).gameObject.SetActive(false);
+                }
+                context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, 0);
+                string tempSelectString = selectString[currentState];
+                List<SpineSkinInfo> tempSpineSkinInfo = GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo((SkinKind)Enum.Parse(typeof(SkinKind), tempSelectString));
+                for (int i = 0; i < tempSpineSkinInfo.Count; i++)
+                {
+                    context.GetChild(i).gameObject.SetActive(true);
+                    string tempName = tempSpineSkinInfo[i].skinName.Split('/')[1];
+                    context.GetChild(i).name = tempName;
+                    GameObject tempIcon = GameManager.instance.iconManager.GetIcon(context.GetChild(i).name);
+                    iConList.Add(Instantiate(tempIcon, context.GetChild(i).position, quaternion.identity, context.GetChild(i)));
+                    context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * context_Height);
+                }
+            }
+        }));
+    }
+    // 유저 스킨 아이템 종류 
+    public void State3(int num)
+    {
+        currentState = 3;
+        StartCoroutine(SlideMoveCoroutine(()=> {
+            if (num != -1)
+            {
+                for (int i = 0; i < context.childCount; i++)
+                {
+                    context.GetChild(i).gameObject.SetActive(false);
+                }
+                context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, 0);
+                string tempSelectString = selectString[currentState];
+                List<UserSkin> userSkinList = GameManager.instance.userInfoManager.GetSkinItemList(tempSelectString);
+                for (int i = 0; i < userSkinList.Count; i++)
+                {
+                    context.GetChild(i).gameObject.SetActive(true);
+                    string tempName = userSkinList[i].skinName.Split('/')[1];
+                    context.GetChild(i).name = tempName;
+                    GameObject tempIcon = GameManager.instance.iconManager.GetIcon(context.GetChild(i).name);
+                    iConList.Add(Instantiate(tempIcon, context.GetChild(i).position, quaternion.identity, context.GetChild(i)));
+                    context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * context_Height);
+                }
+            }
+        }));
     }
 }

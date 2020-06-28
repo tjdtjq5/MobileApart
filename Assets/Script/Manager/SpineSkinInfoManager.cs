@@ -7,6 +7,19 @@ public class SpineSkinInfoManager : MonoBehaviour
 {
     public SpineSkinInfo[] SpineSkinInfoList;
 
+    public List<SkinKind> GetSkinKindList()
+    {
+        List<SkinKind> skinKindList = new List<SkinKind>();
+        for (int i = 0; i < SpineSkinInfoList.Length; i++)
+        {
+            if (!skinKindList.Contains(SpineSkinInfoList[i].skinKind))
+            {
+                skinKindList.Add(SpineSkinInfoList[i].skinKind);
+            }
+        }
+        return skinKindList;
+    }
+
     public SpineSkinInfo GetSpineSkinInfo(string skinName)
     {
         for (int i = 0; i < SpineSkinInfoList.Length; i++)
@@ -66,7 +79,9 @@ public enum SkinKind
     haF,
     haB,
     outt,
-    sho
+    sho,
+    cap,
+    set
 }
 
 public enum Grade
