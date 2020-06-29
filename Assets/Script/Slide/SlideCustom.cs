@@ -294,35 +294,21 @@ public class SlideCustom : MonoBehaviour
         tempColorItemIcon.transform.GetChild(0).GetComponent<Image>().color = GameManager.instance.userInfoManager.colorItem[num].color;
         tempColor = GameManager.instance.userInfoManager.colorItem[num].color;
         colorItemList.Add(tempColorItemIcon);
+
+
     }
 
     public void SlotSelect(int num)
     {
-        Color originColor_01 = transformSkin.GetColor(userSkin.skinName, 1);
-        Color originColor_02 = transformSkin.GetColor(userSkin.skinName, 2);
+    
+        string skinNameKind = userSkin.skinName.Split('/')[0];
         switch (num)
         {
             case 2:
-                transformSkin.SetColor(userSkin.skinName, tempColor, 2);
-                if (userSkin.color_01 == Color.clear)
-                {
-                    transformSkin.SetColor(userSkin.skinName, originColor_01, 1);
-                }
-                else
-                {
-                    transformSkin.SetColor(userSkin.skinName, userSkin.color_01, 1);
-                }
+                transformSkin.SetColor(skinNameKind, tempColor, 2);
                 break;
             default:
-                transformSkin.SetColor(userSkin.skinName, tempColor, 1);
-                if (userSkin.color_02 == Color.clear)
-                {
-                    transformSkin.SetColor(userSkin.skinName, originColor_02, 2);
-                }
-                else
-                {
-                    transformSkin.SetColor(userSkin.skinName, userSkin.color_02, 2);
-                }
+                transformSkin.SetColor(skinNameKind, tempColor, 1);
                 break;
         }
     }

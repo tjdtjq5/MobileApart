@@ -21,6 +21,10 @@ public class UserInfoManager : MonoBehaviour
         PushSkinItem("eye/eye_01");
         PushSkinItem("eye/eye_01");
 
+        PushSkinItem("top/clo_top_01");
+        PushSkinItem("top/clo_top_01");
+        PushSkinItem("top/clo_top_01");
+
         PushColorItem(Color.white);
         PushColorItem(Color.black);
         PushColorItem(Color.yellow);
