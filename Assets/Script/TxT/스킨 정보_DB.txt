@@ -1,6 +1,6 @@
 cap/race_animal_01	cap	1	HR
 cap/race_demon_horn_02	cap	2	HR
-cap/eye_01	eye	3	HR
+eye/eye_01	eye	3	HR
 eye/eye_02	eye	4	HR
 eye/eye_demon	eye	5	HR
 face/face_01	face	6	HR

@@ -20,29 +20,114 @@ public class TransformSkin : MonoBehaviour
         skeletonAnimation = transform.GetComponent<SkeletonAnimation>();
 
         Body("body");
-       
+        eye("eye/eye_01");
+        face("face/face_01");
+        haF("haF/hair_f_01");
+        haB("haB/hair_b_01");
+        top("top/clo_top_01");
+
+        Debug.Log(SetColor("top/clo_top_01", Color.black, 1));
+        Debug.Log(SetColor("top/clo_top_01", Color.black, 2));
     }
 
-    public void SetColor(string slotName , Color color)
+    public bool SetColor(string slotName , Color color, int slotNum = 1)
     {
-       
+        bool flag = false; 
         foreach (Spine.Slot slot in skeletonAnimation.skeleton.Slots)
         {
             if (slot.Attachment != null)
             {
-                if (slot.Data.Name.Contains(slotName) && slot.Attachment.Name.Contains("color_01"))
+                if (slotNum == 2)
                 {
-                    int slotIndex = slot.Data.Index;
-                    Attachment attachment = skeletonAnimation.Skeleton.GetAttachment(slotIndex, slot.Attachment.Name);
-                    
-                    var slot2 = skeletonAnimation.Skeleton.Slots.Items[slotIndex];
-                    slot.Attachment = attachment;
+                    if (slot.Data.Name.Contains(slotName) && slot.Data.Name.Contains("color_02"))
+                    {
+                        int slotIndex = slot.Data.Index;
+                        Attachment attachment = skeletonAnimation.Skeleton.GetAttachment(slotIndex, slot.Attachment.Name);
 
-                    ChangeAttachmentColor(attachment, color);
+                        var slot2 = skeletonAnimation.Skeleton.Slots.Items[slotIndex];
+                        slot.Attachment = attachment;
 
+                        ChangeAttachmentColor(attachment, color);
+                        flag = true;
+                    }
                 }
+                else
+                {
+                    if (slot.Data.Name.Contains(slotName) && slot.Data.Name.Contains("color_01"))
+                    {
+                        Debug.Log(slot.Data.Name);
+                        int slotIndex = slot.Data.Index;
+                        Attachment attachment = skeletonAnimation.Skeleton.GetAttachment(slotIndex, slot.Attachment.Name);
+
+                        var slot2 = skeletonAnimation.Skeleton.Slots.Items[slotIndex];
+                        slot.Attachment = attachment;
+
+                        ChangeAttachmentColor(attachment, color);
+                        flag = true;
+                    }
+                }
+           
             }
         }
+
+        return flag;
+    }
+
+    public Color GetColor(string slotName, int slotNum)
+    {
+        Color tempColor = Color.clear;
+        foreach (Spine.Slot slot in skeletonAnimation.skeleton.Slots)
+        {
+            if (slot.Attachment != null)
+            {
+                if (slotNum == 2)
+                {
+                    if (slot.Data.Name.Contains(slotName) && slot.Data.Name.Contains("color_02"))
+                    {
+                        int slotIndex = slot.Data.Index;
+                        Attachment attachment = skeletonAnimation.Skeleton.GetAttachment(slotIndex, slot.Attachment.Name);
+
+                        var slot2 = skeletonAnimation.Skeleton.Slots.Items[slotIndex];
+                        slot.Attachment = attachment;
+
+                        RegionAttachment regionAttachment = attachment as RegionAttachment;
+                        if (regionAttachment != null)
+                        {
+                            tempColor = regionAttachment.GetColor();
+                        }
+                        MeshAttachment meshAttachment = attachment as MeshAttachment;
+                        if (meshAttachment != null)
+                        {
+                            tempColor = meshAttachment.GetColor();
+                        }
+                    }
+                }
+                else
+                {
+                    if (slot.Data.Name.Contains(slotName) && slot.Data.Name.Contains("color_01"))
+                    {
+                        int slotIndex = slot.Data.Index;
+                        Attachment attachment = skeletonAnimation.Skeleton.GetAttachment(slotIndex, slot.Attachment.Name);
+
+                        var slot2 = skeletonAnimation.Skeleton.Slots.Items[slotIndex];
+                        slot.Attachment = attachment;
+
+                        RegionAttachment regionAttachment = attachment as RegionAttachment;
+                        if (regionAttachment != null)
+                        {
+                            tempColor = regionAttachment.GetColor();
+                        }
+                        MeshAttachment meshAttachment = attachment as MeshAttachment;
+                        if (meshAttachment != null)
+                        {
+                            tempColor = meshAttachment.GetColor();
+                        }
+                    }
+                }
+
+            }
+        }
+        return tempColor;
     }
 
     public void RandomSetColor(string slotName)
