@@ -22,7 +22,10 @@ public class IconManager : MonoBehaviour
         {
             if (iconList[i].itemName == itemName)
             {
-                iconList[i].iconObj.GetComponent<Image>().color = Color.white;
+                if (iconList[i].iconObj.GetComponent<Image>() != null)
+                {
+                    iconList[i].iconObj.GetComponent<Image>().color = Color.white;
+                }
                 return iconList[i].iconObj;
             }
         }

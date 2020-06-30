@@ -7,87 +7,66 @@ public class UserInfoManager : MonoBehaviour
     public GameObject userCharacter;
 
     //현재 유저가 장착중인 옷
-    UserEqip acc = new UserEqip();
-    UserEqip top = new UserEqip();
-    UserEqip pan = new UserEqip();
-    UserEqip eye = new UserEqip();
-    UserEqip face = new UserEqip();
-    UserEqip haF = new UserEqip();
-    UserEqip haB = new UserEqip();
-    UserEqip outt = new UserEqip();
-    UserEqip sho = new UserEqip();
-    UserEqip cap = new UserEqip();
-    UserEqip set = new UserEqip();
-    UserEqip body = new UserEqip();
+    public UserEqip acc = new UserEqip();
+    public UserEqip top = new UserEqip();
+    public UserEqip pan = new UserEqip();
+    public UserEqip eye = new UserEqip();
+    public UserEqip face = new UserEqip();
+    public UserEqip haF = new UserEqip();
+    public UserEqip haB = new UserEqip();
+    public UserEqip outt = new UserEqip();
+    public UserEqip sho = new UserEqip();
+    public UserEqip cap = new UserEqip();
+    public UserEqip set = new UserEqip();
+    public UserEqip body = new UserEqip();
 
     private void Start()
     {
-        LoadSkinItem();
-        Debug.Log(" === Load === ");
-        for (int i = 0; i < skinItem.Count; i++)
-        {
-            Debug.Log(skinItem[i].skinName + " , " + skinItem[i].color_01 + " , " + skinItem[i].color_02);
-        }
-
-        PushSkinItem("body");
-        PushSkinItem("cap/race_animal_01");
-        PushSkinItem("eye/eye_01");
-        PushSkinItem("face/face_01");
-        PushSkinItem("haF/hair_f_01");
-        PushSkinItem("haB/hair_b_01");
-        PushSkinItem("pan/clo_under_01");
-        PushSkinItem("top/clo_top_01");
-        PushSkinItem("sho/shoes_01");
-
-        PushUserEqip(skinItem[0]);
-        PushUserEqip(skinItem[1]);
-        PushUserEqip(skinItem[2]);
-        PushUserEqip(skinItem[3]);
-        PushUserEqip(skinItem[4]);
-        PushUserEqip(skinItem[5]);
-        PushUserEqip(skinItem[6]);
-        PushUserEqip(skinItem[7]);
-        PushUserEqip(skinItem[8]);
-
-        PushSkinItem("cap/race_animal_01");
-        PushSkinItem("cap/race_animal_01");
-        PushSkinItem("cap/race_animal_01");
-        PushSkinItem("cap/race_animal_01");
-        PushSkinItem("cap/race_animal_01");
-        PushSkinItem("cap/race_animal_01");
-        PushSkinItem("cap/race_animal_01");
-        PushSkinItem("cap/race_animal_01");
-        PushSkinItem("cap/race_animal_01");
-        PushSkinItem("cap/race_animal_01");
-        PushSkinItem("eye/eye_01");
-        PushSkinItem("eye/eye_01");
-        PushSkinItem("top/clo_top_01");
-        PushSkinItem("top/clo_top_01");
-        PushSkinItem("top/clo_top_01");
+        Initialized();
 
         PushColorItem(Color.white);
         PushColorItem(Color.black);
         PushColorItem(Color.yellow);
         PushColorItem(Color.grey);
 
-
         userCharacter.GetComponent<TransformSkin>().UserEqipInfoSetting();
-
-        SaveSkinItem();
-        Debug.Log(" === Save === ");
-        for (int i = 0; i < skinItem.Count; i++)
-        {
-            Debug.Log(skinItem[i].skinName + " , " + skinItem[i].color_01 + " , " + skinItem[i].color_02);
-        }
+        userCharacter.GetComponent<TransformSkin>().UserEqipInfoSetting();
     }
 
-    //초기 옷 
+    //초기 
     void Initialized()
     {
         if (!PlayerPrefs.HasKey("첫시작"))
         {
             PlayerPrefs.SetString("첫시작", "True");
 
+            skinItem.Add(new UserSkin("acc/top_ribbon", Color.white, Color.white));
+            skinItem.Add(new UserSkin("top/clo_top_school", Color.white, Color.white));
+            skinItem.Add(new UserSkin("pan/skirt_01", Color.white, Color.white));
+            skinItem.Add(new UserSkin("eye/eye_01", Color.white, Color.white));
+            skinItem.Add(new UserSkin("face/face_01", Color.white, Color.white));
+            skinItem.Add(new UserSkin("haF/hair_f_01", Color.white, Color.white));
+            skinItem.Add(new UserSkin("haB/hair_b_01", Color.white, Color.white));
+            skinItem.Add(new UserSkin("sho/shoes_01", Color.white, Color.white));
+            skinItem.Add(new UserSkin("body", Color.white, Color.white));
+
+            PushUserEqip(skinItem[0]);
+            PushUserEqip(skinItem[1]);
+            PushUserEqip(skinItem[2]);
+            PushUserEqip(skinItem[3]);
+            PushUserEqip(skinItem[4]);
+            PushUserEqip(skinItem[5]);
+            PushUserEqip(skinItem[6]);
+            PushUserEqip(skinItem[7]);
+            PushUserEqip(skinItem[8]);
+
+            SaveSkinItem();
+            SaveUserEqip();
+        }
+        else
+        {
+            LoadSkinItem();
+            LoadUserEqip();
         }
     }
 
@@ -321,7 +300,6 @@ public class UserInfoManager : MonoBehaviour
             List<UserSkin> userSkinList = new List<UserSkin>();
             for (int i = 0; i < SkinItemList.Length - 1; i++)
             {
-                Debug.Log(SkinItemList[i]);
                 UserSkin tempUserSkin = new UserSkin(SkinItemList[i].Split('-')[0], StringToColor(SkinItemList[i].Split('-')[1]), StringToColor(SkinItemList[i].Split('-')[2]));
                 userSkinList.Add(tempUserSkin);
             }
@@ -329,6 +307,94 @@ public class UserInfoManager : MonoBehaviour
         }
     }
 
+    // 장착중인 스킨들 저장 
+    public void SaveUserEqip()
+    {
+        string tempUserEqip = "";
+
+        tempUserEqip += acc.skinKind.ToString() + "-";
+        tempUserEqip += acc.skinName + "-";
+        tempUserEqip += acc.color_01.ToString() + "-";
+        tempUserEqip += acc.color_02.ToString() + "=";
+
+        tempUserEqip += top.skinKind.ToString() + "-";
+        tempUserEqip += top.skinName + "-";
+        tempUserEqip += top.color_01.ToString() + "-";
+        tempUserEqip += top.color_02.ToString() + "=";
+
+        tempUserEqip += pan.skinKind.ToString() + "-";
+        tempUserEqip += pan.skinName + "-";
+        tempUserEqip += pan.color_01.ToString() + "-";
+        tempUserEqip += pan.color_02.ToString() + "=";
+
+        tempUserEqip += eye.skinKind.ToString() + "-";
+        tempUserEqip += eye.skinName + "-";
+        tempUserEqip += eye.color_01.ToString() + "-";
+        tempUserEqip += eye.color_02.ToString() + "=";
+
+        tempUserEqip += face.skinKind.ToString() + "-";
+        tempUserEqip += face.skinName + "-";
+        tempUserEqip += face.color_01.ToString() + "-";
+        tempUserEqip += face.color_02.ToString() + "=";
+
+        tempUserEqip += haF.skinKind.ToString() + "-";
+        tempUserEqip += haF.skinName + "-";
+        tempUserEqip += haF.color_01.ToString() + "-";
+        tempUserEqip += haF.color_02.ToString() + "=";
+
+        tempUserEqip += haB.skinKind.ToString() + "-";
+        tempUserEqip += haB.skinName + "-";
+        tempUserEqip += haB.color_01.ToString() + "-";
+        tempUserEqip += haB.color_02.ToString() + "=";
+
+        tempUserEqip += outt.skinKind.ToString() + "-";
+        tempUserEqip += outt.skinName + "-";
+        tempUserEqip += outt.color_01.ToString() + "-";
+        tempUserEqip += outt.color_02.ToString() + "=";
+
+        tempUserEqip += sho.skinKind.ToString() + "-";
+        tempUserEqip += sho.skinName + "-";
+        tempUserEqip += sho.color_01.ToString() + "-";
+        tempUserEqip += sho.color_02.ToString() + "=";
+
+        tempUserEqip += cap.skinKind.ToString() + "-";
+        tempUserEqip += cap.skinName + "-";
+        tempUserEqip += cap.color_01.ToString() + "-";
+        tempUserEqip += cap.color_02.ToString() + "=";
+
+        tempUserEqip += set.skinKind.ToString() + "-";
+        tempUserEqip += set.skinName + "-";
+        tempUserEqip += set.color_01.ToString() + "-";
+        tempUserEqip += set.color_02.ToString() + "=";
+
+        tempUserEqip += body.skinKind.ToString() + "-";
+        tempUserEqip += body.skinName + "-";
+        tempUserEqip += body.color_01.ToString() + "-";
+        tempUserEqip += body.color_02.ToString() + "=";
+
+        PlayerPrefs.SetString("UserEqip", tempUserEqip);
+    }
+
+    public void LoadUserEqip()
+    {
+        if (PlayerPrefs.HasKey("UserEqip"))
+        {
+            string tempUserEqip = PlayerPrefs.GetString("UserEqip");
+            string[] tempUserEqipList = tempUserEqip.Split('=');
+            acc = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[0].Split('-')[0]), tempUserEqipList[0].Split('-')[1], StringToColor(tempUserEqipList[0].Split('-')[2]), StringToColor(tempUserEqipList[0].Split('-')[3]));
+            top = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[1].Split('-')[0]), tempUserEqipList[1].Split('-')[1], StringToColor(tempUserEqipList[1].Split('-')[2]), StringToColor(tempUserEqipList[1].Split('-')[3]));
+            pan = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[2].Split('-')[0]), tempUserEqipList[2].Split('-')[1], StringToColor(tempUserEqipList[2].Split('-')[2]), StringToColor(tempUserEqipList[2].Split('-')[3]));
+            eye = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[3].Split('-')[0]), tempUserEqipList[3].Split('-')[1], StringToColor(tempUserEqipList[3].Split('-')[2]), StringToColor(tempUserEqipList[3].Split('-')[3]));
+            face = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[4].Split('-')[0]), tempUserEqipList[4].Split('-')[1], StringToColor(tempUserEqipList[4].Split('-')[2]), StringToColor(tempUserEqipList[4].Split('-')[3]));
+            haF = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[5].Split('-')[0]), tempUserEqipList[5].Split('-')[1], StringToColor(tempUserEqipList[5].Split('-')[2]), StringToColor(tempUserEqipList[5].Split('-')[3]));
+            haB = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[6].Split('-')[0]), tempUserEqipList[6].Split('-')[1], StringToColor(tempUserEqipList[6].Split('-')[2]), StringToColor(tempUserEqipList[6].Split('-')[3]));
+            outt = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[7].Split('-')[0]), tempUserEqipList[7].Split('-')[1], StringToColor(tempUserEqipList[7].Split('-')[2]), StringToColor(tempUserEqipList[7].Split('-')[3]));
+            sho = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[8].Split('-')[0]), tempUserEqipList[8].Split('-')[1], StringToColor(tempUserEqipList[8].Split('-')[2]), StringToColor(tempUserEqipList[8].Split('-')[3]));
+            cap = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[9].Split('-')[0]), tempUserEqipList[9].Split('-')[1], StringToColor(tempUserEqipList[9].Split('-')[2]), StringToColor(tempUserEqipList[9].Split('-')[3]));
+            set = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[10].Split('-')[0]), tempUserEqipList[10].Split('-')[1], StringToColor(tempUserEqipList[10].Split('-')[2]), StringToColor(tempUserEqipList[10].Split('-')[3]));
+            body = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[11].Split('-')[0]), tempUserEqipList[11].Split('-')[1], StringToColor(tempUserEqipList[11].Split('-')[2]), StringToColor(tempUserEqipList[11].Split('-')[3]));
+        }
+    }
 }
 
 public class UserSkin

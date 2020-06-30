@@ -20,6 +20,7 @@ public class TransformSkin : MonoBehaviour
         skeletonAnimation = transform.GetComponent<SkeletonAnimation>();
     }
 
+    // 유저정보에 저장된 eqip 정보 세팅 
     public void UserEqipInfoSetting()
     {
         if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.acc).skinName != "")
@@ -102,8 +103,17 @@ public class TransformSkin : MonoBehaviour
         {
             return false;
         }
+        bool flag = false;
 
-        bool flag = false; 
+        if (slotName.Contains("haB") && slotNum == 1)
+        {
+            color = GetColor(GameManager.instance.userInfoManager.haF.skinName , 1);
+        }
+        if (slotName.Contains("haB") && slotNum == 2)
+        {
+            color = GetColor(GameManager.instance.userInfoManager.haF.skinName, 2);
+        }
+
         foreach (Spine.Slot slot in skeletonAnimation.skeleton.Slots)
         {
             if (slot.Attachment != null)
@@ -139,6 +149,16 @@ public class TransformSkin : MonoBehaviour
            
             }
         }
+
+        if (slotName.Contains("haF") && slotNum == 1)
+        {
+            SetColor(GameManager.instance.userInfoManager.haB.skinName, color);
+        }
+        if (slotName.Contains("haF") && slotNum == 2)
+        {
+            SetColor(GameManager.instance.userInfoManager.haB.skinName, color);
+        }
+
         return flag;
     }
 
@@ -301,7 +321,6 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
-
     }
     void acc(string skinName)
     {
@@ -318,7 +337,6 @@ public class TransformSkin : MonoBehaviour
         }
         skinList.Add(skinName);
         SetEquip(skinList);
-
     }
 
     void top(string skinName)
@@ -493,7 +511,7 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
     }
 
-    void SetEquip(List<string> SkinList)
+    public void SetEquip(List<string> SkinList)
     {
         Skin combined = new Skin("combined");
 
@@ -509,6 +527,8 @@ public class TransformSkin : MonoBehaviour
 
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.skeleton.SetSkin(combined);
+        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
+        skeletonAnimation.LateUpdate();
     }
 
     // 이거를 Skin.cs 스크립트에 넣어줘야한다. 
