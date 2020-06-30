@@ -1,10 +1,6 @@
-﻿using Spine;
-using Spine.Unity;
-using Spine.Unity.Editor;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class UserInfoManager : MonoBehaviour
 {
@@ -26,11 +22,13 @@ public class UserInfoManager : MonoBehaviour
 
     private void Start()
     {
-        Initialized();
-    }
+        LoadSkinItem();
+        Debug.Log(" === Load === ");
+        for (int i = 0; i < skinItem.Count; i++)
+        {
+            Debug.Log(skinItem[i].skinName + " , " + skinItem[i].color_01 + " , " + skinItem[i].color_02);
+        }
 
-    void Initialized()
-    {
         PushSkinItem("body");
         PushSkinItem("cap/race_animal_01");
         PushSkinItem("eye/eye_01");
@@ -74,6 +72,23 @@ public class UserInfoManager : MonoBehaviour
 
 
         userCharacter.GetComponent<TransformSkin>().UserEqipInfoSetting();
+
+        SaveSkinItem();
+        Debug.Log(" === Save === ");
+        for (int i = 0; i < skinItem.Count; i++)
+        {
+            Debug.Log(skinItem[i].skinName + " , " + skinItem[i].color_01 + " , " + skinItem[i].color_02);
+        }
+    }
+
+    //초기 옷 
+    void Initialized()
+    {
+        if (!PlayerPrefs.HasKey("첫시작"))
+        {
+            PlayerPrefs.SetString("첫시작", "True");
+
+        }
     }
 
     //랜덤박스아이템 이름, 아이템 수
@@ -190,7 +205,6 @@ public class UserInfoManager : MonoBehaviour
         string tempString = ColorString;
         tempString = tempString.Remove(0, 5);
         tempString = tempString.Remove(tempString.IndexOf(')'));
-
         string[] tempStringList = tempString.Split(',');
 
         float R = float.Parse(tempStringList[0]);
@@ -281,6 +295,37 @@ public class UserInfoManager : MonoBehaviour
                 return body;
             default:
                 return null;
+        }
+    }
+
+    // 저장 
+    // 유저가 가지고있는 옷 정보들 저장 
+    public void SaveSkinItem()
+    {
+        string tempSkinItem = "";
+        for (int i = 0; i < skinItem.Count; i++)
+        {
+            tempSkinItem += skinItem[i].skinName + "-";
+            tempSkinItem += skinItem[i].color_01 + "-";
+            tempSkinItem += skinItem[i].color_02 + "=";
+        }
+        PlayerPrefs.SetString("SkinItem", tempSkinItem);
+    }
+
+    public void LoadSkinItem()
+    {
+        if (PlayerPrefs.HasKey("SkinItem"))
+        {
+            string tempSkinItem = PlayerPrefs.GetString("SkinItem");
+            string[] SkinItemList = tempSkinItem.Split('=');
+            List<UserSkin> userSkinList = new List<UserSkin>();
+            for (int i = 0; i < SkinItemList.Length - 1; i++)
+            {
+                Debug.Log(SkinItemList[i]);
+                UserSkin tempUserSkin = new UserSkin(SkinItemList[i].Split('-')[0], StringToColor(SkinItemList[i].Split('-')[1]), StringToColor(SkinItemList[i].Split('-')[2]));
+                userSkinList.Add(tempUserSkin);
+            }
+            skinItem = userSkinList;
         }
     }
 

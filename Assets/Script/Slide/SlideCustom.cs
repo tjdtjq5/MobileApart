@@ -22,6 +22,7 @@ public class SlideCustom : MonoBehaviour
     public Transform colorItem_context;
     public GameObject slotSelect_01;
     public GameObject slotSelect_02;
+    public GameObject checkPannel;
 
     List<GameObject> colorItemList = new List<GameObject>();
     Color tempColor;
@@ -53,8 +54,22 @@ public class SlideCustom : MonoBehaviour
     int[] backNum = new int[5];
     string[] selectString = new string[5];
 
+
+    bool clickFlag;
+    void ClickFlagFalse()
+    {
+        clickFlag = false;
+    }
+
     public void BackPannelBtn()
     {
+        if (clickFlag)
+        {
+            return;
+        }
+        clickFlag = true;
+        Invoke("ClickFlagFalse", slideMoveSpeed * 2.2f);
+
         if (currentState == 4)
         {
             currentState = 3;
@@ -109,8 +124,16 @@ public class SlideCustom : MonoBehaviour
 
     public void SelectBtn(int num)
     {
+        if (clickFlag)
+        {
+            return;
+        }
+     
+
         if (currentState < 4)
         {
+            clickFlag = true;
+            Invoke("ClickFlagFalse", slideMoveSpeed * 2.2f);
             currentState++;
         }
 
@@ -264,6 +287,20 @@ public class SlideCustom : MonoBehaviour
         //색 버튼 나오게하기 
         colorItem_Btn.position = context.GetChild(num).position;
         colorItem_Btn.DOMoveX(context.GetChild(num).position.x - 162f, slideMoveSpeed);
+        //슬롯버튼 온오프
+        slotSelect_01.SetActive(true);
+        slotSelect_02.SetActive(true);
+
+        slotSelect_01.GetComponent<Image>().color = Color.white;
+        slotSelect_02.GetComponent<Image>().color = Color.white;
+        if (transformSkin.GetColor(skinName, 1) == Color.clear)
+        {
+            slotSelect_01.GetComponent<Image>().color = Color.red;
+        }
+        if (transformSkin.GetColor(skinName, 2) == Color.clear)
+        {
+            slotSelect_02.GetComponent<Image>().color = Color.red;
+        }
     }
 
     // 컬러아이템 패널창이 뜨도록 하는 함수
@@ -319,6 +356,11 @@ public class SlideCustom : MonoBehaviour
 
     public void SlotSelect_01()
     {
+        if (slotSelect_01.GetComponent<Image>().color == Color.red)
+        {
+            return;
+        }
+
         select_01 = true;
         select_02 = false;
 
@@ -328,6 +370,11 @@ public class SlideCustom : MonoBehaviour
 
     public void SlotSelect_02()
     {
+        if (slotSelect_02.GetComponent<Image>().color == Color.red)
+        {
+            return;
+        }
+
         select_01 = false;
         select_02 = true;
 
@@ -376,6 +423,8 @@ public class SlideCustom : MonoBehaviour
             iConList.Add(Instantiate(tempIcon, context.GetChild(i).position, quaternion.identity, context.GetChild(i)));
             context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * context_Height);
         }
+
+        CheckPannelClose();
     }
 
     public void ColorChangeFail()
@@ -384,4 +433,17 @@ public class SlideCustom : MonoBehaviour
         select_02 = false;
         transformSkin.UserEqipInfoSetting();
     }
+
+    // 컬러 변경 확인창 
+
+    public void CheckPannelOpen()
+    {
+        checkPannel.SetActive(true);
+    }
+
+    public void CheckPannelClose()
+    {
+        checkPannel.SetActive(false);
+    }
+
 }

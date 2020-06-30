@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 878030622409865555}
   - component: {fileID: 2520755040046361411}
   m_Layer: 5
-  m_Name: acc_belt
+  m_Name: race_animal_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

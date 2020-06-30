@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class IconManager : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class IconManager : MonoBehaviour
         {
             if (iconList[i].itemName == itemName)
             {
+                iconList[i].iconObj.GetComponent<Image>().color = Color.white;
                 return iconList[i].iconObj;
             }
         }
