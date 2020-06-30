@@ -81,7 +81,8 @@ public enum SkinKind
     outt,
     sho,
     cap,
-    set
+    set,
+    body
 }
 
 public enum Grade

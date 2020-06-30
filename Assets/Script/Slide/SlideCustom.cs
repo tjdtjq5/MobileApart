@@ -20,6 +20,8 @@ public class SlideCustom : MonoBehaviour
     public GameObject colorItem_UnderPannel;
     public GameObject colorItem_pannel;
     public Transform colorItem_context;
+    public GameObject slotSelect_01;
+    public GameObject slotSelect_02;
 
     List<GameObject> colorItemList = new List<GameObject>();
     Color tempColor;
@@ -59,6 +61,7 @@ public class SlideCustom : MonoBehaviour
         }
 
         ColorItemUnderPannelClose();
+        ColorChangeFail();
 
         currentState--;
 
@@ -131,21 +134,21 @@ public class SlideCustom : MonoBehaviour
             case 4:
                 backNum[currentState] = num;
                 selectString[currentState] = context.GetChild(num).name;
-                // 선택 완료 
-                string skinName = selectString[2] + "/" + selectString[3];
-                //스킨 장착 
-                transformSkin.SkinChange((SkinKind)Enum.Parse(typeof(SkinKind), selectString[2]) , skinName);
-                //색 버튼 나오게하기 
-                colorItem_Btn.position = context.GetChild(num).position;
-                colorItem_Btn.DOMoveX(context.GetChild(num).position.x - 162f, slideMoveSpeed);
-                //입은 옷 전역변수 저장 
-                List<UserSkin> userSkinList = GameManager.instance.userInfoManager.GetSkinItemList(selectString[3]);
-                userSkin = userSkinList[num];
+                State4(num);
                 break;
             default:
                 State0();
                 break;
         }
+    }
+
+    void DeleteIconObj()
+    {
+        for (int i = 0; i < iConList.Count; i++)
+        {
+            Destroy(iConList[i]);
+        }
+        iConList.Clear();
     }
 
     // 원래 상태
@@ -158,13 +161,7 @@ public class SlideCustom : MonoBehaviour
             context.GetChild(i).gameObject.SetActive(false);
         }
 
-        for (int i = 0; i < iConList.Count; i++)
-        {
-            Destroy(iConList[i]);
-        }
-        iConList.Clear();
-
-      
+        DeleteIconObj();
 
         currentState = 0;
         theCam.transform.DOMoveX(originTheCam.x, slideMoveSpeed);
@@ -178,6 +175,7 @@ public class SlideCustom : MonoBehaviour
         currentState = 1;
         theCam.transform.DOMoveX(originTheCam.x + 1f, slideMoveSpeed);
         StartCoroutine(SlideMoveCoroutine(()=> {
+            DeleteIconObj();
             context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, 0);
             List<SkinKind> tempSkinKindList = GameManager.instance.spineSkinInfoManager.GetSkinKindList();
             for (int i = 0; i < tempSkinKindList.Count; i++)
@@ -195,6 +193,7 @@ public class SlideCustom : MonoBehaviour
     {
         currentState = 2;
         StartCoroutine(SlideMoveCoroutine(()=> {
+            DeleteIconObj();
             if (num != -1)
             {
                 for (int i = 0; i < context.childCount; i++)
@@ -226,6 +225,8 @@ public class SlideCustom : MonoBehaviour
         StartCoroutine(SlideMoveCoroutine(()=> {
             if (num != -1)
             {
+                DeleteIconObj();
+
                 for (int i = 0; i < context.childCount; i++)
                 {
                     context.GetChild(i).gameObject.SetActive(false);
@@ -240,11 +241,29 @@ public class SlideCustom : MonoBehaviour
                     string tempName = userSkinList[i].skinName.Split('/')[1];
                     context.GetChild(i).name = tempName;
                     GameObject tempIcon = GameManager.instance.iconManager.GetIcon(context.GetChild(i).name);
+                    // 임시적으로 유저 아이콘 색갈 변경 
+                    tempIcon.GetComponent<Image>().color = userSkinList[i].color_01;
+
                     iConList.Add(Instantiate(tempIcon, context.GetChild(i).position, quaternion.identity, context.GetChild(i)));
                     context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * context_Height);
                 }
             }
         }));
+    }
+
+    public void State4(int num)
+    {
+        // 선택 완료 
+        //입은 옷 전역변수 저장 
+        List<UserSkin> userSkinList = GameManager.instance.userInfoManager.GetSkinItemList(selectString[3]);
+        userSkin = userSkinList[num];
+        //스킨 장착 , 유저정보에 저장 
+        string skinName = selectString[2] + "/" + selectString[3];
+        GameManager.instance.userInfoManager.PushUserEqip(GameManager.instance.userInfoManager.skinItem[GameManager.instance.userInfoManager.GetSkinItemIndex(userSkin)]);
+        transformSkin.UserEqipInfoSetting();
+        //색 버튼 나오게하기 
+        colorItem_Btn.position = context.GetChild(num).position;
+        colorItem_Btn.DOMoveX(context.GetChild(num).position.x - 162f, slideMoveSpeed);
     }
 
     // 컬러아이템 패널창이 뜨도록 하는 함수
@@ -286,30 +305,83 @@ public class SlideCustom : MonoBehaviour
         colorItemList.Clear();
     }
 
-
-
     public void ColorItemSelect(int num)
     {
         GameObject tempColorItemIcon = Instantiate(GameManager.instance.iconManager.GetIcon("고정염색약"), colorItem_UnderPannel.transform.Find("염색아이템창").position, quaternion.identity, colorItem_UnderPannel.transform);
         tempColorItemIcon.transform.GetChild(0).GetComponent<Image>().color = GameManager.instance.userInfoManager.colorItem[num].color;
         tempColor = GameManager.instance.userInfoManager.colorItem[num].color;
         colorItemList.Add(tempColorItemIcon);
-
-
+        SlotSelect_01();
     }
 
-    public void SlotSelect(int num)
+    bool select_01 = false;
+    bool select_02 = false;
+
+    public void SlotSelect_01()
     {
-    
-        string skinNameKind = userSkin.skinName.Split('/')[0];
-        switch (num)
+        select_01 = true;
+        select_02 = false;
+
+        transformSkin.UserEqipInfoSetting();
+        transformSkin.SetColor(userSkin.skinName, tempColor, 1);
+    }
+
+    public void SlotSelect_02()
+    {
+        select_01 = false;
+        select_02 = true;
+
+        transformSkin.UserEqipInfoSetting();
+        transformSkin.SetColor(userSkin.skinName, tempColor, 2);
+    }
+
+    public void ColorChangeComplete()
+    {
+        if (select_01)
         {
-            case 2:
-                transformSkin.SetColor(skinNameKind, tempColor, 2);
-                break;
-            default:
-                transformSkin.SetColor(skinNameKind, tempColor, 1);
-                break;
+            // 아이템 색 바꾸기 
+            GameManager.instance.userInfoManager.ChangeColorSkinItem(GameManager.instance.userInfoManager.GetSkinItemIndex(userSkin), tempColor, 1);
+            // 아이템 장착
+            GameManager.instance.userInfoManager.PushUserEqip(GameManager.instance.userInfoManager.skinItem[GameManager.instance.userInfoManager.GetSkinItemIndex(userSkin)]);
         }
+
+        if (select_02)
+        {
+            GameManager.instance.userInfoManager.ChangeColorSkinItem(GameManager.instance.userInfoManager.GetSkinItemIndex(userSkin), tempColor, 2);
+            GameManager.instance.userInfoManager.PushUserEqip(GameManager.instance.userInfoManager.skinItem[GameManager.instance.userInfoManager.GetSkinItemIndex(userSkin)]);
+        }
+
+        select_01 = false;
+        select_02 = false;
+
+        DeleteIconObj();
+
+        for (int i = 0; i < context.childCount; i++)
+        {
+            context.GetChild(i).gameObject.SetActive(false);
+        }
+        context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, 0);
+        string tempSelectString = selectString[currentState];
+
+        List<UserSkin> userSkinList = GameManager.instance.userInfoManager.GetSkinItemList(tempSelectString);
+        for (int i = 0; i < userSkinList.Count; i++)
+        {
+            context.GetChild(i).gameObject.SetActive(true);
+            string tempName = userSkinList[i].skinName.Split('/')[1];
+            context.GetChild(i).name = tempName;
+            GameObject tempIcon = GameManager.instance.iconManager.GetIcon(context.GetChild(i).name);
+            // 임시적으로 유저 아이콘 색갈 변경 
+            tempIcon.GetComponent<Image>().color = userSkinList[i].color_01;
+
+            iConList.Add(Instantiate(tempIcon, context.GetChild(i).position, quaternion.identity, context.GetChild(i)));
+            context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * context_Height);
+        }
+    }
+
+    public void ColorChangeFail()
+    {
+        select_01 = false;
+        select_02 = false;
+        transformSkin.UserEqipInfoSetting();
     }
 }

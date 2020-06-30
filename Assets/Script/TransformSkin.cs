@@ -18,19 +18,91 @@ public class TransformSkin : MonoBehaviour
     private void Start()
     {
         skeletonAnimation = transform.GetComponent<SkeletonAnimation>();
+    }
 
-        Body("body");
-        eye("eye/eye_01");
-        face("face/face_01");
-        haF("haF/hair_f_01");
-        haB("haB/hair_b_01");
-        top("top/clo_top_01");
-
-        Debug.Log(SetColor("top", Color.black, 2));
+    public void UserEqipInfoSetting()
+    {
+        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.acc).skinName != "")
+        {
+            acc(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.acc).skinName);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.acc).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.acc).color_01 , 1);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.acc).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.acc).color_02 , 2);
+        }
+        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.body).skinName != "")
+        {
+            body(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.body).skinName);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.body).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.body).color_01, 1);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.body).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.body).color_02, 2);
+        }
+        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.cap).skinName != "")
+        {
+            cap(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.cap).skinName);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.cap).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.cap).color_01, 1);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.cap).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.cap).color_02, 2);
+        }
+        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.eye).skinName != "")
+        {
+            eye(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.eye).skinName);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.eye).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.eye).color_01, 1);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.eye).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.eye).color_02, 2);
+        }
+        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.face).skinName != "")
+        {
+            face(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.face).skinName);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.face).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.face).color_01, 1);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.face).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.face).color_02, 2);
+        }
+        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB).skinName != "")
+        {
+            haB(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB).skinName);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB).color_01, 1);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB).color_02, 2);
+        }
+        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF).skinName != "")
+        {
+            haF(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF).skinName);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF).color_01, 1);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF).color_02, 2);
+        }
+        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.outt).skinName != "")
+        {
+            outt(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.outt).skinName);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.outt).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.outt).color_01, 1);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.outt).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.outt).color_02, 2);
+        }
+        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.pan).skinName != "")
+        {
+            pan(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.pan).skinName);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.pan).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.pan).color_01, 1);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.pan).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.pan).color_02, 2);
+        }
+        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.set).skinName != "")
+        {
+            set(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.set).skinName);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.set).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.set).color_01, 1);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.set).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.set).color_02, 2);
+        }
+        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.sho).skinName != "")
+        {
+            sho(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.sho).skinName);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.sho).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.sho).color_01, 1);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.sho).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.sho).color_02, 2);
+        }
+        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.top).skinName != "")
+        {
+            top(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.top).skinName);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.top).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.top).color_01, 1);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.top).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.top).color_02, 2);
+        }
     }
 
     public bool SetColor(string slotName , Color color, int slotNum = 1)
     {
+        if (color == Color.clear || color == null)
+        {
+            return false;
+        }
+
         bool flag = false; 
         foreach (Spine.Slot slot in skeletonAnimation.skeleton.Slots)
         {
@@ -70,44 +142,61 @@ public class TransformSkin : MonoBehaviour
         return flag;
     }
 
-    //public Color GetColor(string slotName, int slotNum = 1)
-    //{
-    //    foreach (Spine.Slot slot in skeletonAnimation.skeleton.Slots)
-    //    {
-    //        if (slot.Attachment != null)
-    //        {
-    //            if (slotNum == 2)
-    //            {
-    //                if (slot.Data.Name.Contains(slotName) && slot.Data.Name.Contains("color_02"))
-    //                {
-    //                    int slotIndex = slot.Data.Index;
-    //                    Attachment attachment = skeletonAnimation.Skeleton.GetAttachment(slotIndex, slot.Attachment.Name);
+    public Color GetColor(string slotName, int slotNum = 1)
+    {
+        foreach (Spine.Slot slot in skeletonAnimation.skeleton.Slots)
+        {
+            if (slot.Attachment != null)
+            {
+                if (slotNum == 2)
+                {
+                    if (slot.Data.Name.Contains(slotName) && slot.Data.Name.Contains("color_02"))
+                    {
+                        int slotIndex = slot.Data.Index;
+                        Attachment attachment = skeletonAnimation.Skeleton.GetAttachment(slotIndex, slot.Attachment.Name);
 
-    //                    var slot2 = skeletonAnimation.Skeleton.Slots.Items[slotIndex];
-    //                    slot.Attachment = attachment;
+                        var slot2 = skeletonAnimation.Skeleton.Slots.Items[slotIndex];
+                        slot.Attachment = attachment;
 
-    //                    ChangeAttachmentColor(attachment, color);
-    //                    flag = true;
-    //                }
-    //            }
-    //            else
-    //            {
-    //                if (slot.Data.Name.Contains(slotName) && slot.Data.Name.Contains("color_01"))
-    //                {
-    //                    int slotIndex = slot.Data.Index;
-    //                    Attachment attachment = skeletonAnimation.Skeleton.GetAttachment(slotIndex, slot.Attachment.Name);
+                        RegionAttachment regionAttachment = attachment as RegionAttachment;
+                        if (regionAttachment != null)
+                        {
+                            return regionAttachment.GetColor();
+                        }
+                        MeshAttachment meshAttachment = attachment as MeshAttachment;
+                        if (meshAttachment != null)
+                        {
+                            return meshAttachment.GetColor();
+                        }
+                    }
+                }
+                else
+                {
+                    if (slot.Data.Name.Contains(slotName) && slot.Data.Name.Contains("color_01"))
+                    {
+                        int slotIndex = slot.Data.Index;
+                        Attachment attachment = skeletonAnimation.Skeleton.GetAttachment(slotIndex, slot.Attachment.Name);
 
-    //                    var slot2 = skeletonAnimation.Skeleton.Slots.Items[slotIndex];
-    //                    slot.Attachment = attachment;
+                        var slot2 = skeletonAnimation.Skeleton.Slots.Items[slotIndex];
+                        slot.Attachment = attachment;
 
-    //                    ChangeAttachmentColor(attachment, color);
-    //                    flag = true;
-    //                }
-    //            }
+                        RegionAttachment regionAttachment = attachment as RegionAttachment;
+                        if (regionAttachment != null)
+                        {
+                            return regionAttachment.GetColor();
+                        }
+                        MeshAttachment meshAttachment = attachment as MeshAttachment;
+                        if (meshAttachment != null)
+                        {
+                            return meshAttachment.GetColor();
+                        }
+                    }
+                }
 
-    //        }
-    //    }
-    //}
+            }
+        }
+        return Color.clear;
+    }
 
     public void RandomSetColor(string slotName)
     {
@@ -197,7 +286,7 @@ public class TransformSkin : MonoBehaviour
 
     }
  
-    void Body(string skinName)
+    void body(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
