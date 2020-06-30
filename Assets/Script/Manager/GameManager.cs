@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
         Screen.SetResolution(720, 1280, true);
     }
 
+  
+
 }
 
    

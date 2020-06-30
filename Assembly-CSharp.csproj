@@ -71,6 +71,7 @@
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Script\Album.cs" />
+    <Compile Include="Assets\Script\Camera\CameraResolution.cs" />
     <Compile Include="Assets\Script\Camera\ScreenShotHandler.cs" />
     <Compile Include="Assets\Script\Manager\DatabaseManager.cs" />
     <Compile Include="Assets\Script\Manager\GameManager.cs" />

@@ -29,6 +29,7 @@ public class SlideCustom : MonoBehaviour
     UserSkin userSkin;
 
     public float context_Height = 150;
+    public float movePannelX = .8f;
 
     float slideMoveSpeed = 0.3f;
     int currentState;
@@ -107,10 +108,10 @@ public class SlideCustom : MonoBehaviour
             {
                 callBack();
             }
-            slidePannel.transform.DOMoveX(originSlidePannel.x - 200f, slideMoveSpeed);
+            slidePannel.transform.DOMoveX(originSlidePannel.x - movePannelX, slideMoveSpeed);
         }
 
-        if (slidePannel.transform.position.x == originSlidePannel.x - 200f)
+        if (slidePannel.transform.position.x == originSlidePannel.x - movePannelX)
         {
             slidePannel.transform.DOMoveX(originSlidePannel.x, slideMoveSpeed);
             yield return new WaitForSeconds(slideMoveSpeed);
@@ -118,7 +119,7 @@ public class SlideCustom : MonoBehaviour
             {
                 callBack();
             }
-            slidePannel.transform.DOMoveX(originSlidePannel.x - 200f, slideMoveSpeed);
+            slidePannel.transform.DOMoveX(originSlidePannel.x - movePannelX, slideMoveSpeed);
         }
     }
 
@@ -196,7 +197,7 @@ public class SlideCustom : MonoBehaviour
     {
         backPannel.gameObject.SetActive(true);
         currentState = 1;
-        theCam.transform.DOMoveX(originTheCam.x + 1f, slideMoveSpeed);
+       // theCam.transform.DOMoveX(originTheCam.x + 1, slideMoveSpeed);
         StartCoroutine(SlideMoveCoroutine(()=> {
             DeleteIconObj();
             context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, 0);
@@ -286,7 +287,7 @@ public class SlideCustom : MonoBehaviour
         transformSkin.UserEqipInfoSetting();
         //색 버튼 나오게하기 
         colorItem_Btn.position = context.GetChild(num).position;
-        colorItem_Btn.DOMoveX(context.GetChild(num).position.x - 162f, slideMoveSpeed);
+        colorItem_Btn.DOMoveX(context.GetChild(num).position.x - movePannelX, slideMoveSpeed);
         //슬롯버튼 온오프
         slotSelect_01.SetActive(true);
         slotSelect_02.SetActive(true);
