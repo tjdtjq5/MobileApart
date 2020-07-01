@@ -1,10 +1,11 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
-    - Album
     - DatabaseManager
     - GameManager
     - IconManager
+    - MiniGame
+    - RockPaperScissors
     - ScreenShotHandler
     - SlideCustom
     - SpineSkinInfoManager
@@ -84,8 +85,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11630}
     - Class: 114
-      Script: {instanceID: 11732}
-    - Class: 114
       Script: {instanceID: 11740}
     - Class: 114
       Script: {instanceID: 12156}
@@ -112,19 +111,23 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13812}
     - Class: 114
-      Script: {instanceID: 13924}
+      Script: {instanceID: 13926}
     - Class: 114
-      Script: {instanceID: 13966}
+      Script: {instanceID: 13968}
     - Class: 114
-      Script: {instanceID: 14256}
+      Script: {instanceID: 14258}
     - Class: 114
-      Script: {instanceID: 14366}
+      Script: {instanceID: 14368}
     - Class: 114
-      Script: {instanceID: 14480}
+      Script: {instanceID: 14482}
     - Class: 114
-      Script: {instanceID: 14606}
+      Script: {instanceID: 14608}
     - Class: 114
-      Script: {instanceID: 14638}
+      Script: {instanceID: 14640}
+    - Class: 114
+      Script: {instanceID: 52658}
+    - Class: 114
+      Script: {instanceID: 84158}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -675,6 +678,12 @@ ScriptsOnlyBuild:
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
+    className: CameraResolution
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
     className: TransformSkin
   - hash:
       serializedVersion: 2
@@ -828,7 +837,7 @@ ScriptsOnlyBuild:
     className: Dropdown
   - hash:
       serializedVersion: 2
-      Hash: 0eb78732e7a2f07483fece02bf6f26d1
+      Hash: be1ab63b1a9fa280d00802739c47ca76
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SlideCustom
@@ -870,10 +879,16 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 84abcf07d1c918cb10b6b61194a25611
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: CameraResolution
+    className: MiniGame
+  - hash:
+      serializedVersion: 2
+      Hash: 34174c1cb19e4b5a7f73597887bc4269
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: RockPaperScissors
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity

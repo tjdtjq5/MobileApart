@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class SlideCustom : MonoBehaviour
 {
     public Transform slidePannel;   Vector2 originSlidePannel;
-    public Transform theCam;        Vector2 originTheCam;
+    public Transform character;        Vector2 originCharacter;
     public Transform colorItem_Btn;     Vector2 originColorItemBtn;
     public Transform backPannel; 
     public Transform context;
@@ -39,7 +39,7 @@ public class SlideCustom : MonoBehaviour
     private void Start()
     {
         originSlidePannel = slidePannel.position;
-        originTheCam = theCam.position;
+        originCharacter = character.position;
         originColorItemBtn = colorItem_Btn.position;
         State0();
     }
@@ -188,7 +188,7 @@ public class SlideCustom : MonoBehaviour
         DeleteIconObj();
 
         currentState = 0;
-        theCam.transform.DOMoveX(originTheCam.x, slideMoveSpeed);
+        character.transform.DOMoveX(originCharacter.x, slideMoveSpeed);
         slidePannel.transform.DOMoveX(originSlidePannel.x, slideMoveSpeed);
         backPannel.gameObject.SetActive(false);
     }
@@ -197,7 +197,7 @@ public class SlideCustom : MonoBehaviour
     {
         backPannel.gameObject.SetActive(true);
         currentState = 1;
-       // theCam.transform.DOMoveX(originTheCam.x + 1, slideMoveSpeed);
+        character.DOMoveX(originCharacter.x - 1f, slideMoveSpeed);
         StartCoroutine(SlideMoveCoroutine(()=> {
             DeleteIconObj();
             context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, 0);

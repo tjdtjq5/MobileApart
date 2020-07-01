@@ -78,6 +78,8 @@
     <Compile Include="Assets\Script\Manager\IconManager.cs" />
     <Compile Include="Assets\Script\Manager\SpineSkinInfoManager.cs" />
     <Compile Include="Assets\Script\Manager\UserInfoManager.cs" />
+    <Compile Include="Assets\Script\MiniGame\MiniGame.cs" />
+    <Compile Include="Assets\Script\MiniGame\RockPaperScissors.cs" />
     <Compile Include="Assets\Script\Slide\SlideCustom.cs" />
     <Compile Include="Assets\Script\TransformSkin.cs" />
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\MultiKeyDictionary.cs" />
