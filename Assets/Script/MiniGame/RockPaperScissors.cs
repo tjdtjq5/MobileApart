@@ -6,52 +6,37 @@ using UnityEngine.UI;
 
 public class RockPaperScissors : MonoBehaviour
 {
-    public int sucessCount = 10;
+    public int sucessCount;
+    public Text sucessText;
 
     public GameObject[] miniGameImg;
     public GameObject[] rockPaperScissorsImg;
 
-    public GameObject rock;                    Vector3 originRock;
-    public GameObject paper;                   Vector3 originPaper;
-    public GameObject scissor;                 Vector3 originScissor;
+    public Text counterText;
+    public Image timeFillImg;
 
-    public Text sucessCountText;
-    int scuessCount;
-    public Text test;
+    public GameObject SetImg; 
+    public GameObject rock;                   
+    public GameObject paper;              
+    public GameObject scissor;            
 
     public GameObject character;
     SkeletonAnimation skeletonAnimation;
 
-    int count;                  // 가위바위보 게임 시작시 랜덤 설정 카운트
-    int currentCount;           // count 와 동일한 수가 되면 10연승 시작
+    IEnumerator controllCoroutine;
 
     private void Start()
     {
         skeletonAnimation = character.GetComponent<SkeletonAnimation>();
     }
 
-    void CountReSet()
-    {
-        currentCount = 0;
-        scuessCount = 0;
-        count = Random.RandomRange(0, 13);
-        test.text = count.ToString();
-    }
 
     public void GameStart()
     {
-        CountReSet();
-
-        StartCoroutine(GameStartCoroutine());
-
-        skeletonAnimation.AnimationState.SetAnimation(0, "rsp_ready", true);
-
-        originRock = rock.transform.position;
-        originPaper = paper.transform.position;
-        originScissor = scissor.transform.position;
-
-        scuessCount = 0;
-        sucessCountText.text = "X" + scuessCount;
+        controllCoroutine = GameStartCoroutine();
+        StartCoroutine(controllCoroutine);
+        sucessCount = 0;
+        sucessText.text = sucessCount.ToString();
     }
 
     float fadeSpeed = 0.3f;
@@ -69,29 +54,47 @@ public class RockPaperScissors : MonoBehaviour
         {
             miniGameImg[i].gameObject.SetActive(false);
         }
+
         for (int i = 0; i < rockPaperScissorsImg.Length; i++)
         {
-            rockPaperScissorsImg[i].gameObject.SetActive(true);
+            rockPaperScissorsImg[i].SetActive(true);
+
             if (rockPaperScissorsImg[i].GetComponent<Image>() != null)
             {
                 rockPaperScissorsImg[i].GetComponent<Image>().DOFade(1, fadeSpeed);
             }
+            if (rockPaperScissorsImg[i].GetComponent<Text>() != null)
+            {
+                rockPaperScissorsImg[i].GetComponent<Text>().DOFade(1, fadeSpeed);
+            }
         }
+        yield return new WaitForSeconds(fadeSpeed);
+
+        SetImg.SetActive(true);
+
+        Play();
     }
 
     public void GameExit()
     {
         StartCoroutine(GameExitCoroutine());
+        StopCoroutine(controllCoroutine);
         skeletonAnimation.AnimationState.SetAnimation(0, "idle_01", true);
     }
 
     IEnumerator GameExitCoroutine()
     {
+        SetImg.SetActive(false);
+
         for (int i = 0; i < rockPaperScissorsImg.Length; i++)
         {
             if (rockPaperScissorsImg[i].GetComponent<Image>() != null)
             {
                 rockPaperScissorsImg[i].GetComponent<Image>().DOFade(0, fadeSpeed);
+            }
+            if (rockPaperScissorsImg[i].GetComponent<Text>() != null)
+            {
+                rockPaperScissorsImg[i].GetComponent<Text>().DOFade(0, fadeSpeed);
             }
         }
         yield return new WaitForSeconds(fadeSpeed);
@@ -110,173 +113,185 @@ public class RockPaperScissors : MonoBehaviour
         }
     }
 
+    public void Play()
+    {
+        rock.GetComponent<Image>().color = Color.gray;
+        paper.GetComponent<Image>().color = Color.gray;
+        scissor.GetComponent<Image>().color = Color.gray;
 
-    bool flag = false;
+        skeletonAnimation.AnimationState.SetAnimation(0, "rsp_ready", true);
+
+        controllCoroutine = CounterDownCoroutine(Play02());
+        StartCoroutine(controllCoroutine);
+    }
+
+    IEnumerator CounterDownCoroutine(IEnumerator coroutine)
+    {
+        counterText.gameObject.SetActive(true);
+        counterText.text = "3";
+        yield return new WaitForSeconds(1);
+        counterText.text = "2";
+        yield return new WaitForSeconds(1);
+        counterText.text = "1";
+        yield return new WaitForSeconds(1);
+        counterText.gameObject.SetActive(false);
+
+        controllCoroutine = coroutine;
+        StartCoroutine(controllCoroutine);
+    }
+
+    IEnumerator Play02()
+    {
+        rock.GetComponent<Image>().color = Color.white;
+        paper.GetComponent<Image>().color = Color.white;
+        scissor.GetComponent<Image>().color = Color.white;
+
+        //시간초 
+        timeFillImg.fillAmount = 0;
+        timeFillImg.DOFillAmount(1, 1.5f);
+        yield return new WaitForSeconds(1.5f);
+        Result();
+    }
+
     public void Rock()
     {
-        if (flag)
-            return;
-        flag = true;
-
-        rock.transform.DOMoveX(0, fadeSpeed);
-        paper.gameObject.SetActive(false);
-        scissor.gameObject.SetActive(false);
-        ReSult("rsp-r");
+        if (rock.GetComponent<Image>().color == Color.white)
+        {
+            rock.GetComponent<Image>().color = Color.red;
+            paper.GetComponent<Image>().color = Color.white;
+            scissor.GetComponent<Image>().color = Color.white;
+        }
     }
 
     public void Paper()
     {
-        if (flag)
-            return;
-        flag = true;
-
-        paper.transform.DOMoveX(0, fadeSpeed);
-        rock.gameObject.SetActive(false);
-        scissor.gameObject.SetActive(false);
-        ReSult("rsp-p");
+        if (paper.GetComponent<Image>().color == Color.white)
+        {
+            rock.GetComponent<Image>().color = Color.white;
+            paper.GetComponent<Image>().color = Color.red;
+            scissor.GetComponent<Image>().color = Color.white;
+        }
     }
 
     public void Scissor()
     {
-        if (flag)
-            return;
-        flag = true;
-
-        scissor.transform.DOMoveX(0, fadeSpeed);
-        paper.gameObject.SetActive(false);
-        rock.gameObject.SetActive(false);
-        ReSult("rsp-s");
-    }
-
-    public void ReSult(string playerWhatRSP)
-    {
-        //count 계산 
-        if (count == currentCount) // 카운트가 같으면 무조건 이기게 하기 
+        if (scissor.GetComponent<Image>().color == Color.white)
         {
-            if (scuessCount > sucessCount)  // 10번 이기면 빠져나오기
-            {
-                CountReSet(); // 10번 이긴후에 다시 리셋
-            }
-
-            int tempRandom = Random.RandomRange(0, 2);
-            switch (tempRandom)
-            {
-                case 0: // 0나오면 이김
-                    scuessCount++; // 10번 이겼는지 확인하기 위해 카운트를 셈 
-                    StartCoroutine(SuccecsPlayCoroutine(playerWhatRSP));
-                    break;
-                case 1: // 1나오면 비김 
-                    StartCoroutine(DrawPlayCoroutine(playerWhatRSP));
-                    break;
-                default:
-                    StartCoroutine(SuccecsPlayCoroutine(playerWhatRSP));
-                    break;
-            }
-        }
-        else // 10연승 카운트가 아닐 경우 
-        {
-            int tempRandom = Random.RandomRange(0, 3);
-            switch (tempRandom)
-            {
-                case 0: // 0나오면 이김
-                    StartCoroutine(SuccecsPlayCoroutine(playerWhatRSP));
-                    break;
-                case 1: // 1나오면 비김 
-                    StartCoroutine(DrawPlayCoroutine(playerWhatRSP));
-                    break;
-                case 2: // 2나오면 짐 
-                    StartCoroutine(FailPlayCoroutine(playerWhatRSP));
-                    currentCount++;
-                    break;
-                default:
-                    StartCoroutine(DrawPlayCoroutine(playerWhatRSP));
-                    break;
-            }
+            rock.GetComponent<Image>().color = Color.white;
+            paper.GetComponent<Image>().color = Color.white;
+            scissor.GetComponent<Image>().color = Color.red;
         }
     }
 
-    IEnumerator SuccecsPlayCoroutine(string playerWhatRSP)
+    public void Result()
     {
-        yield return new WaitForSeconds(fadeSpeed);
-        switch (playerWhatRSP)
+        int randResult = Random.RandomRange(0, 3);
+        string aniName = "";
+
+        //플레이어가 묵을 냈을 경우
+        if (rock.GetComponent<Image>().color == Color.red)
         {
-            case "rsp-r":
-                skeletonAnimation.AnimationState.SetAnimation(0, "rsp-s", false);
-                break;
-            case "rsp-s":
-                skeletonAnimation.AnimationState.SetAnimation(0, "rsp-p", false);
-                break;
-            case "rsp-p":
-                skeletonAnimation.AnimationState.SetAnimation(0, "rsp-r", false);
-                break;
-            default:
-                break;
+            switch (randResult)
+            {
+                case 0:
+                    aniName = "rsp-r";
+                    controllCoroutine = Draw();
+                    StartCoroutine(controllCoroutine);
+                    break;
+                case 1:
+                    aniName = "rsp-s";
+                    controllCoroutine = Win();
+                    StartCoroutine(controllCoroutine);
+                    break;
+                case 2:
+                    aniName = "rsp-p";
+                    controllCoroutine = Lose();
+                    StartCoroutine(controllCoroutine);
+                    break;
+            }
         }
-        yield return new WaitForSeconds(0.5f);
+        //플레이어가 찌을 냈을 경우
+        if (scissor.GetComponent<Image>().color == Color.red)
+        {
+            switch (randResult)
+            {
+                case 0:
+                    aniName = "rsp-r";
+                    controllCoroutine = Lose();
+                    StartCoroutine(controllCoroutine);
+                    break;
+                case 1:
+                    aniName = "rsp-s";
+                    controllCoroutine = Draw();
+                    StartCoroutine(controllCoroutine);
+                    break;
+                case 2:
+                    aniName = "rsp-p";
+                    controllCoroutine = Win();
+                    StartCoroutine(controllCoroutine);
+                    break;
+            }
+        }
+        //플레이어가 빠을 냈을 경우
+        if (paper.GetComponent<Image>().color == Color.red)
+        {
+            switch (randResult)
+            {
+                case 0:
+                    aniName = "rsp-r";
+                    controllCoroutine = Win();
+                    StartCoroutine(controllCoroutine);
+                    break;
+                case 1:
+                    aniName = "rsp-s";
+                    controllCoroutine = Lose();
+                    StartCoroutine(controllCoroutine);
+                    break;
+                case 2:
+                    aniName = "rsp-p";
+                    controllCoroutine = Draw();
+                    StartCoroutine(controllCoroutine);
+                    break;
+            }
+        }
+        if (aniName == "")
+        {
+            controllCoroutine = Lose();
+            StartCoroutine(controllCoroutine);
+        }
+        else
+        {
+            skeletonAnimation.AnimationState.SetAnimation(0, aniName, false);
+
+        }
+    }
+
+    IEnumerator Win()
+    {
+        Debug.Log("이김");
+        yield return new WaitForSeconds(1f);
         skeletonAnimation.AnimationState.SetAnimation(0, "game_lose", false);
-        scuessCount++;
-        sucessCountText.text = "X" + scuessCount;
+        sucessCount++;
+        sucessText.text = sucessCount.ToString();
         yield return new WaitForSeconds(1f);
-        StartCoroutine(RePlay());
+        Play();
     }
 
-    IEnumerator DrawPlayCoroutine(string playerWhatRSP)
+    IEnumerator Draw()
     {
-        yield return new WaitForSeconds(fadeSpeed);
-        switch (playerWhatRSP)
-        {
-            case "rsp-r":
-                skeletonAnimation.AnimationState.SetAnimation(0, "rsp-r", false);
-                break;
-            case "rsp-s":
-                skeletonAnimation.AnimationState.SetAnimation(0, "rsp-s", false);
-                break;
-            case "rsp-p":
-                skeletonAnimation.AnimationState.SetAnimation(0, "rsp-p", false);
-                break;
-            default:
-                break;
-        }
-        yield return new WaitForSeconds(0.5f);
-        StartCoroutine(RePlay());
+        Debug.Log("비김");
+        yield return new WaitForSeconds(1f);
+        Play();
     }
-    IEnumerator FailPlayCoroutine(string playerWhatRSP)
+
+    IEnumerator Lose()
     {
-        yield return new WaitForSeconds(fadeSpeed);
-        switch (playerWhatRSP)
-        {
-            case "rsp-r":
-                skeletonAnimation.AnimationState.SetAnimation(0, "rsp-p", false);
-                break;
-            case "rsp-s":
-                skeletonAnimation.AnimationState.SetAnimation(0, "rsp-r", false);
-                break;
-            case "rsp-p":
-                skeletonAnimation.AnimationState.SetAnimation(0, "rsp-s", false);
-                break;
-            default:
-                break;
-        }
-        yield return new WaitForSeconds(0.5f);
+        Debug.Log("짐");
+        yield return new WaitForSeconds(1f);
+        sucessCount = 0;
+        sucessText.text = sucessCount.ToString();
         skeletonAnimation.AnimationState.SetAnimation(0, "game_victory", false);
-        scuessCount = 0;
-        sucessCountText.text = "X" + scuessCount;
         yield return new WaitForSeconds(1f);
-        StartCoroutine(RePlay());
-    }
-    IEnumerator RePlay()
-    {
-        skeletonAnimation.AnimationState.SetAnimation(0, "rsp_ready", true);
-
-        yield return new WaitForSeconds(0.1f);
-
-        rock.SetActive(true);
-        rock.transform.position = originRock;
-        paper.SetActive(true);
-        paper.transform.position = originPaper;
-        scissor.SetActive(true);
-        scissor.transform.position = originScissor;
-
-        flag = false;
+        Play();
     }
 }

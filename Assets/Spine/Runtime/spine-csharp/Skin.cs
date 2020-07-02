@@ -52,7 +52,6 @@ namespace Spine {
 			if (name == null) throw new ArgumentNullException("name", "name cannot be null.");
 			this.name = name;
 		}
-
 		public void AddFromSkin(Skin other)
 		{
 			foreach (var a in other.attachments)

@@ -80,8 +80,10 @@
     <Compile Include="Assets\Script\Manager\UserInfoManager.cs" />
     <Compile Include="Assets\Script\MiniGame\MiniGame.cs" />
     <Compile Include="Assets\Script\MiniGame\RockPaperScissors.cs" />
-    <Compile Include="Assets\Script\Slide\SlideCustom.cs" />
     <Compile Include="Assets\Script\TransformSkin.cs" />
+    <Compile Include="Assets\Script\옷장\Cloth.cs" />
+    <Compile Include="Assets\Script\옷장\SlideCustom.cs" />
+    <Compile Include="Assets\Script\화면전환\ScreenTransition.cs" />
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\MultiKeyDictionary.cs" />
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Reporter.cs" />
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\ReporterGUI.cs" />
