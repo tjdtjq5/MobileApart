@@ -284,7 +284,7 @@ public class Cloth : MonoBehaviour
                 string skinName = tempSpineSkinInfo[i].skinName;
                 prepab.GetComponent<Button>().onClick.AddListener(() => { State02_Btn(skinName); });
                 GameObject iconObj = Instantiate(tempSpineSkinInfo[i].iconObj, prepab.transform.Find("ImgPos").position, Quaternion.identity, prepab.transform.Find("ImgPos"));
-                context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * 200f);
+                context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * 235f);
             }
         }));
     }
@@ -325,6 +325,7 @@ public class Cloth : MonoBehaviour
                         }
                     }
                 }
+                context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * 235f);
             }
         }));
     }
