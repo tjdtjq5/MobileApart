@@ -15,11 +15,10 @@ public class Cloth : MonoBehaviour
     public GameObject backBtn;
     public Transform context;     
     [Header("카메라")]
-    public Camera characterCamera;         Vector2 originChracterCamera;
-    public Camera uiCamera;                Vector2 originUiCamera;
+    public Camera characterCamera;         public Vector3 originChracterCamera; public Vector3 moveChracterCamera;
+    public Camera uiCamera;                public Vector3 originUiCamera;      
     float cameraMoveSpeed = 0.3f;
-    [Header("그림자")] 
-    public Transform shadow;               Vector2 originShadow;
+  
     [Header("아틀라스")]
     public SpriteAtlas atlas;
     [Header("아이콘프리팹")]
@@ -28,14 +27,9 @@ public class Cloth : MonoBehaviour
 
     int currentState;
 
-    int[] selectBtnNum = new int[5];
-    string[] selectString = new string[5];
-
     private void Start()
     {
-        originChracterCamera = characterCamera.transform.position;
-        originUiCamera = uiCamera.transform.position;
-        originShadow = shadow.transform.position;
+     
     }
 
     bool clickFlag;
@@ -45,8 +39,6 @@ public class Cloth : MonoBehaviour
     }
 
     float uiCamMoveX = 16f;
-    float characterCamMoveX = .85f;
-    float shadowMoveX = .85f;
 
     public void ClothOpen()
     {
@@ -59,9 +51,10 @@ public class Cloth : MonoBehaviour
             StartCoroutine(Open_01_Coroutine(() =>
             {
                 context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, 0);
-
-                // 스킨 종류가 리스트에 담긴다
-                List<SkinKind> tempSkinKindList = GameManager.instance.spineSkinInfoManager.GetSkinKindList();
+                context.GetComponent<VerticalLayoutGroup>().padding.top = 30;
+                context.GetComponent<VerticalLayoutGroup>().spacing = 30;
+               // 스킨 종류가 리스트에 담긴다
+               List <SkinKind> tempSkinKindList = GameManager.instance.spineSkinInfoManager.GetSkinKindList();
                 for (int i = 0; i < tempSkinKindList.Count; i++)
                 {
                     GameObject prepab = null;
@@ -132,9 +125,8 @@ public class Cloth : MonoBehaviour
         {
             callBack();
         }
-        characterCamera.transform.DOMoveX(characterCamMoveX, cameraMoveSpeed);
+        characterCamera.transform.DOMove(moveChracterCamera, cameraMoveSpeed);
         uiCamera.transform.DOMoveX(uiCamMoveX, cameraMoveSpeed);
-        shadow.transform.DOMoveX(shadowMoveX, cameraMoveSpeed);
         yield return new WaitForSeconds(cameraMoveSpeed);
 
         clickFlag = false; // 클릭 방지
@@ -145,15 +137,13 @@ public class Cloth : MonoBehaviour
         clickFlag = true;
         characterCamera.transform.DOMoveX(originChracterCamera.x, cameraMoveSpeed);
         uiCamera.transform.DOMoveX(originUiCamera.x, cameraMoveSpeed);
-        shadow.transform.DOMoveX(originShadow.x, cameraMoveSpeed);
         yield return new WaitForSeconds(cameraMoveSpeed);
         if (callBack != null)
         {
             callBack();
         }
-        characterCamera.transform.DOMoveX(characterCamMoveX, cameraMoveSpeed);
+        characterCamera.transform.DOMove(moveChracterCamera, cameraMoveSpeed);
         uiCamera.transform.DOMoveX(uiCamMoveX, cameraMoveSpeed);
-        shadow.transform.DOMoveX(shadowMoveX, cameraMoveSpeed);
         yield return new WaitForSeconds(cameraMoveSpeed);
         clickFlag = false;
     }
