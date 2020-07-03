@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DG.Tweening.Plugins.Core.PathCore;
+using System.IO;
 
 public class SpineSkinInfoManager : MonoBehaviour
 {
@@ -55,6 +57,7 @@ public class SpineSkinInfoManager : MonoBehaviour
             SpineSkinInfoList[i].skinKind = (SkinKind)Enum.Parse(typeof(SkinKind), dataList[1]);
             SpineSkinInfoList[i].inGameName = dataList[2];
             SpineSkinInfoList[i].grade = (Grade)Enum.Parse(typeof(Grade), dataList[3]);
+            SpineSkinInfoList[i].iconObj = Resources.Load<GameObject>(System.IO.Path.Combine("스킨Obj", dataList[0].Replace('/', '_')));
         }
     }
 
@@ -67,6 +70,7 @@ public struct SpineSkinInfo
     public SkinKind skinKind;
     public string inGameName;
     public Grade grade;
+    public GameObject iconObj;
 }
 
 public enum SkinKind

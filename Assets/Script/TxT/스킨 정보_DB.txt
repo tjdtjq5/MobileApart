@@ -29,3 +29,4 @@ acc/race_demon_tail	acc	교복 넥타이	HR
 acc/race_elf_01	acc	26	HR
 acc/top_ribbon	acc	27	HR
 acc/top_tie	acc	28	HR
+acc/race_animal_01	cap	1	HR

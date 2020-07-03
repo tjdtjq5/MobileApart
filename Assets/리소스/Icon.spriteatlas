@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Icon
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 7d225548377af7842b5c1ef329a218b4, type: 3}
+    - {fileID: 2800000, guid: 361c6b6a36bd4c94e9836c15d13f8163, type: 3}
+    - {fileID: 2800000, guid: e3421227be67ce546bf8287e4348a374, type: 3}
+    - {fileID: 2800000, guid: ea5ace200d4aa30479c088e7275b7d7e, type: 3}
+    - {fileID: 2800000, guid: 62cbadb3073bdb345b5197a50ab3e94e, type: 3}
+    - {fileID: 2800000, guid: fe347d8466cd1014998325761a26bef9, type: 3}
+    - {fileID: 2800000, guid: 337cdd9d1fbc6d847934856e2cf54ee2, type: 3}
+    - {fileID: 2800000, guid: 2ebe07fad85f7584ba491f9db4a91c84, type: 3}
+    - {fileID: 2800000, guid: af623c7e1376ccc49898eb853273c4a7, type: 3}
+    - {fileID: 2800000, guid: ac899f3f1768cec49ba2f9c5b55ab8f5, type: 3}
+    - {fileID: 2800000, guid: 65e1f8153258ab140b792e1554764ea9, type: 3}
+    - {fileID: 2800000, guid: e449dcbba22f02c4a8b8bbb84dc289fc, type: 3}
+    - {fileID: 2800000, guid: 99220a1ccdbef83498265f9883f0e892, type: 3}
+    - {fileID: 2800000, guid: 001d59b9b49bb9a41a3a28ca2c49b557, type: 3}
+    - {fileID: 2800000, guid: 8e9e287827f8aba449224c62e8e191ca, type: 3}
+    - {fileID: 2800000, guid: 89b81cef9668d574684f9207ed89c6ed, type: 3}
+    - {fileID: 2800000, guid: 00567494518a038468757d7ce547dafb, type: 3}
+    - {fileID: 2800000, guid: bd97076236ede3d41bc17ea349c1876f, type: 3}
+    - {fileID: 2800000, guid: b16e7aebaeb97c5428946d92311a4337, type: 3}
+    - {fileID: 2800000, guid: 54024dad0825f3344ad6f59067e4cf19, type: 3}
+    - {fileID: 2800000, guid: 22ef821389b2fe2459d710558a6a0275, type: 3}
+    - {fileID: 2800000, guid: 7f58afcd66f5967409d2b02be98ce05d, type: 3}
+    - {fileID: 2800000, guid: 9fe5c791a13c6a1428291e3a9bd0053a, type: 3}
+    - {fileID: 2800000, guid: 3359ab7524888934e9b64a0d6b4848a6, type: 3}
+    - {fileID: 2800000, guid: f36be315d32e0c9449ce35e11361efe3, type: 3}
+    - {fileID: 2800000, guid: 48f66c3e7d3639041a96700d00721c46, type: 3}
+    - {fileID: 2800000, guid: cf2105b1192a8324cb13bada2ca0af71, type: 3}
+    - {fileID: 2800000, guid: 3ef6c1367525b45439438aa9495018d7, type: 3}
+    - {fileID: 2800000, guid: e6a4db4b7c07abb47ae6782189229df1, type: 3}
+    - {fileID: 2800000, guid: c8620daf95b6bd940ac6b8ee2c5f73cb, type: 3}
+    - {fileID: 2800000, guid: dd3674f1803d89541929828671bee386, type: 3}
+    - {fileID: 2800000, guid: cd9ababa3079869428c1313756e3cf3e, type: 3}
+    - {fileID: 2800000, guid: e4b0387fde103614e948a8cb2972d440, type: 3}
+    - {fileID: 2800000, guid: 9adc97d8727cc3e4c9f5a68aa370ef79, type: 3}
+    - {fileID: 2800000, guid: 447dd0ed4ee3d044a8e14ee078f68035, type: 3}
+    totalSpriteSurfaceArea: 4051508
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: ea5ace200d4aa30479c088e7275b7d7e, type: 3}
+  - {fileID: 21300000, guid: 9fe5c791a13c6a1428291e3a9bd0053a, type: 3}
+  - {fileID: 21300000, guid: cf2105b1192a8324cb13bada2ca0af71, type: 3}
+  - {fileID: 21300000, guid: dd3674f1803d89541929828671bee386, type: 3}
+  - {fileID: 21300000, guid: bd97076236ede3d41bc17ea349c1876f, type: 3}
+  - {fileID: 21300000, guid: 22ef821389b2fe2459d710558a6a0275, type: 3}
+  - {fileID: 21300000, guid: 62cbadb3073bdb345b5197a50ab3e94e, type: 3}
+  - {fileID: 21300000, guid: fe347d8466cd1014998325761a26bef9, type: 3}
+  - {fileID: 21300000, guid: 00567494518a038468757d7ce547dafb, type: 3}
+  - {fileID: 21300000, guid: f36be315d32e0c9449ce35e11361efe3, type: 3}
+  - {fileID: 21300000, guid: 65e1f8153258ab140b792e1554764ea9, type: 3}
+  - {fileID: 21300000, guid: 3359ab7524888934e9b64a0d6b4848a6, type: 3}
+  - {fileID: 21300000, guid: 3ef6c1367525b45439438aa9495018d7, type: 3}
+  - {fileID: 21300000, guid: e3421227be67ce546bf8287e4348a374, type: 3}
+  - {fileID: 21300000, guid: 7d225548377af7842b5c1ef329a218b4, type: 3}
+  - {fileID: 21300000, guid: 8e9e287827f8aba449224c62e8e191ca, type: 3}
+  - {fileID: 21300000, guid: 9adc97d8727cc3e4c9f5a68aa370ef79, type: 3}
+  - {fileID: 21300000, guid: 001d59b9b49bb9a41a3a28ca2c49b557, type: 3}
+  - {fileID: 21300000, guid: 361c6b6a36bd4c94e9836c15d13f8163, type: 3}
+  - {fileID: 21300000, guid: cd9ababa3079869428c1313756e3cf3e, type: 3}
+  - {fileID: 21300000, guid: 2ebe07fad85f7584ba491f9db4a91c84, type: 3}
+  - {fileID: 21300000, guid: e6a4db4b7c07abb47ae6782189229df1, type: 3}
+  - {fileID: 21300000, guid: e449dcbba22f02c4a8b8bbb84dc289fc, type: 3}
+  - {fileID: 21300000, guid: b16e7aebaeb97c5428946d92311a4337, type: 3}
+  - {fileID: 21300000, guid: 99220a1ccdbef83498265f9883f0e892, type: 3}
+  - {fileID: 21300000, guid: 337cdd9d1fbc6d847934856e2cf54ee2, type: 3}
+  - {fileID: 21300000, guid: 54024dad0825f3344ad6f59067e4cf19, type: 3}
+  - {fileID: 21300000, guid: 7f58afcd66f5967409d2b02be98ce05d, type: 3}
+  - {fileID: 21300000, guid: 447dd0ed4ee3d044a8e14ee078f68035, type: 3}
+  - {fileID: 21300000, guid: 48f66c3e7d3639041a96700d00721c46, type: 3}
+  - {fileID: 21300000, guid: af623c7e1376ccc49898eb853273c4a7, type: 3}
+  - {fileID: 21300000, guid: ac899f3f1768cec49ba2f9c5b55ab8f5, type: 3}
+  - {fileID: 21300000, guid: e4b0387fde103614e948a8cb2972d440, type: 3}
+  - {fileID: 21300000, guid: c8620daf95b6bd940ac6b8ee2c5f73cb, type: 3}
+  - {fileID: 21300000, guid: 89b81cef9668d574684f9207ed89c6ed, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - icon_back
+  - ui_dress_textbox
+  - icon_list_album
+  - icon_list_profile
+  - icon_main_dress
+  - icon_trash
+  - icon_dress_acce
+  - icon_dress_cap
+  - icon_main_camera
+  - box
+  - icon_dress_shoes
+  - ui_roundcorner
+  - icon_list_bar
+  - circle_line
+  - arrow_speak
+  - icon_dyeing_ample
+  - icon_main_shop
+  - icon_dress_under
+  - circle
+  - icon_list_setting
+  - icon_dress_eye
+  - icon_list_box
+  - icon_dress_skirt
+  - icon_main_game
+  - icon_dress_top
+  - icon_dress_dyeing
+  - icon_main_likability
+  - ui_button_outline
+  - icon_main_story
+  - gradation
+  - icon_dress_hair
+  - icon_dress_set
+  - icon_main_list
+  - icon_list_mail
+  - icon_feeling_usual
+  m_Tag: Icon
+  m_IsVariant: 0
