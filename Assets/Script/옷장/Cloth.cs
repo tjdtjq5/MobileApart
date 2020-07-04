@@ -25,18 +25,14 @@ public class Cloth : MonoBehaviour
     [Header("아이콘프리팹")]
     public GameObject stage_01_btn_Prepab;
     public GameObject stage_02_btn_Prepab;
+    public GameObject colorBtn;
+    public GameObject colorSlotBtn01;
+    public GameObject colorSlotBtn02;
 
     [Header("캐릭터 스파인")]
     public TransformSkin transformSkin;
 
     int currentState;
-
-    private void Start()
-    {
-      
-     
-
-    }
 
     bool clickFlag;
     void ClickFlagFalse()
@@ -123,8 +119,13 @@ public class Cloth : MonoBehaviour
                 }
             }));
         }
-        if (currentState == 2 && !clickFlag)
+        if (currentState == 2 || currentState == 3 && !clickFlag)
         {
+            //컬러버튼 슬롯버튼 위치 리셋
+            colorBtn.transform.position = new Vector2(colorBtn.transform.position.x, 2000);
+            colorSlotBtn01.transform.position = new Vector2(colorSlotBtn01.transform.position.x, 2000);
+            colorSlotBtn02.transform.position = new Vector2(colorSlotBtn02.transform.position.x, 2000);
+
             currentState = 1;
             backBtn.GetComponent<Button>().onClick.RemoveAllListeners();
             backBtn.GetComponent<Button>().onClick.AddListener(() => { ClothClose(); });
@@ -262,6 +263,109 @@ public class Cloth : MonoBehaviour
     public void State01_Btn(SkinKind skinKind)
     {
         if (clickFlag)
+        {
+            return;
+        }
+        stage01_data = skinKind;
+        currentState = 2;
+        backBtn.GetComponent<Button>().onClick.RemoveAllListeners();
+        backBtn.GetComponent<Button>().onClick.AddListener(() => { ClothOpen(); });
+        StartCoroutine(Open_02_Coroutine(() =>
+        {
+            for (int i = 0; i < context.childCount; i++)
+            {
+                Destroy(context.GetChild(i).gameObject);
+            }
+            context.GetComponent<VerticalLayoutGroup>().padding.top = 15;
+            context.GetComponent<VerticalLayoutGroup>().spacing = 25;
+            context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, 0);
+            List<SpineSkinInfo> tempSpineSkinInfo = GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(skinKind);
+            for (int i = 0; i < tempSpineSkinInfo.Count; i++)
+            {
+                List<UserSkin> userSkinList = GameManager.instance.userInfoManager.GetSkinItemList(tempSpineSkinInfo[i].skinName);
+                for (int j = 0; j < userSkinList.Count; j++)
+                {
+                    GameObject prepab = Instantiate(stage_02_btn_Prepab, context.transform.position, Quaternion.identity, context.transform);
+                    prepab.transform.Find("이름").GetChild(0).GetComponent<Text>().text = GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(userSkinList[j].skinName).inGameName;
+                    GameObject iconObj = Instantiate(GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(userSkinList[j].skinName).iconObj, prepab.transform.Find("ImgPos").position, Quaternion.identity, prepab.transform.Find("ImgPos"));
+                    for (int k = 0; k < iconObj.transform.childCount; k++)
+                    {
+                        if (iconObj.transform.GetChild(k).gameObject.activeSelf)
+                        {
+                            if (iconObj.transform.GetChild(k).name.Contains("color_01"))
+                            {
+                                iconObj.transform.GetChild(k).GetComponent<Image>().color = userSkinList[i].color_01;
+                            }
+                            if (iconObj.transform.GetChild(k).name.Contains("color_02"))
+                            {
+                                iconObj.transform.GetChild(k).GetComponent<Image>().color = userSkinList[i].color_02;
+                            }
+                        }
+                    }
+                    context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * 235f);
+                    UserSkin tempUserSkin = userSkinList[j];
+                    prepab.GetComponent<Button>().onClick.AddListener(() => { State02_Btn(tempUserSkin, prepab.transform); });
+                }
+            }
+        }));
+    }
+
+
+
+
+   
+
+    UserSkin stage02_data;
+    public void State02_Btn(UserSkin userSkin, Transform pos)
+    {
+        if (clickFlag)
+            return;
+
+        currentState = 3;
+        stage02_data = userSkin;
+        // 스킨 장착
+        GameManager.instance.userInfoManager.PushUserEqip(GameManager.instance.userInfoManager.skinItem[GameManager.instance.userInfoManager.GetSkinItemIndex(userSkin)]);
+        transformSkin.UserEqipInfoSetting();
+
+        //컬러버튼 
+        colorBtn.transform.position = new Vector3(colorBtn.transform.position.x, pos.position.y);
+        colorBtn.transform.localPosition = new Vector3(colorBtn.transform.localPosition.x, colorBtn.transform.localPosition.y, 0);
+        colorBtn.transform.localScale = new Vector2(0.5f, 0.5f);
+        colorBtn.transform.DOScale(new Vector2(1, 1f), cameraMoveSpeed);
+        colorBtn.GetComponent<Button>().onClick.RemoveAllListeners();
+        colorBtn.GetComponent<Button>().onClick.AddListener(() => ColorBtn(colorBtn.transform.position));
+
+        //슬롯버튼 위치 리셋
+        colorSlotBtn01.transform.position = new Vector2(colorSlotBtn01.transform.position.x, 2000);
+        colorSlotBtn02.transform.position = new Vector2(colorSlotBtn02.transform.position.x, 2000);
+
+    }
+
+    public void ColorBtn(Vector3 pos)
+    {
+        //컬러버튼 위치 리셋
+        colorBtn.transform.position = new Vector2(colorBtn.transform.position.x, 2000);
+
+        if (transformSkin.GetColor(stage02_data.skinName, 1) != Color.clear)
+        {
+            colorSlotBtn01.transform.position = new Vector3(pos.x - 3f, pos.y , pos.z);
+            colorSlotBtn01.transform.localScale = new Vector2(0, 1f);
+            colorSlotBtn01.transform.DOScale(new Vector2(1, 1f), cameraMoveSpeed);
+        }
+        if (transformSkin.GetColor(stage02_data.skinName, 2) != Color.clear)
+        {
+            colorSlotBtn02.transform.position = new Vector3(pos.x - 3f, pos.y - 5f, pos.z);
+            colorSlotBtn02.transform.localScale = new Vector2(0, 1f);
+            colorSlotBtn02.transform.DOScale(new Vector2(1, 1f), cameraMoveSpeed);
+        }
+    }
+
+
+
+    /*SkinKind stage01_data;
+    public void State01_Btn(SkinKind skinKind)
+    {
+        if (clickFlag)
             return;
 
         stage01_data = skinKind;
@@ -288,59 +392,47 @@ public class Cloth : MonoBehaviour
             }
         }));
     }
-
-    string stage02_data;
-    public void State02_Btn(string skinName)
-    {
-        if (clickFlag)
-            return;
-
-        stage02_data = skinName;
-        currentState = 3;
-        backBtn.GetComponent<Button>().onClick.RemoveAllListeners();
-        backBtn.GetComponent<Button>().onClick.AddListener(() => { State01_Btn(stage01_data); });
-        StartCoroutine(Open_02_Coroutine(() => {
-            for (int i = 0; i < context.childCount; i++)
-            {
-                Destroy(context.GetChild(i).gameObject);
-            }
-            context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, 0);
-            List<UserSkin> userSkinList = GameManager.instance.userInfoManager.GetSkinItemList(skinName);
-            for (int i = 0; i < userSkinList.Count; i++)
-            {
-                GameObject prepab = Instantiate(stage_02_btn_Prepab, context.transform.position, Quaternion.identity, context.transform);
-                prepab.transform.Find("이름").GetChild(0).GetComponent<Text>().text = GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(skinName).inGameName;
-                GameObject iconObj = Instantiate(GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(skinName).iconObj, prepab.transform.Find("ImgPos").position, Quaternion.identity, prepab.transform.Find("ImgPos"));
-                for (int j = 0; j < iconObj.transform.childCount; j++)
-                {
-                    if (iconObj.transform.GetChild(j).gameObject.activeSelf)
-                    {
-                        if (iconObj.transform.GetChild(j).name.Contains("color_01"))
-                        {
-                            iconObj.transform.GetChild(j).GetComponent<Image>().color = userSkinList[i].color_01;
-                        }
-                        if (iconObj.transform.GetChild(j).name.Contains("color_02"))
-                        {
-                            iconObj.transform.GetChild(j).GetComponent<Image>().color = userSkinList[i].color_02;
-                        }
-                    }
-                }
-                context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * 235f);
-            }
-        }));
-    }
-
-    UserSkin stage03_data;
-    public void State03_Btn(UserSkin userSkin)
-    {
-        if (clickFlag)
-            return;
-
-        stage03_data = userSkin;
-        // 스킨 장착
-        GameManager.instance.userInfoManager.PushUserEqip(GameManager.instance.userInfoManager.skinItem[GameManager.instance.userInfoManager.GetSkinItemIndex(userSkin)]);
-        transformSkin.UserEqipInfoSetting();
+    */
 
 
-    }
+    /*string stage02_data;
+   public void State02_Btn(string skinName)
+   {
+       if (clickFlag)
+           return;
+
+       stage02_data = skinName;
+       currentState = 3;
+       backBtn.GetComponent<Button>().onClick.RemoveAllListeners();
+       backBtn.GetComponent<Button>().onClick.AddListener(() => { State01_Btn(stage01_data); });
+       StartCoroutine(Open_02_Coroutine(() => {
+           for (int i = 0; i < context.childCount; i++)
+           {
+               Destroy(context.GetChild(i).gameObject);
+           }
+           context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, 0);
+           List<UserSkin> userSkinList = GameManager.instance.userInfoManager.GetSkinItemList(skinName);
+           for (int i = 0; i < userSkinList.Count; i++)
+           {
+               GameObject prepab = Instantiate(stage_02_btn_Prepab, context.transform.position, Quaternion.identity, context.transform);
+               prepab.transform.Find("이름").GetChild(0).GetComponent<Text>().text = GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(skinName).inGameName;
+               GameObject iconObj = Instantiate(GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(skinName).iconObj, prepab.transform.Find("ImgPos").position, Quaternion.identity, prepab.transform.Find("ImgPos"));
+               for (int j = 0; j < iconObj.transform.childCount; j++)
+               {
+                   if (iconObj.transform.GetChild(j).gameObject.activeSelf)
+                   {
+                       if (iconObj.transform.GetChild(j).name.Contains("color_01"))
+                       {
+                           iconObj.transform.GetChild(j).GetComponent<Image>().color = userSkinList[i].color_01;
+                       }
+                       if (iconObj.transform.GetChild(j).name.Contains("color_02"))
+                       {
+                           iconObj.transform.GetChild(j).GetComponent<Image>().color = userSkinList[i].color_02;
+                       }
+                   }
+               }
+               context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * 235f);
+           }
+       }));
+   }*/
 }
