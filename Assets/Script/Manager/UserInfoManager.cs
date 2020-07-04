@@ -24,6 +24,10 @@ public class UserInfoManager : MonoBehaviour
     {
         Initialized();
 
+        PushColorItem(Color.clear);
+        PushColorItem(Color.clear);
+        PushColorItem(Color.clear);
+        PushColorItem(Color.clear);
         PushColorItem(Color.white);
         PushColorItem(Color.black);
         PushColorItem(Color.yellow);

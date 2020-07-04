@@ -100,10 +100,18 @@ public class TransformSkin : MonoBehaviour
 
     public bool SetColor(string slotName , Color color, int slotNum = 1)
     {
-        if (color == Color.clear || color == null)
+        if (color == null)
         {
             return false;
         }
+        if (color == Color.clear)
+        {
+            float randR = (float)Random.RandomRange(0, 255) / 255;
+            float randG = (float)Random.RandomRange(0, 255) / 255;
+            float randB = (float)Random.RandomRange(0, 255) / 255;
+            color = new Color(randR, randG, randB, 1);
+        }
+
         bool flag = false;
 
         if (slotName.Contains("haB") && slotNum == 1)
@@ -217,35 +225,6 @@ public class TransformSkin : MonoBehaviour
             }
         }
         return Color.clear;
-    }
-
-    public void RandomSetColor(string slotName)
-    {
-        float randR = (float)Random.RandomRange(0, 255) / 255;
-        float randB = (float)Random.RandomRange(0, 255) / 255;
-        float randG = (float)Random.RandomRange(0, 255) / 255;
-
-        foreach (Spine.Slot slot in skeletonAnimation.skeleton.Slots)
-        {
-            if (slot.Attachment != null)
-            {
-                if (slot.Attachment.Name.Contains(slotName) && slot.Attachment.Name.Contains("color_01"))
-                {
-
-                    Color color = new Color((randR), (randG), (randB), 1);
-
-                    int slotIndex = slot.Data.Index;
-                    Attachment attachment = skeletonAnimation.Skeleton.GetAttachment(slotIndex, slot.Attachment.Name);
-
-                    var slot2 = skeletonAnimation.Skeleton.Slots.Items[slotIndex];
-                    slot.Attachment = attachment;
-
-                    ChangeAttachmentColor(attachment, color);
-
-                  
-                }
-            }
-        }
     }
 
     void ChangeAttachmentColor(Attachment attachment, Color color)

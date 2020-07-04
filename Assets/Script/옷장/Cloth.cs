@@ -14,7 +14,8 @@ public class Cloth : MonoBehaviour
     public Transform clothPannel;
     public GameObject clothBtn;
     public GameObject backBtn;
-    public Transform context;     
+    public Transform context;
+    public GameObject colorItemPannel;
     [Header("카메라")]
     public Camera characterCamera;         public Vector3 originChracterCamera; public Vector3 moveChracterCamera;
     public Camera uiCamera;                public Vector3 originUiCamera;      
@@ -22,12 +23,16 @@ public class Cloth : MonoBehaviour
   
     [Header("아틀라스")]
     public SpriteAtlas atlas;
+    [Header("스프라이트")]
+    public Sprite randomColorIcon;
+    public Sprite colorIcon;
     [Header("아이콘프리팹")]
     public GameObject stage_01_btn_Prepab;
     public GameObject stage_02_btn_Prepab;
     public GameObject colorBtn;
     public GameObject colorSlotBtn01;
     public GameObject colorSlotBtn02;
+    public GameObject colorItem;
 
     [Header("캐릭터 스파인")]
     public TransformSkin transformSkin;
@@ -348,19 +353,85 @@ public class Cloth : MonoBehaviour
 
         if (transformSkin.GetColor(stage02_data.skinName, 1) != Color.clear)
         {
-            colorSlotBtn01.transform.position = new Vector3(pos.x - 3f, pos.y , pos.z);
+            colorSlotBtn01.transform.position = new Vector3(pos.x - 3f, pos.y+3f , pos.z);
             colorSlotBtn01.transform.localScale = new Vector2(0, 1f);
             colorSlotBtn01.transform.DOScale(new Vector2(1, 1f), cameraMoveSpeed);
         }
         if (transformSkin.GetColor(stage02_data.skinName, 2) != Color.clear)
         {
-            colorSlotBtn02.transform.position = new Vector3(pos.x - 3f, pos.y - 5f, pos.z);
+            colorSlotBtn02.transform.position = new Vector3(pos.x - 3f, pos.y -3f, pos.z);
             colorSlotBtn02.transform.localScale = new Vector2(0, 1f);
             colorSlotBtn02.transform.DOScale(new Vector2(1, 1f), cameraMoveSpeed);
         }
     }
 
+    public void ColorItemPannelOpen()
+    {
+        if (clickFlag)
+        {
+            return;
+        }
+        clickFlag = true;
 
+        ColorItemReset();
+    }
+
+    public void ColorItemReset()
+    {
+        colorItemPannel.SetActive(true);
+        colorItemPannel.transform.localScale = new Vector2(0f, 0f);
+        colorItemPannel.transform.DOScale(new Vector2(1.2f, 1.2f), cameraMoveSpeed).OnComplete(() => {
+            colorItemPannel.transform.DOScale(new Vector2(1f, 1f), cameraMoveSpeed).OnComplete(() => {
+                clickFlag = false;
+            });
+
+        });
+
+        for (int i = 0; i < colorItemPannel.transform.Find("패널").childCount; i++)
+        {
+            Destroy(colorItemPannel.transform.Find("패널").GetChild(i).gameObject);
+        }
+        for (int i = 0; i < GameManager.instance.userInfoManager.colorItem.Count; i++)
+        {
+            if (GameManager.instance.userInfoManager.colorItem[i].color == Color.clear)
+            {
+                GameObject colorIcon = Instantiate(colorItem, colorItemPannel.transform.position, Quaternion.identity, colorItemPannel.transform.Find("패널"));
+                colorIcon.transform.GetChild(0).Find("아이콘이미지").GetComponent<Image>().sprite = randomColorIcon;
+                colorIcon.transform.GetChild(0).Find("갯수").GetComponent<Text>().text = "x" + GameManager.instance.userInfoManager.colorItem[i].num;
+            }
+        }
+        for (int i = 0; i < GameManager.instance.userInfoManager.colorItem.Count; i++)
+        {
+            if (GameManager.instance.userInfoManager.colorItem[i].color != Color.clear)
+            {
+                GameObject colorIcon = Instantiate(colorItem, colorItemPannel.transform.position, Quaternion.identity, colorItemPannel.transform.Find("패널"));
+                colorIcon.transform.GetChild(0).Find("아이콘이미지").GetComponent<Image>().sprite = this.colorIcon;
+                colorIcon.transform.GetChild(0).Find("아이콘이미지").GetComponent<Image>().color = GameManager.instance.userInfoManager.colorItem[i].color;
+                colorIcon.transform.GetChild(0).Find("갯수").GetComponent<Text>().text = "x" + GameManager.instance.userInfoManager.colorItem[i].num;
+            }
+        }
+    }
+    public void ColorItemPannelClose()
+    {
+        if (clickFlag)
+        {
+            return;
+        }
+        clickFlag = true;
+
+        colorItemPannel.transform.localScale = new Vector2(1f, 1f);
+        colorItemPannel.transform.DOScale(new Vector2(1.2f, 1.2f), cameraMoveSpeed).OnComplete(() => {
+            colorItemPannel.transform.DOScale(new Vector2(0f, 0f), cameraMoveSpeed).OnComplete(()=> { 
+                colorItemPannel.SetActive(false);
+                clickFlag = false;
+            });
+        });
+    }
+
+    public void RemoveColorItem()
+    {
+
+    }
 
     /*SkinKind stage01_data;
     public void State01_Btn(SkinKind skinKind)
