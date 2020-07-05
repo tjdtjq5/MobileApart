@@ -90,6 +90,28 @@ public class UserInfoManager : MonoBehaviour
         }
         colorItem.Add(new UserColorItem(color, 1));
     }
+    public void DeleteColorItem(int index)
+    {
+        colorItem[index].num--;
+
+        if (colorItem[index].num == 0 && colorItem[index].color != Color.clear )
+        {
+            colorItem.RemoveAt(index);
+        }
+    }
+
+    public int GetIndexColorItem(Color color)
+    {
+        for (int i = 0; i < colorItem.Count; i++)
+        {
+            if (colorItem[i].color == color)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public void DeleteColorItem(Color color)
     {
         for (int i = 0; i < colorItem.Count; i++)
@@ -97,11 +119,10 @@ public class UserInfoManager : MonoBehaviour
             if (colorItem[i].color == color)
             {
                 colorItem[i].num--;
-                if (colorItem[i].num < 1)
+                if (colorItem[i].num == 0 && colorItem[i].color != Color.clear)
                 {
                     colorItem.RemoveAt(i);
                 }
-                return;
             }
         }
     }
@@ -162,6 +183,14 @@ public class UserInfoManager : MonoBehaviour
 
     public void ChangeColorSkinItem(int index, Color color, int slotNum = 1)
     {
+        if (color == Color.clear)
+        {
+            float randR = (float)Random.RandomRange(0, 255) / 255;
+            float randG = (float)Random.RandomRange(0, 255) / 255;
+            float randB = (float)Random.RandomRange(0, 255) / 255;
+            color = new Color(randR, randG, randB, 1);
+        }
+
         if (slotNum == 1)
         {
             skinItem[index].color_01 = color;

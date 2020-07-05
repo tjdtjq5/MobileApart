@@ -47,11 +47,31 @@ public class Cloth : MonoBehaviour
 
     float uiCamMoveX = 17f;
 
+    private void Start()
+    {
+        colorSlotBtn01.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = randomColorIcon;
+        colorSlotBtn01.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
+        colorSlotBtn01.transform.GetChild(0).Find("수량").GetComponent<Text>().text = "x" + 0;
+        colorSlotBtn02.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = randomColorIcon;
+        colorSlotBtn02.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
+        colorSlotBtn02.transform.GetChild(0).Find("수량").GetComponent<Text>().text = "x" + 0;
+    }
+
     public void ClothOpen()
     {
         if (currentState == 0 && !clickFlag)
         {
             currentState = 1;
+
+            selectColorItemIndexNum = -1;
+
+            int num = GameManager.instance.userInfoManager.GetIndexColorItem(Color.clear);
+            colorSlotBtn01.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = randomColorIcon;
+            colorSlotBtn01.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
+            colorSlotBtn01.transform.GetChild(0).Find("수량").GetComponent<Text>().text = "x" + GameManager.instance.userInfoManager.colorItem[num].num;
+            colorSlotBtn02.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = randomColorIcon;
+            colorSlotBtn02.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
+            colorSlotBtn02.transform.GetChild(0).Find("수량").GetComponent<Text>().text = "x" + GameManager.instance.userInfoManager.colorItem[num].num;
 
             backBtn.SetActive(true);
             clothBtn.SetActive(false);
@@ -272,6 +292,7 @@ public class Cloth : MonoBehaviour
             return;
         }
         stage01_data = skinKind;
+        stage02_data = null;
         currentState = 2;
         backBtn.GetComponent<Button>().onClick.RemoveAllListeners();
         backBtn.GetComponent<Button>().onClick.AddListener(() => { ClothOpen(); });
@@ -365,7 +386,8 @@ public class Cloth : MonoBehaviour
         }
     }
 
-    public void ColorItemPannelOpen()
+    int slotNum;
+    public void ColorItemPannelOpen(int slotNum)
     {
         if (clickFlag)
         {
@@ -373,11 +395,9 @@ public class Cloth : MonoBehaviour
         }
         clickFlag = true;
 
-        ColorItemReset();
-    }
+        this.slotNum = slotNum;
+        selectColorItemIndexNum = -1;
 
-    public void ColorItemReset()
-    {
         colorItemPannel.SetActive(true);
         colorItemPannel.transform.localScale = new Vector2(0f, 0f);
         colorItemPannel.transform.DOScale(new Vector2(1.2f, 1.2f), cameraMoveSpeed).OnComplete(() => {
@@ -386,6 +406,11 @@ public class Cloth : MonoBehaviour
             });
 
         });
+        ColorItemReset();
+    }
+
+    public void ColorItemReset()
+    {
 
         for (int i = 0; i < colorItemPannel.transform.Find("패널").childCount; i++)
         {
@@ -397,7 +422,12 @@ public class Cloth : MonoBehaviour
             {
                 GameObject colorIcon = Instantiate(colorItem, colorItemPannel.transform.position, Quaternion.identity, colorItemPannel.transform.Find("패널"));
                 colorIcon.transform.GetChild(0).Find("아이콘이미지").GetComponent<Image>().sprite = randomColorIcon;
+                colorIcon.transform.GetChild(0).Find("아이콘이미지").GetChild(0).gameObject.SetActive(false);
                 colorIcon.transform.GetChild(0).Find("갯수").GetComponent<Text>().text = "x" + GameManager.instance.userInfoManager.colorItem[i].num;
+              
+                int tempIndex = i;
+                GameObject tempObj = colorIcon;
+                colorIcon.transform.Find("circle").GetComponent<Button>().onClick.AddListener(()=>ColorItemSelect(tempIndex, tempObj));
             }
         }
         for (int i = 0; i < GameManager.instance.userInfoManager.colorItem.Count; i++)
@@ -406,8 +436,14 @@ public class Cloth : MonoBehaviour
             {
                 GameObject colorIcon = Instantiate(colorItem, colorItemPannel.transform.position, Quaternion.identity, colorItemPannel.transform.Find("패널"));
                 colorIcon.transform.GetChild(0).Find("아이콘이미지").GetComponent<Image>().sprite = this.colorIcon;
-                colorIcon.transform.GetChild(0).Find("아이콘이미지").GetComponent<Image>().color = GameManager.instance.userInfoManager.colorItem[i].color;
+                colorIcon.transform.GetChild(0).Find("아이콘이미지").GetChild(0).gameObject.SetActive(true);
+                colorIcon.transform.GetChild(0).Find("아이콘이미지").GetChild(0).GetComponent<Image>().color = GameManager.instance.userInfoManager.colorItem[i].color;
                 colorIcon.transform.GetChild(0).Find("갯수").GetComponent<Text>().text = "x" + GameManager.instance.userInfoManager.colorItem[i].num;
+
+
+                int tempIndex = i;
+                GameObject tempObj = colorIcon;
+                colorIcon.transform.Find("circle").GetComponent<Button>().onClick.AddListener(() => ColorItemSelect(tempIndex, tempObj));
             }
         }
     }
@@ -419,6 +455,7 @@ public class Cloth : MonoBehaviour
         }
         clickFlag = true;
 
+       
         colorItemPannel.transform.localScale = new Vector2(1f, 1f);
         colorItemPannel.transform.DOScale(new Vector2(1.2f, 1.2f), cameraMoveSpeed).OnComplete(() => {
             colorItemPannel.transform.DOScale(new Vector2(0f, 0f), cameraMoveSpeed).OnComplete(()=> { 
@@ -428,82 +465,226 @@ public class Cloth : MonoBehaviour
         });
     }
 
+    int selectColorItemIndexNum;
+    public void ColorItemSelect(int colorItemIndex, GameObject selectIcon)
+    {
+        selectColorItemIndexNum = colorItemIndex;
+
+        Transform tempPannel = colorItemPannel.transform.Find("패널");
+        for (int i = 0; i < tempPannel.childCount; i++)
+        {
+            tempPannel.GetChild(i).Find("circle").GetComponent<Image>().color = Color.white;
+        }
+
+        selectIcon.transform.Find("circle").GetComponent<Image>().color = new Color(0, (float)213 / 255, (float)165 / 255, 1);
+    }
+
+
+    //확인버튼 
+    public void ColorItemSlotSet()
+    {
+        if (selectColorItemIndexNum == -1)
+        {
+            ColorItemPannelClose();
+            return;
+        }
+
+        if (slotNum == 1)
+        {
+            if (GameManager.instance.userInfoManager.colorItem[selectColorItemIndexNum].color == Color.clear)
+            {
+                colorSlotBtn01.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = randomColorIcon;
+                colorSlotBtn01.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
+                colorSlotBtn01.transform.GetChild(0).Find("수량").GetComponent<Text>().text = "x" + GameManager.instance.userInfoManager.colorItem[selectColorItemIndexNum].num;
+            }
+            else
+            {
+                colorSlotBtn01.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = colorIcon;
+                colorSlotBtn01.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(true);
+                colorSlotBtn01.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().color = GameManager.instance.userInfoManager.colorItem[selectColorItemIndexNum].color;
+                colorSlotBtn01.transform.GetChild(0).Find("수량").GetComponent<Text>().text = "x" + GameManager.instance.userInfoManager.colorItem[selectColorItemIndexNum].num;
+            }
+            
+        }
+
+        if (slotNum == 2)
+        {
+            if (GameManager.instance.userInfoManager.colorItem[selectColorItemIndexNum].color == Color.clear)
+            {
+                colorSlotBtn02.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = randomColorIcon;
+                colorSlotBtn02.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
+                colorSlotBtn02.transform.GetChild(0).Find("수량").GetComponent<Text>().text = "x" + GameManager.instance.userInfoManager.colorItem[selectColorItemIndexNum].num;
+            }
+            else
+            {
+                colorSlotBtn02.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = colorIcon;
+                colorSlotBtn02.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(true);
+                colorSlotBtn02.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().color = GameManager.instance.userInfoManager.colorItem[selectColorItemIndexNum].color;
+                colorSlotBtn02.transform.GetChild(0).Find("수량").GetComponent<Text>().text = "x" + GameManager.instance.userInfoManager.colorItem[selectColorItemIndexNum].num;
+            }
+        }
+        ColorItemPannelClose();
+
+    }
+
+    //염색하기 버튼
+    [Header("염색완료 알림")]
+    public GameObject complete;
+    public void ColorChange(int slotNum)
+    {
+        if (complete.activeSelf)
+        {
+            return;
+        }
+
+        if (slotNum == 1)
+        {
+            //랜덤 염색 사용하기 
+            if (colorSlotBtn01.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite == randomColorIcon)
+            {
+                int num = int.Parse(colorSlotBtn01.transform.GetChild(0).Find("수량").GetComponent<Text>().text.Split('x')[1]);
+                if (num > 0)
+                {
+                    num--;
+                    GameManager.instance.userInfoManager.DeleteColorItem(Color.clear);
+                    colorSlotBtn01.transform.GetChild(0).Find("수량").GetComponent<Text>().text = "x" + num;
+
+                    // 아이템 색 바꾸기 
+                    GameManager.instance.userInfoManager.ChangeColorSkinItem(GameManager.instance.userInfoManager.GetSkinItemIndex(stage02_data), Color.clear, 1);
+                    // 아이템 장착
+                    GameManager.instance.userInfoManager.PushUserEqip(GameManager.instance.userInfoManager.skinItem[GameManager.instance.userInfoManager.GetSkinItemIndex(stage02_data)]);
+
+                    complete.SetActive(true);
+                    complete.GetComponent<Image>().DOFade(1, 0);
+                    complete.transform.GetChild(0).GetComponent<Text>().DOFade(1, 0);
+                    complete.GetComponent<Image>().DOFade(0, 1.3f).OnComplete(()=> { complete.SetActive(false); });
+                    complete.transform.GetChild(0).GetComponent<Text>().DOFade(0, 1.3f);
+
+                    transformSkin.UserEqipInfoSetting();
+                }
+            }
+            else
+            {
+                int num = int.Parse(colorSlotBtn01.transform.GetChild(0).Find("수량").GetComponent<Text>().text.Split('x')[1]);
+                if (num > 0)
+                {
+                    num--;
+                    Color tempColor = colorSlotBtn01.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().color;
+                    GameManager.instance.userInfoManager.DeleteColorItem(tempColor);
+                    transformSkin.SetColor(stage02_data.skinName, tempColor, 1);
+                    colorSlotBtn01.transform.GetChild(0).Find("수량").GetComponent<Text>().text = "x" + num;
+
+                    // 아이템 색 바꾸기 
+                    GameManager.instance.userInfoManager.ChangeColorSkinItem(GameManager.instance.userInfoManager.GetSkinItemIndex(stage02_data), tempColor, 1);
+                    // 아이템 장착
+                    GameManager.instance.userInfoManager.PushUserEqip(GameManager.instance.userInfoManager.skinItem[GameManager.instance.userInfoManager.GetSkinItemIndex(stage02_data)]);
+
+                    complete.SetActive(true);
+                    complete.GetComponent<Image>().DOFade(1, 0);
+                    complete.transform.GetChild(0).GetComponent<Text>().DOFade(1, 0);
+                    complete.GetComponent<Image>().DOFade(0, 1.3f).OnComplete(() => { complete.SetActive(false); });
+                    complete.transform.GetChild(0).GetComponent<Text>().DOFade(0, 1.3f);
+
+                    transformSkin.UserEqipInfoSetting();
+                }
+            }
+        }
+        if (slotNum == 2)
+        {
+            //랜덤 염색 사용하기 
+            if (colorSlotBtn02.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite == randomColorIcon)
+            {
+                int num = int.Parse(colorSlotBtn02.transform.GetChild(0).Find("수량").GetComponent<Text>().text.Split('x')[1]);
+                if (num > 0)
+                {
+                    num--;
+                    GameManager.instance.userInfoManager.DeleteColorItem(Color.clear);
+                    transformSkin.SetColor(stage02_data.skinName, Color.clear, 2);
+                    colorSlotBtn02.transform.GetChild(0).Find("수량").GetComponent<Text>().text = "x" + num;
+
+                    // 아이템 색 바꾸기 
+                    GameManager.instance.userInfoManager.ChangeColorSkinItem(GameManager.instance.userInfoManager.GetSkinItemIndex(stage02_data), Color.clear, 2);
+                    // 아이템 장착
+                    GameManager.instance.userInfoManager.PushUserEqip(GameManager.instance.userInfoManager.skinItem[GameManager.instance.userInfoManager.GetSkinItemIndex(stage02_data)]);
+
+                    complete.SetActive(true);
+                    complete.GetComponent<Image>().DOFade(1, 0);
+                    complete.transform.GetChild(0).GetComponent<Text>().DOFade(1, 0);
+                    complete.GetComponent<Image>().DOFade(0, 1.3f).OnComplete(() => { complete.SetActive(false); });
+                    complete.transform.GetChild(0).GetComponent<Text>().DOFade(0, 1.3f);
+
+                    transformSkin.UserEqipInfoSetting();
+                }
+            }
+            else
+            {
+                int num = int.Parse(colorSlotBtn02.transform.GetChild(0).Find("수량").GetComponent<Text>().text.Split('x')[1]);
+                if (num > 0)
+                {
+                    num--;
+                    Color tempColor = colorSlotBtn02.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().color;
+                    GameManager.instance.userInfoManager.DeleteColorItem(tempColor);
+                    transformSkin.SetColor(stage02_data.skinName, tempColor, 2);
+                    colorSlotBtn02.transform.GetChild(0).Find("수량").GetComponent<Text>().text = "x" + num;
+
+                    // 아이템 색 바꾸기 
+                    GameManager.instance.userInfoManager.ChangeColorSkinItem(GameManager.instance.userInfoManager.GetSkinItemIndex(stage02_data), tempColor, 2);
+                    // 아이템 장착
+                    GameManager.instance.userInfoManager.PushUserEqip(GameManager.instance.userInfoManager.skinItem[GameManager.instance.userInfoManager.GetSkinItemIndex(stage02_data)]);
+
+                    complete.SetActive(true);
+                    complete.GetComponent<Image>().DOFade(1, 0);
+                    complete.transform.GetChild(0).GetComponent<Text>().DOFade(1, 0);
+                    complete.GetComponent<Image>().DOFade(0, 1.3f).OnComplete(() => { complete.SetActive(false); });
+                    complete.transform.GetChild(0).GetComponent<Text>().DOFade(0, 1.3f);
+
+                    transformSkin.UserEqipInfoSetting();
+                }
+            }
+        }
+    }
+
+    [Header("경고창")]
+    public GameObject redAlam;
+    //버리기버튼 
+    public void RemoveColorItemBtn()
+    {
+        if (selectColorItemIndexNum == -1)
+        {
+            return;
+        }
+
+        redAlam.SetActive(true);
+        redAlam.GetComponent<Image>().DOFade(0, 0);
+        redAlam.GetComponent<Image>().DOFade(1, cameraMoveSpeed);
+        redAlam.transform.Find("Text").GetComponent<Text>().DOFade(0, 0);
+        redAlam.transform.Find("Text").GetComponent<Text>().DOFade(1, cameraMoveSpeed);
+        redAlam.transform.Find("확인").GetComponent<Image>().DOFade(0, 0);
+        redAlam.transform.Find("확인").GetComponent<Image>().DOFade(1, cameraMoveSpeed);
+        redAlam.transform.Find("확인").GetChild(0).GetComponent<Text>().DOFade(0, 0);
+        redAlam.transform.Find("확인").GetChild(0).GetComponent<Text>().DOFade(1, cameraMoveSpeed);
+        redAlam.transform.Find("취소").GetComponent<Image>().DOFade(0, 0);
+        redAlam.transform.Find("취소").GetComponent<Image>().DOFade(1, cameraMoveSpeed);
+        redAlam.transform.Find("취소").GetChild(0).GetComponent<Text>().DOFade(0, 0);
+        redAlam.transform.Find("취소").GetChild(0).GetComponent<Text>().DOFade(1, cameraMoveSpeed);
+    }
+    // 경고 확인 
     public void RemoveColorItem()
     {
-
+        int count = GameManager.instance.userInfoManager.colorItem[selectColorItemIndexNum].num;
+        for (int i = 0; i < count; i++)
+        {
+            GameManager.instance.userInfoManager.DeleteColorItem(selectColorItemIndexNum);
+        }
+        ColorItemReset();
+        selectColorItemIndexNum = -1;
+        redAlam.SetActive(false);
     }
 
-    /*SkinKind stage01_data;
-    public void State01_Btn(SkinKind skinKind)
+    public void AlramExit()
     {
-        if (clickFlag)
-            return;
-
-        stage01_data = skinKind;
-        currentState = 2;
-        backBtn.GetComponent<Button>().onClick.RemoveAllListeners();
-        backBtn.GetComponent<Button>().onClick.AddListener(() => { ClothOpen(); });
-        StartCoroutine(Open_02_Coroutine(() => {
-            for (int i = 0; i < context.childCount; i++)
-            {
-                Destroy(context.GetChild(i).gameObject);
-            }
-            context.GetComponent<VerticalLayoutGroup>().padding.top = 15;
-            context.GetComponent<VerticalLayoutGroup>().spacing = 25;
-            context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, 0);
-            List<SpineSkinInfo> tempSpineSkinInfo = GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(skinKind);
-            for (int i = 0; i < tempSpineSkinInfo.Count; i++)
-            {
-                GameObject prepab = Instantiate(stage_02_btn_Prepab, context.transform.position, Quaternion.identity, context.transform);
-                prepab.transform.Find("이름").GetChild(0).GetComponent<Text>().text = tempSpineSkinInfo[i].inGameName;
-                string skinName = tempSpineSkinInfo[i].skinName;
-                prepab.GetComponent<Button>().onClick.AddListener(() => { State02_Btn(skinName); });
-                GameObject iconObj = Instantiate(tempSpineSkinInfo[i].iconObj, prepab.transform.Find("ImgPos").position, Quaternion.identity, prepab.transform.Find("ImgPos"));
-                context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * 235f);
-            }
-        }));
+        redAlam.SetActive(false);
     }
-    */
 
-
-    /*string stage02_data;
-   public void State02_Btn(string skinName)
-   {
-       if (clickFlag)
-           return;
-
-       stage02_data = skinName;
-       currentState = 3;
-       backBtn.GetComponent<Button>().onClick.RemoveAllListeners();
-       backBtn.GetComponent<Button>().onClick.AddListener(() => { State01_Btn(stage01_data); });
-       StartCoroutine(Open_02_Coroutine(() => {
-           for (int i = 0; i < context.childCount; i++)
-           {
-               Destroy(context.GetChild(i).gameObject);
-           }
-           context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, 0);
-           List<UserSkin> userSkinList = GameManager.instance.userInfoManager.GetSkinItemList(skinName);
-           for (int i = 0; i < userSkinList.Count; i++)
-           {
-               GameObject prepab = Instantiate(stage_02_btn_Prepab, context.transform.position, Quaternion.identity, context.transform);
-               prepab.transform.Find("이름").GetChild(0).GetComponent<Text>().text = GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(skinName).inGameName;
-               GameObject iconObj = Instantiate(GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(skinName).iconObj, prepab.transform.Find("ImgPos").position, Quaternion.identity, prepab.transform.Find("ImgPos"));
-               for (int j = 0; j < iconObj.transform.childCount; j++)
-               {
-                   if (iconObj.transform.GetChild(j).gameObject.activeSelf)
-                   {
-                       if (iconObj.transform.GetChild(j).name.Contains("color_01"))
-                       {
-                           iconObj.transform.GetChild(j).GetComponent<Image>().color = userSkinList[i].color_01;
-                       }
-                       if (iconObj.transform.GetChild(j).name.Contains("color_02"))
-                       {
-                           iconObj.transform.GetChild(j).GetComponent<Image>().color = userSkinList[i].color_02;
-                       }
-                   }
-               }
-               context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * 235f);
-           }
-       }));
-   }*/
+    
 }
