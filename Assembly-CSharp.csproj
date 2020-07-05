@@ -94,6 +94,7 @@
     <Compile Include="Assets\test.cs" />
     <None Include="Assets\Spine\version.txt" />
     <None Include="Assets\Script\TxT\스킨 정보_DB.txt" />
+    <None Include="Assets\Material\MaskedUIBlur.shader" />
     <None Include="Assets\Character\bodya.atlas.txt" />
     <None Include="Assets\Material\additive.shader" />
     <None Include="Assets\Demigiant\DOTween\readme.txt" />
