@@ -75,9 +75,9 @@
     <Compile Include="Assets\Script\BackEnd\BackEndManager.cs" />
     <Compile Include="Assets\Script\Camera\CameraResolution.cs" />
     <Compile Include="Assets\Script\Camera\ScreenShotHandler.cs" />
+    <Compile Include="Assets\Script\Loding.cs" />
     <Compile Include="Assets\Script\Manager\DatabaseManager.cs" />
     <Compile Include="Assets\Script\Manager\GameManager.cs" />
-    <Compile Include="Assets\Script\Manager\IconManager.cs" />
     <Compile Include="Assets\Script\Manager\SpineSkinInfoManager.cs" />
     <Compile Include="Assets\Script\Manager\UserInfoManager.cs" />
     <Compile Include="Assets\Script\MiniGame\MiniGame.cs" />
@@ -356,23 +356,23 @@
     <Reference Include="DOTween">
       <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
-    <Reference Include="TheBackendHashKeySettings">
-      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/Settings/TheBackendHashKeySettings.dll</HintPath>
-    </Reference>
-    <Reference Include="TheBackend.iOS">
-      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/Android/TheBackend.iOS.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Collections.Immutable">
-      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/System.Collections.Immutable.dll</HintPath>
-    </Reference>
-    <Reference Include="TheBackendSettings">
-      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/Settings/TheBackendSettings.dll</HintPath>
-    </Reference>
     <Reference Include="Backend">
       <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/Backend.dll</HintPath>
     </Reference>
     <Reference Include="LitJson">
       <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/LitJson.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="TheBackend.iOS">
+      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/Android/TheBackend.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="TheBackendHashKeySettings">
+      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/Settings/TheBackendHashKeySettings.dll</HintPath>
+    </Reference>
+    <Reference Include="TheBackendSettings">
+      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/Settings/TheBackendSettings.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/UnityWorkspace/2019.3.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

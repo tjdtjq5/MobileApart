@@ -19,13 +19,14 @@ public class BackEndManager : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Start()
     {
         InitBackEnd();
     }
 
+
     // 뒤끝 초기화
-    private void InitBackEnd()
+    public void InitBackEnd()
     {
         Backend.Initialize(BRO =>
         {

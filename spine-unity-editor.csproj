@@ -314,26 +314,26 @@
     <Reference Include="DOTweenEditor">
       <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
     </Reference>
-    <Reference Include="TheBackendHashKeySettings">
-      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/Settings/TheBackendHashKeySettings.dll</HintPath>
-    </Reference>
-    <Reference Include="TheBackend.iOS">
-      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/Android/TheBackend.iOS.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Collections.Immutable">
-      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/System.Collections.Immutable.dll</HintPath>
-    </Reference>
-    <Reference Include="TheBackendSettingEditor">
-      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/Editor/TheBackendSettingEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="TheBackendSettings">
-      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/Settings/TheBackendSettings.dll</HintPath>
-    </Reference>
     <Reference Include="Backend">
       <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/Backend.dll</HintPath>
     </Reference>
     <Reference Include="LitJson">
       <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/LitJson.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="TheBackend.iOS">
+      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/Android/TheBackend.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="TheBackendSettingEditor">
+      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/Editor/TheBackendSettingEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="TheBackendHashKeySettings">
+      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/Settings/TheBackendHashKeySettings.dll</HintPath>
+    </Reference>
+    <Reference Include="TheBackendSettings">
+      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Assets/TheBackend/Plugins/Settings/TheBackendSettings.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>

@@ -6,6 +6,9 @@ using BackEnd;
 
 public class BackEndAuthentication : MonoBehaviour
 {
+
+  
+
     public InputField idInput;
     public InputField paInput;
 
@@ -111,6 +114,7 @@ public class BackEndAuthentication : MonoBehaviour
         if (backendReturnObject.IsSuccess() == true)
         {
             Debug.Log("[동기방식] 자동로그인 완료");
+            
         }
         else
         {

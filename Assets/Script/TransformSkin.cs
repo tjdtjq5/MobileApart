@@ -18,7 +18,8 @@ public class TransformSkin : MonoBehaviour
     private void Start()
     {
         skeletonAnimation = transform.GetComponent<SkeletonAnimation>();
-      //  skeletonAnimation.AnimationState.SetAnimation(0, "idle_01", true);
+        UserEqipInfoSetting();
+        UserEqipInfoSetting();
     }
 
     // 유저정보에 저장된 eqip 정보 세팅 

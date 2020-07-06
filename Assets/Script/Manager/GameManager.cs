@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public DatabaseManager databaseManager;
     void Awake()
     {
+        DontDestroyOnLoad(this.gameObject);
+
         instance = this;
         Screen.SetResolution(720, 1280, true);
     }

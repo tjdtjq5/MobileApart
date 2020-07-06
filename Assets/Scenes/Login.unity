@@ -280,7 +280,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 299353731}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 573319497}
+        m_MethodName: OnClickSignUp1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &299353731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,6 +573,7 @@ GameObject:
   m_Component:
   - component: {fileID: 573319496}
   - component: {fileID: 573319495}
+  - component: {fileID: 573319497}
   m_Layer: 0
   m_Name: Backend
   m_TagString: Untagged
@@ -595,6 +607,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &573319497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573319494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f7c2619a87b0034484cf2fca9f79af9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idInput: {fileID: 1461641172}
+  paInput: {fileID: 794622627}
 --- !u!1 &794622625
 GameObject:
   m_ObjectHideFlags: 0
@@ -1158,7 +1184,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1240019266}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 573319497}
+        m_MethodName: OnClickLogin1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1240019266
 MonoBehaviour:
   m_ObjectHideFlags: 0
