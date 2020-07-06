@@ -81,6 +81,7 @@
     <Compile Include="Assets\Script\MiniGame\MiniGame.cs" />
     <Compile Include="Assets\Script\MiniGame\RockPaperScissors.cs" />
     <Compile Include="Assets\Script\TransformSkin.cs" />
+    <Compile Include="Assets\Script\상점\Shop.cs" />
     <Compile Include="Assets\Script\옷장\Cloth.cs" />
     <Compile Include="Assets\Script\옷장\SlideCustom.cs" />
     <Compile Include="Assets\Script\화면전환\LeftMenue.cs" />

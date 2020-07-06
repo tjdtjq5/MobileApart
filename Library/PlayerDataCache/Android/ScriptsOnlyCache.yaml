@@ -7,6 +7,7 @@ ScriptsOnlyBuild:
     - LeftMenue
     - MiniGame
     - RockPaperScissors
+    - Shop
     - SpineSkinInfoManager
     - TransformSkin
     - UserInfoManager
@@ -131,6 +132,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 14656}
     - Class: 114
       Script: {instanceID: 14680}
+    - Class: 114
+      Script: {instanceID: 65632}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -914,7 +917,13 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 63a98188105f11f2749b95888d32e887
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Shop
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: "C:/Users/tjdtj/OneDrive/\uBC14\uD0D5 \uD654\uBA74/22.apk"
+  playerPath: "C:/Users/tjdtj/OneDrive/\uBC14\uD0D5 \uD654\uBA74/test.apk"
