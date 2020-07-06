@@ -4,6 +4,7 @@ ScriptsOnlyBuild:
     - Cloth
     - DatabaseManager
     - GameManager
+    - LeftMenue
     - MiniGame
     - RockPaperScissors
     - SpineSkinInfoManager
@@ -37,8 +38,10 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.GridLayoutGroup
     - UnityEngine.UI.Image
     - UnityEngine.UI.Mask
+    - UnityEngine.UI.Outline
     - UnityEngine.UI.ScrollRect
     - UnityEngine.UI.Scrollbar
     - UnityEngine.UI.Text
@@ -75,53 +78,59 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11258}
-    - Class: 114
-      Script: {instanceID: 11580}
+      Script: {instanceID: 11262}
     - Class: 114
       Script: {instanceID: 11584}
     - Class: 114
-      Script: {instanceID: 11634}
+      Script: {instanceID: 11588}
     - Class: 114
-      Script: {instanceID: 11726}
+      Script: {instanceID: 11638}
     - Class: 114
-      Script: {instanceID: 12162}
+      Script: {instanceID: 11730}
     - Class: 114
-      Script: {instanceID: 12346}
+      Script: {instanceID: 11750}
     - Class: 114
-      Script: {instanceID: 12610}
+      Script: {instanceID: 12166}
     - Class: 114
-      Script: {instanceID: 12736}
+      Script: {instanceID: 12350}
     - Class: 114
-      Script: {instanceID: 12970}
+      Script: {instanceID: 12614}
     - Class: 114
-      Script: {instanceID: 13124}
+      Script: {instanceID: 12740}
     - Class: 114
-      Script: {instanceID: 13190}
+      Script: {instanceID: 12974}
     - Class: 114
-      Script: {instanceID: 13202}
+      Script: {instanceID: 13128}
     - Class: 114
-      Script: {instanceID: 13282}
+      Script: {instanceID: 13194}
     - Class: 114
-      Script: {instanceID: 13366}
+      Script: {instanceID: 13206}
     - Class: 114
-      Script: {instanceID: 13388}
+      Script: {instanceID: 13286}
     - Class: 114
-      Script: {instanceID: 13584}
+      Script: {instanceID: 13370}
     - Class: 114
-      Script: {instanceID: 13820}
+      Script: {instanceID: 13386}
     - Class: 114
-      Script: {instanceID: 13934}
+      Script: {instanceID: 13394}
     - Class: 114
-      Script: {instanceID: 13976}
+      Script: {instanceID: 13590}
     - Class: 114
-      Script: {instanceID: 14268}
+      Script: {instanceID: 13826}
     - Class: 114
-      Script: {instanceID: 14378}
+      Script: {instanceID: 13940}
     - Class: 114
-      Script: {instanceID: 14650}
+      Script: {instanceID: 13982}
     - Class: 114
-      Script: {instanceID: 63118}
+      Script: {instanceID: 14274}
+    - Class: 114
+      Script: {instanceID: 14384}
+    - Class: 114
+      Script: {instanceID: 14548}
+    - Class: 114
+      Script: {instanceID: 14656}
+    - Class: 114
+      Script: {instanceID: 14680}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -129,6 +138,8 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 212
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
@@ -569,6 +580,12 @@ ScriptsOnlyBuild:
     className: SkeletonDataAsset
   - hash:
       serializedVersion: 2
+      Hash: bc94575c76bdd0538066915ab19d0573
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Cloth
+  - hash:
+      serializedVersion: 2
       Hash: fa3034d9794a27e71242f49afdd86406
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -761,7 +778,7 @@ ScriptsOnlyBuild:
     className: SkeletonUtilityBone
   - hash:
       serializedVersion: 2
-      Hash: e6244943820012746757f0b56373bf91
+      Hash: 13ed81ed74dc09caf9f7063dc8d6d5c4
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SpineSkinInfoManager
@@ -863,6 +880,12 @@ ScriptsOnlyBuild:
     className: StandaloneInputModule
   - hash:
       serializedVersion: 2
+      Hash: b1f871bf61d7462bdb88b515986a7b49
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: LeftMenue
+  - hash:
+      serializedVersion: 2
       Hash: aa88ae22474df55295327e4ee99e5a24
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -891,12 +914,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 4a6c43a8b70d3190f6820c6e17595018
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Cloth
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity

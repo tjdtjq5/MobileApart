@@ -3,10 +3,8 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Spine;
 using UnityEngine.UI;
 using UnityEngine.U2D;
-using UnityEditor.U2D;
 
 public class Cloth : MonoBehaviour
 {
@@ -45,7 +43,7 @@ public class Cloth : MonoBehaviour
         clickFlag = false;
     }
 
-    float uiCamMoveX = 17f;
+    float uiCamMoveX = 1.7f;
 
     private void Start()
     {
@@ -251,6 +249,7 @@ public class Cloth : MonoBehaviour
             callBack();
         }
         characterCamera.transform.DOMove(moveChracterCamera, cameraMoveSpeed);
+        characterCamera.GetComponent<Camera>().DOOrthoSize(6.5f, cameraMoveSpeed);
         uiCamera.transform.DOMoveX(uiCamMoveX, cameraMoveSpeed);
         yield return new WaitForSeconds(cameraMoveSpeed);
 
@@ -275,6 +274,7 @@ public class Cloth : MonoBehaviour
     {
         clickFlag = true;
         characterCamera.transform.DOMove(originChracterCamera, cameraMoveSpeed);
+        characterCamera.GetComponent<Camera>().DOOrthoSize(5f, cameraMoveSpeed);
         uiCamera.transform.DOMoveX(originUiCamera.x, cameraMoveSpeed);
         yield return new WaitForSeconds(cameraMoveSpeed);
         if (callback != null)
@@ -359,7 +359,7 @@ public class Cloth : MonoBehaviour
         colorBtn.transform.localScale = new Vector2(0.5f, 0.5f);
         colorBtn.transform.DOScale(new Vector2(1, 1f), cameraMoveSpeed);
         colorBtn.GetComponent<Button>().onClick.RemoveAllListeners();
-        colorBtn.GetComponent<Button>().onClick.AddListener(() => ColorBtn(colorBtn.transform.position));
+        colorBtn.GetComponent<Button>().onClick.AddListener(() => ColorBtn());
 
         //슬롯버튼 위치 리셋
         colorSlotBtn01.transform.position = new Vector2(colorSlotBtn01.transform.position.x, 2000);
@@ -367,23 +367,23 @@ public class Cloth : MonoBehaviour
 
     }
 
-    public void ColorBtn(Vector3 pos)
+    public void ColorBtn()
     {
-        //컬러버튼 위치 리셋
-        colorBtn.transform.position = new Vector2(colorBtn.transform.position.x, 2000);
-
         if (transformSkin.GetColor(stage02_data.skinName, 1) != Color.clear)
         {
-            colorSlotBtn01.transform.position = new Vector3(pos.x - 3f, pos.y+3f , pos.z);
+            colorSlotBtn01.transform.position = new Vector2(colorBtn.transform.position.x - 1f, colorBtn.transform.position.y + 0.3f);
             colorSlotBtn01.transform.localScale = new Vector2(0, 1f);
             colorSlotBtn01.transform.DOScale(new Vector2(1, 1f), cameraMoveSpeed);
         }
         if (transformSkin.GetColor(stage02_data.skinName, 2) != Color.clear)
         {
-            colorSlotBtn02.transform.position = new Vector3(pos.x - 3f, pos.y -3f, pos.z);
+            colorSlotBtn02.transform.position = new Vector2(colorBtn.transform.position.x - 1f, colorBtn.transform.position.y - 0.3f);
             colorSlotBtn02.transform.localScale = new Vector2(0, 1f);
             colorSlotBtn02.transform.DOScale(new Vector2(1, 1f), cameraMoveSpeed);
         }
+
+        //컬러버튼 위치 리셋
+        colorBtn.transform.position = new Vector2(colorBtn.transform.position.x, 2000);
     }
 
     int slotNum;
