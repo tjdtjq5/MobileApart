@@ -28,20 +28,20 @@ public class BackEndManager : MonoBehaviour
     // 뒤끝 초기화
     public void InitBackEnd()
     {
-        Backend.Initialize(BRO =>
+        Backend.Initialize(() =>
         {
-            Debug.Log("뒤끝 초기화 진행 " + BRO);
-
-            // 성공
-            if (BRO.IsSuccess())
+            // 초기화 성공한 경우 실행
+            if (Backend.IsInitialized)
             {
+                // example
+                // 버전체크 -> 업데이트
                 Debug.Log(Backend.Utils.GetServerTime());
-            }
 
-            // 실패
+            }
+            // 초기화 실패한 경우 실행
             else
             {
-                ShowErrorUI(BRO);
+                Debug.Log("초기화 실패");
             }
         });
     }

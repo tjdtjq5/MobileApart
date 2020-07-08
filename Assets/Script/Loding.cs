@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using BackEnd;
+using LitJson;
 
 public class Loding : MonoBehaviour
 {
@@ -25,6 +27,7 @@ public class Loding : MonoBehaviour
         StartCoroutine(LoadSceneCoroutine());
     }
 
+    bool flag = false;
     IEnumerator LoadSceneCoroutine()
     {
         yield return null;
@@ -42,11 +45,15 @@ public class Loding : MonoBehaviour
             }
             else if (operation.progress >= 0.9f)
             {
-                progressbar.value = Mathf.MoveTowards(progressbar.value, 1f, Time.deltaTime);
                 loadtext.text = ((int)(progressbar.value * 100)).ToString() + "%";
+                if (!flag)
+                {
+                    flag = true;
+                    AsyncGetUserInfo();
+                }
             }
 
-
+       
 
             if (progressbar.value >= 1f)
             {
@@ -61,4 +68,31 @@ public class Loding : MonoBehaviour
         }
 
     }
+
+
+    string nickName = "";
+    string inDate = "";
+
+    // 닉네임 정보 받아오기 순서 1 
+    public void AsyncGetUserInfo()
+    {
+        BackendAsyncClass.BackendAsync(Backend.BMember.GetUserInfo, (callback) =>
+        {
+            JsonData returnJsonData = callback.GetReturnValuetoJSON();
+            if (returnJsonData.Keys.Contains("row"))
+            {
+                JsonData row = returnJsonData["row"];
+                inDate = row["inDate"].ToString();
+                nickName = row["nickname"].ToString();
+                GameManager.instance.userInfoManager.nickname = nickName;
+                GameManager.instance.userInfoManager.inDate = inDate;
+                Debug.Log("닉네임 받아오기 완료");
+                progressbar.value = 0.92f;
+                loadtext.text = ((int)(progressbar.value * 100)).ToString() + "%";
+            }
+        });
+    }
+
+    // 스킨 아이템 정보 받아오기 
+
 }

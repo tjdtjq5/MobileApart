@@ -15,7 +15,7 @@ public class CameraResolution : MonoBehaviour
         float targetWidthAspect = 9.0f;
         float targetHeightAspect = 16.0f;
 
-        Camera.main.aspect = targetWidthAspect / targetHeightAspect;
+        this.GetComponent<Camera>().aspect = targetWidthAspect / targetHeightAspect;
 
         float widthRatio = (float)Screen.width / targetWidthAspect;
         float heightRatio = (float)Screen.height / targetHeightAspect;

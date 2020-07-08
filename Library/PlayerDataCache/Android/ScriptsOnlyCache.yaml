@@ -82,65 +82,65 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11280}
+      Script: {instanceID: 11294}
     - Class: 114
-      Script: {instanceID: 11426}
+      Script: {instanceID: 11444}
     - Class: 114
-      Script: {instanceID: 11610}
+      Script: {instanceID: 11630}
     - Class: 114
-      Script: {instanceID: 11614}
+      Script: {instanceID: 11634}
     - Class: 114
-      Script: {instanceID: 11664}
-    - Class: 114
-      Script: {instanceID: 11758}
+      Script: {instanceID: 11684}
     - Class: 114
       Script: {instanceID: 11778}
     - Class: 114
-      Script: {instanceID: 12196}
+      Script: {instanceID: 11798}
     - Class: 114
-      Script: {instanceID: 12380}
+      Script: {instanceID: 12226}
     - Class: 114
-      Script: {instanceID: 12646}
+      Script: {instanceID: 12416}
     - Class: 114
-      Script: {instanceID: 12772}
+      Script: {instanceID: 12684}
     - Class: 114
-      Script: {instanceID: 13006}
+      Script: {instanceID: 12814}
     - Class: 114
-      Script: {instanceID: 13160}
+      Script: {instanceID: 12980}
     - Class: 114
-      Script: {instanceID: 13228}
+      Script: {instanceID: 13056}
     - Class: 114
-      Script: {instanceID: 13240}
+      Script: {instanceID: 13212}
     - Class: 114
-      Script: {instanceID: 13320}
+      Script: {instanceID: 13280}
     - Class: 114
-      Script: {instanceID: 13404}
+      Script: {instanceID: 13292}
     - Class: 114
-      Script: {instanceID: 13420}
+      Script: {instanceID: 13372}
     - Class: 114
-      Script: {instanceID: 13428}
+      Script: {instanceID: 13458}
     - Class: 114
-      Script: {instanceID: 13626}
+      Script: {instanceID: 13474}
     - Class: 114
-      Script: {instanceID: 13848}
+      Script: {instanceID: 13482}
     - Class: 114
-      Script: {instanceID: 13866}
+      Script: {instanceID: 13684}
     - Class: 114
-      Script: {instanceID: 13982}
+      Script: {instanceID: 13910}
     - Class: 114
-      Script: {instanceID: 14024}
+      Script: {instanceID: 13928}
     - Class: 114
-      Script: {instanceID: 14316}
+      Script: {instanceID: 14044}
     - Class: 114
-      Script: {instanceID: 14428}
+      Script: {instanceID: 14086}
     - Class: 114
-      Script: {instanceID: 14592}
+      Script: {instanceID: 14382}
     - Class: 114
-      Script: {instanceID: 14702}
+      Script: {instanceID: 14496}
     - Class: 114
-      Script: {instanceID: 14726}
+      Script: {instanceID: 14664}
     - Class: 114
-      Script: {instanceID: 18020}
+      Script: {instanceID: 14776}
+    - Class: 114
+      Script: {instanceID: 14800}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -180,6 +180,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_SelectionCaret
+  - hash:
+      serializedVersion: 2
+      Hash: 671420ad2c33f1ddaf6d076461adf15a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CFX_Demo_Translate
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -338,6 +344,12 @@ ScriptsOnlyBuild:
     className: GridLayoutGroup
   - hash:
       serializedVersion: 2
+      Hash: 694ed4ff5668105a3183631c03b38306
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CFX_Demo
+  - hash:
+      serializedVersion: 2
       Hash: 8aa3d6ccbcb54ee8db6c1229854adaaa
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -360,6 +372,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: PhysicsRaycaster
+  - hash:
+      serializedVersion: 2
+      Hash: fa3e4585868a251c4fc15b64875ea790
+    assemblyName: CFXRRuntime.dll
+    namespaceName: CartoonFX
+    className: CFXR_ParticleText
   - hash:
       serializedVersion: 2
       Hash: bd3cf68c8964d3c66d1c43f4f98508c9
@@ -404,6 +422,12 @@ ScriptsOnlyBuild:
     className: PixelPerfectCamera
   - hash:
       serializedVersion: 2
+      Hash: 1d0beb1a2d4edee4c06b6835632e83a3
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CFX_AutoStopLoopedEffect
+  - hash:
+      serializedVersion: 2
       Hash: 236d75210b730b326791db20759faa0b
     assemblyName: spine-unity.dll
     namespaceName: Spine.Unity
@@ -438,6 +462,18 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Shadow
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CFX_ShurikenThreadFix
+  - hash:
+      serializedVersion: 2
+      Hash: b10f0f008d787b95a5928eed8ceaa36e
+    assemblyName: CFXRDemo.dll
+    namespaceName: Kino
+    className: Bloom
   - hash:
       serializedVersion: 2
       Hash: 452034bc115721a46591769a06814093
@@ -494,6 +530,12 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
+      Hash: 0ae5606b0dc4ebd5d000e916ec862577
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CFX_InspectorHelp
+  - hash:
+      serializedVersion: 2
       Hash: bee2bc98f07f503bbd75bcaf68b47412
     assemblyName: spine-unity.dll
     namespaceName: Spine.Unity
@@ -506,10 +548,22 @@ ScriptsOnlyBuild:
     className: SlotBlendModes
   - hash:
       serializedVersion: 2
+      Hash: 4aac268d7e435f7a65add91aaba819a4
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CFX_Demo_RandomDir
+  - hash:
+      serializedVersion: 2
       Hash: b3ab2106268377ffe25dd18ac23dca28
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_Asset
+  - hash:
+      serializedVersion: 2
+      Hash: f98b07cf919b54e1cbdc75109809c5b5
+    assemblyName: CFXRDemo.dll
+    namespaceName: CartoonFX
+    className: CFXR_Demo
   - hash:
       serializedVersion: 2
       Hash: d4020bafcd3ccbb5601a6e6c8ac78be0
@@ -524,6 +578,12 @@ ScriptsOnlyBuild:
     className: SkeletonMecanim
   - hash:
       serializedVersion: 2
+      Hash: 3f5031037e63abe5dcf87c278e01a4de
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CFX_Demo_RotateCamera
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -534,6 +594,24 @@ ScriptsOnlyBuild:
     assemblyName: Unity.2D.Animation.Runtime.dll
     namespaceName: UnityEngine.U2D.Animation
     className: SpriteSkinEntity
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CFX_AutodestructWhenNoChildren
+  - hash:
+      serializedVersion: 2
+      Hash: 5d27c6e85ec89cfab8577e9e26695e88
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CFX_AutoDestructShuriken
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CameraResolution2
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -564,6 +642,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: RemoteTestResultSender
+  - hash:
+      serializedVersion: 2
+      Hash: 660deb0ce569359218f0ba85b7ce0e3a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CFX_LightIntensityFade
   - hash:
       serializedVersion: 2
       Hash: 4fd8bf02e3089425d3502e26c44ba31a
@@ -608,6 +692,12 @@ ScriptsOnlyBuild:
     className: VerticalLayoutGroup
   - hash:
       serializedVersion: 2
+      Hash: dad3a1f1e1ecb4691721bab721edd60a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CFX_AutoRotate
+  - hash:
+      serializedVersion: 2
       Hash: 36666ac3689f8ae085146c224becaadd
     assemblyName: spine-unity.dll
     namespaceName: Spine.Unity
@@ -642,6 +732,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: SignalReceiver
+  - hash:
+      serializedVersion: 2
+      Hash: 421b20ccd7815ebee5e2b14a986d2efc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CFX_Demo_New
   - hash:
       serializedVersion: 2
       Hash: 5ad4aa237d47ac2bab17bacb672edf7a
@@ -710,10 +806,22 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
+      Hash: 053af5cf08eb21aace7d1d5622658246
+    assemblyName: CFXRRuntime.dll
+    namespaceName: CartoonFX
+    className: CFXR_Effect
+  - hash:
+      serializedVersion: 2
       Hash: f9f37592b404590cce7c5df2214e6246
     assemblyName: spine-unity.dll
     namespaceName: Spine.Unity
     className: BoneFollowerGraphic
+  - hash:
+      serializedVersion: 2
+      Hash: b8d4b9b58cda7de3878cdf499471863b
+    assemblyName: CFXRRuntime.dll
+    namespaceName: CartoonFX
+    className: CFXR_ParticleTextFontAsset
   - hash:
       serializedVersion: 2
       Hash: 89b2306ad1c5d46495facaa550b27553
@@ -818,6 +926,12 @@ ScriptsOnlyBuild:
     className: SkeletonUtilityBone
   - hash:
       serializedVersion: 2
+      Hash: e70e7b311a1620c2e899545b2e1fdfae
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CFX_Demo_RandomDirectionTranslate
+  - hash:
+      serializedVersion: 2
       Hash: 13ed81ed74dc09caf9f7063dc8d6d5c4
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -872,6 +986,12 @@ ScriptsOnlyBuild:
     className: BaseInput
   - hash:
       serializedVersion: 2
+      Hash: 263025083d0a7e8d3b9c0c9ab88a743d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CFX_SpawnSystem
+  - hash:
+      serializedVersion: 2
       Hash: caa533b001ae39b864ba8425019e2268
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -906,6 +1026,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Dropdown
+  - hash:
+      serializedVersion: 2
+      Hash: 4e875e1432fadf1f077549b388792f99
+    assemblyName: CFXRDemo.dll
+    namespaceName: CartoonFX
+    className: CFXR_Demo_Rotate
   - hash:
       serializedVersion: 2
       Hash: be1ab63b1a9fa280d00802739c47ca76
@@ -954,12 +1080,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CameraResolution2
   platform: 13
   scenePathNames:
   - Assets/Scenes/Main.unity

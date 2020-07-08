@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using BackEnd;
+using UnityEngine.SceneManagement;
 
 public class BackEndAuthentication : MonoBehaviour
 {
@@ -39,6 +38,7 @@ public class BackEndAuthentication : MonoBehaviour
         if (backendReturnObject.IsSuccess() == true)
         {
             Debug.Log("[동기방식] 로그인 완료");
+            SceneManager.LoadScene("Loding");
         }
 
         else

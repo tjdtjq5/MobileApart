@@ -4,6 +4,8 @@ using UnityEngine.Playables;
 
 public class UserInfoManager : MonoBehaviour
 {
+    public string nickname;
+    public string inDate;
 
     //현재 유저가 장착중인 옷
     public UserEqip acc = new UserEqip();
@@ -31,8 +33,6 @@ public class UserInfoManager : MonoBehaviour
         PushColorItem(Color.black);
         PushColorItem(Color.yellow);
         PushColorItem(Color.grey);
-
- 
     }
 
     //초기 
