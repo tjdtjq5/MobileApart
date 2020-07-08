@@ -37,6 +37,21 @@ public class BackEndManager : MonoBehaviour
                 // 버전체크 -> 업데이트
                 Debug.Log(Backend.Utils.GetServerTime());
 
+                char[] googleHashKeyToChar = Backend.Utils.GetGoogleHash().ToCharArray();
+                for (int i = 0; i < googleHashKeyToChar.Length; i++)
+                {
+                    if (googleHashKeyToChar[i] == 'I')
+                    {
+                        Debug.Log("대문자 아이");
+                    }
+                    if (googleHashKeyToChar[i] == 'l')
+                    {
+                        Debug.Log("소문자 엘");
+                    }
+
+                    Debug.Log(googleHashKeyToChar[i]);
+                }
+
             }
             // 초기화 실패한 경우 실행
             else

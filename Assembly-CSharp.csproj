@@ -88,7 +88,6 @@
     <Compile Include="Assets\Script\메인\상점\Shop.cs" />
     <Compile Include="Assets\Script\메인\옷장\Cloth.cs" />
     <Compile Include="Assets\Script\메인\옷장\SlideCustom.cs" />
-    <Compile Include="Assets\Script\메인화면 첫 시작\NicknameSet.cs" />
     <Compile Include="Assets\Script\캐릭터선택씬\Caracter01.cs" />
     <Compile Include="Assets\Script\화면전환\LeftMenue.cs" />
     <Compile Include="Assets\Script\화면전환\ScreenTransition.cs" />

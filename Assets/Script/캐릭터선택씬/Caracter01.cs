@@ -26,7 +26,10 @@ public class Caracter01 : MonoBehaviour
 
     public void SelectCaracter01()
     {
-        GameManager.instance.userInfoManager.PutCharacter("character01");
+        Param characterData = new Param();
+        characterData.Add("haveCharacter", "character01");
+        BackEndGameInfo.instance.GamePrivateInfoUpdate("UserInfo", characterData);
+
         SceneManager.LoadScene("Loding");
     }
 

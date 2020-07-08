@@ -310,14 +310,7 @@ public class UserInfoManager : MonoBehaviour
 
         Param saveSkinData = new Param();
         saveSkinData.Add("SkinItem", tempSkinItem);
-        if (BackEndGameInfo.instance.GetPrivateContents("UserInfo" , "nickname").Count == 0)
-        {
-            BackEndGameInfo.instance.InsertData("UserInfo", saveSkinData);
-        }
-        else
-        {
-            BackEndGameInfo.instance.GamePrivateInfoUpdate("UserInfo", saveSkinData);
-        }
+        BackEndGameInfo.instance.GamePrivateInfoUpdate("UserInfo", saveSkinData);
     }
 
     public void LoadSkinItem()
@@ -401,14 +394,7 @@ public class UserInfoManager : MonoBehaviour
         Param saveEqipData = new Param();
         saveEqipData.Add("UserEqip", tempUserEqip);
 
-        if (BackEndGameInfo.instance.GetPrivateContents("UserInfo", "nickname").Count == 0)
-        {
-            BackEndGameInfo.instance.InsertData("UserInfo", saveEqipData);
-        }
-        else
-        {
-            BackEndGameInfo.instance.GamePrivateInfoUpdate("UserInfo", saveEqipData);
-        }
+        BackEndGameInfo.instance.GamePrivateInfoUpdate("UserInfo", saveEqipData);
     }
 
     public void LoadUserEqip()
@@ -429,43 +415,12 @@ public class UserInfoManager : MonoBehaviour
         body = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[11].Split('-')[0]), tempUserEqipList[11].Split('-')[1], StringToColor(tempUserEqipList[11].Split('-')[2]), StringToColor(tempUserEqipList[11].Split('-')[3]));
     }
 
-    [HideInInspector] public string haveCharacter;
-
-    public void PutCharacter(string character)
-    {
-        if (!haveCharacter.Contains(character))
-        {
-            haveCharacter += character + "-";
-        }
-    }
-
-    public void SaveHaveCharacter()
-    {
-        Param data = new Param();
-        data.Add("haveCharacter", haveCharacter);
-
-        if (BackEndGameInfo.instance.GetPrivateContents("UserInfo", "nickname").Count == 0)
-        {
-            BackEndGameInfo.instance.InsertData("UserInfo", data);
-        }
-        else
-        {
-            BackEndGameInfo.instance.GamePrivateInfoUpdate("UserInfo", data);
-        }
-    }
-
-    public void LoadHaveCharacter()
-    {
-        haveCharacter = BackEndGameInfo.instance.GetPrivateContents("UserInfo", "haveCharacter")[0];
-    }
-
     private void OnApplicationQuit()
     {
         if (BackEndGameInfo.instance.GetPrivateContents("UserInfo", "nickname").Count != 0)
         {
             SaveSkinItem();
             SaveUserEqip();
-            SaveHaveCharacter();
         }
     }
 }

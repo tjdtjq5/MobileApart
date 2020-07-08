@@ -1,12 +1,19 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - BackEndAuthentication
+    - BackEndGameInfo
+    - BackEndManager
     - CameraResolution2
+    - Caracter01
     - Cloth
     - DatabaseManager
     - GameManager
     - LeftMenue
+    - Loding
     - MiniGame
+    - Reporter
+    - ReporterMessageReceiver
     - RockPaperScissors
     - Shop
     - SpineSkinInfoManager
@@ -44,10 +51,12 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.GridLayoutGroup
     - UnityEngine.UI.Image
+    - UnityEngine.UI.InputField
     - UnityEngine.UI.Mask
     - UnityEngine.UI.Outline
     - UnityEngine.UI.ScrollRect
     - UnityEngine.UI.Scrollbar
+    - UnityEngine.UI.Slider
     - UnityEngine.UI.Text
     - UnityEngine.UI.VerticalLayoutGroup
     spine-unity.dll:
@@ -56,6 +65,195 @@ ScriptsOnlyBuild:
     - Spine.Unity.SkeletonDataAsset
     - Spine.Unity.SpineAtlasAsset
   sceneClasses:
+    Assets/Scenes/CaracterSelect.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 49
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 11294}
+    - Class: 114
+      Script: {instanceID: 11630}
+    - Class: 114
+      Script: {instanceID: 11684}
+    - Class: 114
+      Script: {instanceID: 12416}
+    - Class: 114
+      Script: {instanceID: 12684}
+    - Class: 114
+      Script: {instanceID: 13212}
+    - Class: 114
+      Script: {instanceID: 13292}
+    - Class: 114
+      Script: {instanceID: 13460}
+    - Class: 114
+      Script: {instanceID: 13686}
+    - Class: 114
+      Script: {instanceID: 14088}
+    - Class: 114
+      Script: {instanceID: 14560}
+    - Class: 114
+      Script: {instanceID: 14782}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/Loding.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 11294}
+    - Class: 114
+      Script: {instanceID: 11400}
+    - Class: 114
+      Script: {instanceID: 11630}
+    - Class: 114
+      Script: {instanceID: 11684}
+    - Class: 114
+      Script: {instanceID: 12416}
+    - Class: 114
+      Script: {instanceID: 14088}
+    - Class: 114
+      Script: {instanceID: 14782}
+    - Class: 114
+      Script: {instanceID: 14830}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/Login.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 49
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 700}
+    - Class: 114
+      Script: {instanceID: 11294}
+    - Class: 114
+      Script: {instanceID: 11382}
+    - Class: 114
+      Script: {instanceID: 11630}
+    - Class: 114
+      Script: {instanceID: 11684}
+    - Class: 114
+      Script: {instanceID: 11712}
+    - Class: 114
+      Script: {instanceID: 12222}
+    - Class: 114
+      Script: {instanceID: 12416}
+    - Class: 114
+      Script: {instanceID: 13056}
+    - Class: 114
+      Script: {instanceID: 13212}
+    - Class: 114
+      Script: {instanceID: 13318}
+    - Class: 114
+      Script: {instanceID: 13406}
+    - Class: 114
+      Script: {instanceID: 13484}
+    - Class: 114
+      Script: {instanceID: 13548}
+    - Class: 114
+      Script: {instanceID: 13912}
+    - Class: 114
+      Script: {instanceID: 13930}
+    - Class: 114
+      Script: {instanceID: 14088}
+    - Class: 114
+      Script: {instanceID: 14384}
+    - Class: 114
+      Script: {instanceID: 14500}
+    - Class: 114
+      Script: {instanceID: 14782}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
     Assets/Scenes/Main.unity:
     - Class: 1
       Script: {instanceID: 0}
@@ -106,8 +304,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12980}
     - Class: 114
-      Script: {instanceID: 13056}
-    - Class: 114
       Script: {instanceID: 13212}
     - Class: 114
       Script: {instanceID: 13280}
@@ -116,31 +312,21 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13372}
     - Class: 114
-      Script: {instanceID: 13458}
+      Script: {instanceID: 13460}
     - Class: 114
-      Script: {instanceID: 13474}
+      Script: {instanceID: 13476}
     - Class: 114
-      Script: {instanceID: 13482}
+      Script: {instanceID: 13686}
     - Class: 114
-      Script: {instanceID: 13684}
+      Script: {instanceID: 14046}
     - Class: 114
-      Script: {instanceID: 13910}
+      Script: {instanceID: 14088}
     - Class: 114
-      Script: {instanceID: 13928}
+      Script: {instanceID: 14670}
     - Class: 114
-      Script: {instanceID: 14044}
+      Script: {instanceID: 14782}
     - Class: 114
-      Script: {instanceID: 14086}
-    - Class: 114
-      Script: {instanceID: 14382}
-    - Class: 114
-      Script: {instanceID: 14496}
-    - Class: 114
-      Script: {instanceID: 14664}
-    - Class: 114
-      Script: {instanceID: 14776}
-    - Class: 114
-      Script: {instanceID: 14800}
+      Script: {instanceID: 14806}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -692,6 +878,12 @@ ScriptsOnlyBuild:
     className: VerticalLayoutGroup
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BackEndGameInfo
+  - hash:
+      serializedVersion: 2
       Hash: dad3a1f1e1ecb4691721bab721edd60a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -908,7 +1100,7 @@ ScriptsOnlyBuild:
     className: SkeletonPartsRenderer
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: dd1be4e4cff8b1f7a89d4825dbad9ee0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UserInfoManager
@@ -942,6 +1134,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Rotate
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Caracter01
   - hash:
       serializedVersion: 2
       Hash: e9eb0a3732e46290c5b4bf45a554fe6e
@@ -1082,5 +1280,8 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   platform: 13
   scenePathNames:
+  - Assets/Scenes/Login.unity
+  - Assets/Scenes/CaracterSelect.unity
+  - Assets/Scenes/Loding.unity
   - Assets/Scenes/Main.unity
   playerPath: "C:/Users/tjdtj/OneDrive/\uBC14\uD0D5 \uD654\uBA74/test.apk"
