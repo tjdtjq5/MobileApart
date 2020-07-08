@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Playables;
+using BackEnd;
 
 public class UserInfoManager : MonoBehaviour
 {
-    public string nickname;
-    public string inDate;
+
+    [HideInInspector] public string nickname;
+    [HideInInspector] public string inDate;
+
 
     //현재 유저가 장착중인 옷
     public UserEqip acc = new UserEqip();
@@ -23,7 +25,6 @@ public class UserInfoManager : MonoBehaviour
 
     private void Start()
     {
-        Initialized();
 
         PushColorItem(Color.clear);
         PushColorItem(Color.clear);
@@ -36,40 +37,27 @@ public class UserInfoManager : MonoBehaviour
     }
 
     //초기 
-    void Initialized()
+    public void Initialized()
     {
-        if (!PlayerPrefs.HasKey("첫시작"))
-        {
-            PlayerPrefs.SetString("첫시작", "True");
+        skinItem.Add(new UserSkin("acc/top_ribbon", Color.white, Color.white));
+        skinItem.Add(new UserSkin("top/clo_top_school", Color.white, Color.white));
+        skinItem.Add(new UserSkin("pan/skirt_01", Color.white, Color.white));
+        skinItem.Add(new UserSkin("eye/eye_01", Color.white, Color.white));
+        skinItem.Add(new UserSkin("face/face_01", Color.white, Color.white));
+        skinItem.Add(new UserSkin("haF/hair_f_01", Color.white, Color.white));
+        skinItem.Add(new UserSkin("haB/hair_b_01", Color.white, Color.white));
+        skinItem.Add(new UserSkin("sho/shoes_01", Color.white, Color.white));
+        skinItem.Add(new UserSkin("body", Color.white, Color.white));
 
-            skinItem.Add(new UserSkin("acc/top_ribbon", Color.white, Color.white));
-            skinItem.Add(new UserSkin("top/clo_top_school", Color.white, Color.white));
-            skinItem.Add(new UserSkin("pan/skirt_01", Color.white, Color.white));
-            skinItem.Add(new UserSkin("eye/eye_01", Color.white, Color.white));
-            skinItem.Add(new UserSkin("face/face_01", Color.white, Color.white));
-            skinItem.Add(new UserSkin("haF/hair_f_01", Color.white, Color.white));
-            skinItem.Add(new UserSkin("haB/hair_b_01", Color.white, Color.white));
-            skinItem.Add(new UserSkin("sho/shoes_01", Color.white, Color.white));
-            skinItem.Add(new UserSkin("body", Color.white, Color.white));
-
-            PushUserEqip(skinItem[0]);
-            PushUserEqip(skinItem[1]);
-            PushUserEqip(skinItem[2]);
-            PushUserEqip(skinItem[3]);
-            PushUserEqip(skinItem[4]);
-            PushUserEqip(skinItem[5]);
-            PushUserEqip(skinItem[6]);
-            PushUserEqip(skinItem[7]);
-            PushUserEqip(skinItem[8]);
-
-            SaveSkinItem();
-            SaveUserEqip();
-        }
-        else
-        {
-            LoadSkinItem();
-            LoadUserEqip();
-        }
+        PushUserEqip(skinItem[0]);
+        PushUserEqip(skinItem[1]);
+        PushUserEqip(skinItem[2]);
+        PushUserEqip(skinItem[3]);
+        PushUserEqip(skinItem[4]);
+        PushUserEqip(skinItem[5]);
+        PushUserEqip(skinItem[6]);
+        PushUserEqip(skinItem[7]);
+        PushUserEqip(skinItem[8]);
     }
 
     //랜덤박스아이템 이름, 아이템 수
@@ -319,23 +307,30 @@ public class UserInfoManager : MonoBehaviour
             tempSkinItem += skinItem[i].color_01 + "-";
             tempSkinItem += skinItem[i].color_02 + "=";
         }
-        PlayerPrefs.SetString("SkinItem", tempSkinItem);
+
+        Param saveSkinData = new Param();
+        saveSkinData.Add("SkinItem", tempSkinItem);
+        if (BackEndGameInfo.instance.GetPrivateContents("UserInfo" , "nickname").Count == 0)
+        {
+            BackEndGameInfo.instance.InsertData("UserInfo", saveSkinData);
+        }
+        else
+        {
+            BackEndGameInfo.instance.GamePrivateInfoUpdate("UserInfo", saveSkinData);
+        }
     }
 
     public void LoadSkinItem()
     {
-        if (PlayerPrefs.HasKey("SkinItem"))
+        string tempSkinItem = BackEndGameInfo.instance.GetPrivateContents("UserInfo", "SkinItem")[0];
+        string[] SkinItemList = tempSkinItem.Split('=');
+        List<UserSkin> userSkinList = new List<UserSkin>();
+        for (int i = 0; i < SkinItemList.Length - 1; i++)
         {
-            string tempSkinItem = PlayerPrefs.GetString("SkinItem");
-            string[] SkinItemList = tempSkinItem.Split('=');
-            List<UserSkin> userSkinList = new List<UserSkin>();
-            for (int i = 0; i < SkinItemList.Length - 1; i++)
-            {
-                UserSkin tempUserSkin = new UserSkin(SkinItemList[i].Split('-')[0], StringToColor(SkinItemList[i].Split('-')[1]), StringToColor(SkinItemList[i].Split('-')[2]));
-                userSkinList.Add(tempUserSkin);
-            }
-            skinItem = userSkinList;
+            UserSkin tempUserSkin = new UserSkin(SkinItemList[i].Split('-')[0], StringToColor(SkinItemList[i].Split('-')[1]), StringToColor(SkinItemList[i].Split('-')[2]));
+            userSkinList.Add(tempUserSkin);
         }
+        skinItem = userSkinList;
     }
 
     // 장착중인 스킨들 저장 
@@ -403,27 +398,74 @@ public class UserInfoManager : MonoBehaviour
         tempUserEqip += body.color_01.ToString() + "-";
         tempUserEqip += body.color_02.ToString() + "=";
 
-        PlayerPrefs.SetString("UserEqip", tempUserEqip);
+        Param saveEqipData = new Param();
+        saveEqipData.Add("UserEqip", tempUserEqip);
+
+        if (BackEndGameInfo.instance.GetPrivateContents("UserInfo", "nickname").Count == 0)
+        {
+            BackEndGameInfo.instance.InsertData("UserInfo", saveEqipData);
+        }
+        else
+        {
+            BackEndGameInfo.instance.GamePrivateInfoUpdate("UserInfo", saveEqipData);
+        }
     }
 
     public void LoadUserEqip()
     {
-        if (PlayerPrefs.HasKey("UserEqip"))
+        string tempUserEqip = BackEndGameInfo.instance.GetPrivateContents("UserInfo", "UserEqip")[0];
+        string[] tempUserEqipList = tempUserEqip.Split('=');
+        acc = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[0].Split('-')[0]), tempUserEqipList[0].Split('-')[1], StringToColor(tempUserEqipList[0].Split('-')[2]), StringToColor(tempUserEqipList[0].Split('-')[3]));
+        top = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[1].Split('-')[0]), tempUserEqipList[1].Split('-')[1], StringToColor(tempUserEqipList[1].Split('-')[2]), StringToColor(tempUserEqipList[1].Split('-')[3]));
+        pan = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[2].Split('-')[0]), tempUserEqipList[2].Split('-')[1], StringToColor(tempUserEqipList[2].Split('-')[2]), StringToColor(tempUserEqipList[2].Split('-')[3]));
+        eye = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[3].Split('-')[0]), tempUserEqipList[3].Split('-')[1], StringToColor(tempUserEqipList[3].Split('-')[2]), StringToColor(tempUserEqipList[3].Split('-')[3]));
+        face = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[4].Split('-')[0]), tempUserEqipList[4].Split('-')[1], StringToColor(tempUserEqipList[4].Split('-')[2]), StringToColor(tempUserEqipList[4].Split('-')[3]));
+        haF = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[5].Split('-')[0]), tempUserEqipList[5].Split('-')[1], StringToColor(tempUserEqipList[5].Split('-')[2]), StringToColor(tempUserEqipList[5].Split('-')[3]));
+        haB = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[6].Split('-')[0]), tempUserEqipList[6].Split('-')[1], StringToColor(tempUserEqipList[6].Split('-')[2]), StringToColor(tempUserEqipList[6].Split('-')[3]));
+        outt = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[7].Split('-')[0]), tempUserEqipList[7].Split('-')[1], StringToColor(tempUserEqipList[7].Split('-')[2]), StringToColor(tempUserEqipList[7].Split('-')[3]));
+        sho = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[8].Split('-')[0]), tempUserEqipList[8].Split('-')[1], StringToColor(tempUserEqipList[8].Split('-')[2]), StringToColor(tempUserEqipList[8].Split('-')[3]));
+        cap = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[9].Split('-')[0]), tempUserEqipList[9].Split('-')[1], StringToColor(tempUserEqipList[9].Split('-')[2]), StringToColor(tempUserEqipList[9].Split('-')[3]));
+        set = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[10].Split('-')[0]), tempUserEqipList[10].Split('-')[1], StringToColor(tempUserEqipList[10].Split('-')[2]), StringToColor(tempUserEqipList[10].Split('-')[3]));
+        body = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[11].Split('-')[0]), tempUserEqipList[11].Split('-')[1], StringToColor(tempUserEqipList[11].Split('-')[2]), StringToColor(tempUserEqipList[11].Split('-')[3]));
+    }
+
+    [HideInInspector] public string haveCharacter;
+
+    public void PutCharacter(string character)
+    {
+        if (!haveCharacter.Contains(character))
         {
-            string tempUserEqip = PlayerPrefs.GetString("UserEqip");
-            string[] tempUserEqipList = tempUserEqip.Split('=');
-            acc = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[0].Split('-')[0]), tempUserEqipList[0].Split('-')[1], StringToColor(tempUserEqipList[0].Split('-')[2]), StringToColor(tempUserEqipList[0].Split('-')[3]));
-            top = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[1].Split('-')[0]), tempUserEqipList[1].Split('-')[1], StringToColor(tempUserEqipList[1].Split('-')[2]), StringToColor(tempUserEqipList[1].Split('-')[3]));
-            pan = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[2].Split('-')[0]), tempUserEqipList[2].Split('-')[1], StringToColor(tempUserEqipList[2].Split('-')[2]), StringToColor(tempUserEqipList[2].Split('-')[3]));
-            eye = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[3].Split('-')[0]), tempUserEqipList[3].Split('-')[1], StringToColor(tempUserEqipList[3].Split('-')[2]), StringToColor(tempUserEqipList[3].Split('-')[3]));
-            face = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[4].Split('-')[0]), tempUserEqipList[4].Split('-')[1], StringToColor(tempUserEqipList[4].Split('-')[2]), StringToColor(tempUserEqipList[4].Split('-')[3]));
-            haF = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[5].Split('-')[0]), tempUserEqipList[5].Split('-')[1], StringToColor(tempUserEqipList[5].Split('-')[2]), StringToColor(tempUserEqipList[5].Split('-')[3]));
-            haB = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[6].Split('-')[0]), tempUserEqipList[6].Split('-')[1], StringToColor(tempUserEqipList[6].Split('-')[2]), StringToColor(tempUserEqipList[6].Split('-')[3]));
-            outt = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[7].Split('-')[0]), tempUserEqipList[7].Split('-')[1], StringToColor(tempUserEqipList[7].Split('-')[2]), StringToColor(tempUserEqipList[7].Split('-')[3]));
-            sho = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[8].Split('-')[0]), tempUserEqipList[8].Split('-')[1], StringToColor(tempUserEqipList[8].Split('-')[2]), StringToColor(tempUserEqipList[8].Split('-')[3]));
-            cap = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[9].Split('-')[0]), tempUserEqipList[9].Split('-')[1], StringToColor(tempUserEqipList[9].Split('-')[2]), StringToColor(tempUserEqipList[9].Split('-')[3]));
-            set = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[10].Split('-')[0]), tempUserEqipList[10].Split('-')[1], StringToColor(tempUserEqipList[10].Split('-')[2]), StringToColor(tempUserEqipList[10].Split('-')[3]));
-            body = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[11].Split('-')[0]), tempUserEqipList[11].Split('-')[1], StringToColor(tempUserEqipList[11].Split('-')[2]), StringToColor(tempUserEqipList[11].Split('-')[3]));
+            haveCharacter += character + "-";
+        }
+    }
+
+    public void SaveHaveCharacter()
+    {
+        Param data = new Param();
+        data.Add("haveCharacter", haveCharacter);
+
+        if (BackEndGameInfo.instance.GetPrivateContents("UserInfo", "nickname").Count == 0)
+        {
+            BackEndGameInfo.instance.InsertData("UserInfo", data);
+        }
+        else
+        {
+            BackEndGameInfo.instance.GamePrivateInfoUpdate("UserInfo", data);
+        }
+    }
+
+    public void LoadHaveCharacter()
+    {
+        haveCharacter = BackEndGameInfo.instance.GetPrivateContents("UserInfo", "haveCharacter")[0];
+    }
+
+    private void OnApplicationQuit()
+    {
+        if (BackEndGameInfo.instance.GetPrivateContents("UserInfo", "nickname").Count != 0)
+        {
+            SaveSkinItem();
+            SaveUserEqip();
+            SaveHaveCharacter();
         }
     }
 }

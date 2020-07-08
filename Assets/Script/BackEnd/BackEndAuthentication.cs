@@ -2,12 +2,11 @@
 using UnityEngine.UI;
 using BackEnd;
 using UnityEngine.SceneManagement;
+using LitJson;
+using System.Runtime.CompilerServices;
 
 public class BackEndAuthentication : MonoBehaviour
 {
-
-  
-
     public InputField idInput;
     public InputField paInput;
 
@@ -38,7 +37,8 @@ public class BackEndAuthentication : MonoBehaviour
         if (backendReturnObject.IsSuccess() == true)
         {
             Debug.Log("[동기방식] 로그인 완료");
-            SceneManager.LoadScene("Loding");
+            // SceneManager.LoadScene("Loding");
+            AsyncGetUserInfo();
         }
 
         else
@@ -49,99 +49,36 @@ public class BackEndAuthentication : MonoBehaviour
         Debug.Log("동기 방식============================================= ");
     }
 
-    BackendReturnObject bro = new BackendReturnObject();
-    bool isSuccess = false;
 
-    void Update()
+    // 닉네임 정보 받아오기 순서 1 
+    public void AsyncGetUserInfo()
     {
-        if (isSuccess)
+        BackendAsyncClass.BackendAsync(Backend.BMember.GetUserInfo, (callback) =>
         {
-            // SaveToken( BackendReturnObject bro ) -> void
-            // 비동기 메소드는 update()문에서 SaveToken을 꼭 적용해야 합니다.
-            Backend.BMember.SaveToken(bro);
-            isSuccess = false;
-            bro.Clear();
-        }
-    }
+            Debug.Log(callback.GetReturnValue());
+            string[] userData = callback.GetReturnValue().Split('"');
+            string inDate = userData[7];
+            string nickname = userData[4];
+            GameManager.instance.userInfoManager.inDate = inDate;
 
-    // 회원가입2 - 비동기 방식
-    public void OnClickSignUp2()
-    {
-        Backend.BMember.CustomSignUp(idInput.text, paInput.text, "Test2", (callback) =>
-        {
-            isSuccess = callback.IsSuccess();
-            bro = callback;
-
-            if (isSuccess == true)
+            Debug.Log("닉네임 및 inDate 받아오기 완료");
+            if (nickname == ":null,") // 닉네임이 안정해져 있을 경우
             {
-                Debug.Log("[비동기방식] 회원가입 완료");
+                GameManager.instance.userInfoManager.nickname = "";
+                SceneManager.LoadScene("CaracterSelect");
             }
-            else
+            else // 닉네임이 있을 경우 
             {
-                BackEndManager.MyInstance.ShowErrorUI(callback);
+                GameManager.instance.userInfoManager.nickname = callback.GetReturnValuetoJSON()["row"]["nickname"].ToString();
+                GameManager.instance.userInfoManager.LoadSkinItem();
+                GameManager.instance.userInfoManager.LoadUserEqip();
+
+                SceneManager.LoadScene("Loding");
             }
-        });
 
-        Debug.Log("비동기 방식============================================= ");
-    }
-
-    // 로그인2 - 비동기 방식
-    public void OnClickLogin2()
-    {
-        Backend.BMember.CustomLogin(idInput.text, paInput.text, (callback) =>
-        {
-            isSuccess = callback.IsSuccess();
-            bro = callback;
-
-            if (isSuccess == true)
-            {
-                Debug.Log("[비동기방식] 로그인 완료");
-            }
-            else
-            {
-                BackEndManager.MyInstance.ShowErrorUI(bro);
-            }
-        });
-        Debug.Log("비동기 방식============================================= ");
-    }
-
-
-    // 자동 로그인 - 동기방식
-    public void AutoLogin1()
-    {
-        BackendReturnObject backendReturnObject = Backend.BMember.LoginWithTheBackendToken();
-
-        if (backendReturnObject.IsSuccess() == true)
-        {
-            Debug.Log("[동기방식] 자동로그인 완료");
-            
-        }
-        else
-        {
-            BackEndManager.MyInstance.ShowErrorUI(backendReturnObject);
-        }
-
-
-        Debug.Log("동기 방식============================================= ");
-    }
-
-    // 자동 로그인 - 비동기방식
-    public void AutoLogin2()
-    {
-        Backend.BMember.LoginWithTheBackendToken((callback) =>
-        {
-            isSuccess = callback.IsSuccess();
-            bro = callback;
-
-            if (isSuccess == true)
-            {
-                Debug.Log("[비동기방식] 자동로그인 완료");
-            }
-            else
-            {
-                BackEndManager.MyInstance.ShowErrorUI(bro);
-            }
 
         });
     }
+
+
 }
