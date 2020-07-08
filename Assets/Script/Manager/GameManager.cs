@@ -13,11 +13,8 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         instance = this;
-        Screen.SetResolution(720, 1280, true);
+        //Screen.SetResolution(1080, 1920, true);
     }
-
-  
-
 }
 
    

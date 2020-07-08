@@ -74,6 +74,7 @@
     <Compile Include="Assets\Script\BackEnd\BackEndAuthentication.cs" />
     <Compile Include="Assets\Script\BackEnd\BackEndManager.cs" />
     <Compile Include="Assets\Script\Camera\CameraResolution.cs" />
+    <Compile Include="Assets\Script\Camera\CameraResolution2.cs" />
     <Compile Include="Assets\Script\Camera\ScreenShotHandler.cs" />
     <Compile Include="Assets\Script\Loding.cs" />
     <Compile Include="Assets\Script\Manager\DatabaseManager.cs" />
@@ -95,12 +96,37 @@
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Test\Rotate.cs" />
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Test\TestReporter.cs" />
     <Compile Include="Assets\test.cs" />
+    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
+    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo.cs" />
+    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_New.cs" />
+    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDir.cs" />
+    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
+    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RotateCamera.cs" />
+    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
+    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
+    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoRotate.cs" />
+    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutodestructWhenNoChildren.cs" />
+    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_InspectorHelp.cs" />
+    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_LightIntensityFade.cs" />
+    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_ShurikenThreadFix.cs" />
+    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Spawn System\CFX_SpawnSystem.cs" />
     <None Include="Assets\Spine\version.txt" />
+    <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Glow.shader" />
+    <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Ubershader.shader" />
+    <None Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAB_Alpha8.shader" />
     <None Include="Assets\Script\TxT\스킨 정보_DB.txt" />
+    <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR.cginc" />
     <None Include="Assets\Material\MaskedUIBlur.shader" />
+    <None Include="Assets\리소스\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
     <None Include="Assets\Character\bodya.atlas.txt" />
+    <None Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\CartoonFX Readme.txt" />
     <None Include="Assets\Material\additive.shader" />
+    <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Prefabs\Texts\_Make your own text effect.txt" />
+    <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\Readme Cartoon FX Remaster.txt" />
+    <None Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
     <None Include="Assets\Demigiant\DOTween\readme.txt" />
+    <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Procedural Ring.shader" />
+    <None Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_WaterWiggle.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
@@ -737,6 +763,22 @@
     <ProjectReference Include="spine-unity-editor.csproj">
       <Project>{007215B7-A2B9-B071-D18C-74F165DDEB91}</Project>
       <Name>spine-unity-editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXRRuntime.csproj">
+      <Project>{04D8942E-9E5F-A8CA-724C-187BA157BEEE}</Project>
+      <Name>CFXRRuntime</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXREditor.csproj">
+      <Project>{EF87E9CF-D73C-A76C-8577-E55BB2BA8DF1}</Project>
+      <Name>CFXREditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXRDemo.csproj">
+      <Project>{AD0E4991-802F-4C9F-9069-67BF0D32D4C4}</Project>
+      <Name>CFXRDemo</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXRDemoEditor.csproj">
+      <Project>{03B2DFAC-B2A2-2D85-0C5A-D7AD7C5BB7A0}</Project>
+      <Name>CFXRDemoEditor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

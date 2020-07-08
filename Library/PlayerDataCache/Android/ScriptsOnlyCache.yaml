@@ -1,6 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - CameraResolution2
     - Cloth
     - DatabaseManager
     - GameManager
@@ -13,6 +14,8 @@ ScriptsOnlyBuild:
     - UserInfoManager
     DOTween.dll:
     - DG.Tweening.Core.DOTweenSettings
+    TheBackendSettings.dll:
+    - TheBackendSettings
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.Tilemap.Editor.dll:
@@ -53,7 +56,7 @@ ScriptsOnlyBuild:
     - Spine.Unity.SkeletonDataAsset
     - Spine.Unity.SpineAtlasAsset
   sceneClasses:
-    Assets/Scenes/SampleScene.unity:
+    Assets/Scenes/Main.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -79,61 +82,65 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11262}
+      Script: {instanceID: 11280}
     - Class: 114
-      Script: {instanceID: 11584}
+      Script: {instanceID: 11426}
     - Class: 114
-      Script: {instanceID: 11588}
+      Script: {instanceID: 11610}
     - Class: 114
-      Script: {instanceID: 11638}
+      Script: {instanceID: 11614}
     - Class: 114
-      Script: {instanceID: 11730}
+      Script: {instanceID: 11664}
     - Class: 114
-      Script: {instanceID: 11750}
+      Script: {instanceID: 11758}
     - Class: 114
-      Script: {instanceID: 12166}
+      Script: {instanceID: 11778}
     - Class: 114
-      Script: {instanceID: 12350}
+      Script: {instanceID: 12196}
     - Class: 114
-      Script: {instanceID: 12614}
+      Script: {instanceID: 12380}
     - Class: 114
-      Script: {instanceID: 12740}
+      Script: {instanceID: 12646}
     - Class: 114
-      Script: {instanceID: 12974}
+      Script: {instanceID: 12772}
     - Class: 114
-      Script: {instanceID: 13128}
+      Script: {instanceID: 13006}
     - Class: 114
-      Script: {instanceID: 13194}
+      Script: {instanceID: 13160}
     - Class: 114
-      Script: {instanceID: 13206}
+      Script: {instanceID: 13228}
     - Class: 114
-      Script: {instanceID: 13286}
+      Script: {instanceID: 13240}
     - Class: 114
-      Script: {instanceID: 13370}
+      Script: {instanceID: 13320}
     - Class: 114
-      Script: {instanceID: 13386}
+      Script: {instanceID: 13404}
     - Class: 114
-      Script: {instanceID: 13394}
+      Script: {instanceID: 13420}
     - Class: 114
-      Script: {instanceID: 13590}
+      Script: {instanceID: 13428}
     - Class: 114
-      Script: {instanceID: 13826}
+      Script: {instanceID: 13626}
     - Class: 114
-      Script: {instanceID: 13940}
+      Script: {instanceID: 13848}
+    - Class: 114
+      Script: {instanceID: 13866}
     - Class: 114
       Script: {instanceID: 13982}
     - Class: 114
-      Script: {instanceID: 14274}
+      Script: {instanceID: 14024}
     - Class: 114
-      Script: {instanceID: 14384}
+      Script: {instanceID: 14316}
     - Class: 114
-      Script: {instanceID: 14548}
+      Script: {instanceID: 14428}
     - Class: 114
-      Script: {instanceID: 14656}
+      Script: {instanceID: 14592}
     - Class: 114
-      Script: {instanceID: 14680}
+      Script: {instanceID: 14702}
     - Class: 114
-      Script: {instanceID: 65632}
+      Script: {instanceID: 14726}
+    - Class: 114
+      Script: {instanceID: 18020}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -199,10 +206,22 @@ ScriptsOnlyBuild:
     className: ReporterMessageReceiver
   - hash:
       serializedVersion: 2
+      Hash: 32456d4d301afb0da0950e66f3814c1a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Loding
+  - hash:
+      serializedVersion: 2
       Hash: 30af5f62e532d3044e78a10afa87ab99
     assemblyName: spine-unity.dll
     namespaceName: Spine.Unity
     className: AnimationReferenceAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 63a98188105f11f2749b95888d32e887
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Shop
   - hash:
       serializedVersion: 2
       Hash: e8e6884f9aa59c3f25a5eb28f6416d62
@@ -215,6 +234,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_ScrollbarEventHandler
+  - hash:
+      serializedVersion: 2
+      Hash: 02a1e3a1f1f8da5fafd0aa34668cc9b5
+    assemblyName: TheBackendHashKeySettings.dll
+    namespaceName: 
+    className: TheBackendHashKeySettings
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
@@ -269,6 +294,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: TestResultRendererCallback
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BackEndManager
   - hash:
       serializedVersion: 2
       Hash: 896f4ddc5cbd3f6fa8a70c332cddb47a
@@ -565,10 +596,10 @@ ScriptsOnlyBuild:
     className: SpineAtlasAsset
   - hash:
       serializedVersion: 2
-      Hash: 9506eb178fb9720b1f986a3704d6fe4f
+      Hash: 05bc8199af91ee5e0e453813471b0b1c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: IconManager
+    className: BackEndAuthentication
   - hash:
       serializedVersion: 2
       Hash: 5ad4aa237d47ac2bab17bacb672edf7a
@@ -685,6 +716,12 @@ ScriptsOnlyBuild:
     className: BoneFollowerGraphic
   - hash:
       serializedVersion: 2
+      Hash: 89b2306ad1c5d46495facaa550b27553
+    assemblyName: TheBackendSettings.dll
+    namespaceName: 
+    className: TheBackendSettings
+  - hash:
+      serializedVersion: 2
       Hash: bb7857e3bff0a34b919feb40ab25e1ba
     assemblyName: spine-unity.dll
     namespaceName: Spine.Unity
@@ -763,7 +800,7 @@ ScriptsOnlyBuild:
     className: SkeletonPartsRenderer
   - hash:
       serializedVersion: 2
-      Hash: 6efca551941daaef5d7c252887d49e64
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UserInfoManager
@@ -919,11 +956,11 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: 63a98188105f11f2749b95888d32e887
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: Shop
+    className: CameraResolution2
   platform: 13
   scenePathNames:
-  - Assets/Scenes/SampleScene.unity
+  - Assets/Scenes/Main.unity
   playerPath: "C:/Users/tjdtj/OneDrive/\uBC14\uD0D5 \uD654\uBA74/test.apk"

@@ -12,8 +12,8 @@ public class CameraResolution : MonoBehaviour
     private void ResolutionFix()
     {
         // 가로 세로 비율
-        float targetWidthAspect = 16.0f;
-        float targetHeightAspect = 9.0f;
+        float targetWidthAspect = 9.0f;
+        float targetHeightAspect = 16.0f;
 
         Camera.main.aspect = targetWidthAspect / targetHeightAspect;
 
