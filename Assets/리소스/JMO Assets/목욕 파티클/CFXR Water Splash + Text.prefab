@@ -87,6 +87,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5482032288308034270, guid: b37a451fed04afa419e1991cfdffbf99,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b37a451fed04afa419e1991cfdffbf99, type: 3}
 --- !u!1001 &7304248432917551847
@@ -96,6 +101,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114389566158634072, guid: 60c88e966a0f8324da766221921ee65f,
+        type: 3}
+      propertyPath: clearBehavior
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 342572388441666913, guid: 60c88e966a0f8324da766221921ee65f,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5012733527486519099, guid: 60c88e966a0f8324da766221921ee65f,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5068704198672003480, guid: 60c88e966a0f8324da766221921ee65f,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -104,12 +124,12 @@ PrefabInstance:
     - target: {fileID: 5531231052371847849, guid: 60c88e966a0f8324da766221921ee65f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.492
+      value: 13.66
       objectReference: {fileID: 0}
     - target: {fileID: 5531231052371847849, guid: 60c88e966a0f8324da766221921ee65f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.621
+      value: -26.11
       objectReference: {fileID: 0}
     - target: {fileID: 5531231052371847849, guid: 60c88e966a0f8324da766221921ee65f,
         type: 3}
@@ -119,17 +139,17 @@ PrefabInstance:
     - target: {fileID: 5531231052371847849, guid: 60c88e966a0f8324da766221921ee65f,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5531231052371847849, guid: 60c88e966a0f8324da766221921ee65f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5531231052371847849, guid: 60c88e966a0f8324da766221921ee65f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5531231052371847849, guid: 60c88e966a0f8324da766221921ee65f,
         type: 3}
@@ -176,10 +196,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: CFXR Water Splash + Text
       objectReference: {fileID: 0}
+    - target: {fileID: 5531231052371847855, guid: 60c88e966a0f8324da766221921ee65f,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5573395842851499435, guid: 60c88e966a0f8324da766221921ee65f,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5629449522299147222, guid: 60c88e966a0f8324da766221921ee65f,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5756098090874883589, guid: 60c88e966a0f8324da766221921ee65f,
         type: 3}
@@ -190,6 +220,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6988509010111234008, guid: 60c88e966a0f8324da766221921ee65f,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586956518152273989, guid: 60c88e966a0f8324da766221921ee65f,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8278824556785241469, guid: 60c88e966a0f8324da766221921ee65f,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60c88e966a0f8324da766221921ee65f, type: 3}

@@ -49,7 +49,6 @@ public class Bath : MonoBehaviour
             setOn[i].SetActive(true);
         }
 
-        clickParticleWater.SetActive(true);
         AniCoroutine = Bath3Coroutine(1.5f);
     }
 
@@ -132,18 +131,18 @@ public class Bath : MonoBehaviour
             return;
         }
 
-        Vector2 mousePos = Input.mousePosition;
-        Vector2 touchPos = characterCam.GetComponent<Camera>().ScreenToWorldPoint(mousePos);
-        clickParticleWater.transform.position = new Vector3(touchPos.x, clickParticleWater.transform.position.y, -2);
-        clickParticleWater.GetComponent<ParticleSystem>().Play();
         AniCoroutine = Bath3Coroutine(1.5f);
         StartCoroutine(AniCoroutine);
     }
 
     IEnumerator Bath3Coroutine(float time)
     {
+        clickParticleWater.SetActive(true);
+        clickParticleWater.GetComponent<ParticleSystem>().Play();
+        clickParticleWater.transform.position = new Vector3(-0.61f, clickParticleWater.transform.position.y, -2);
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "bath3", false);
         yield return new WaitForSeconds(time);
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "bath", true);
+        clickParticleWater.SetActive(false);
     }
 }

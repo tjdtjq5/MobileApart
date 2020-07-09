@@ -125,6 +125,7 @@
     <None Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\CartoonFX Readme.txt" />
     <None Include="Assets\Material\additive.shader" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Prefabs\Texts\_Make your own text effect.txt" />
+    <None Include="Assets\Material\GlassStainedBumpDistort.shader" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\Readme Cartoon FX Remaster.txt" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
     <None Include="Assets\Demigiant\DOTween\readme.txt" />
