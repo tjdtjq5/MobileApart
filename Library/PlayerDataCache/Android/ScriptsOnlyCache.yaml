@@ -4,6 +4,7 @@ ScriptsOnlyBuild:
     - BackEndAuthentication
     - BackEndGameInfo
     - BackEndManager
+    - Bath
     - CameraResolution2
     - Caracter01
     - Cloth
@@ -12,13 +13,15 @@ ScriptsOnlyBuild:
     - LeftMenue
     - Loding
     - MiniGame
-    - Reporter
-    - ReporterMessageReceiver
     - RockPaperScissors
     - Shop
     - SpineSkinInfoManager
     - TransformSkin
     - UserInfoManager
+    CFXRRuntime.dll:
+    - CartoonFX.CFXR_Effect
+    - CartoonFX.CFXR_ParticleText
+    - CartoonFX.CFXR_ParticleTextFontAsset
     DOTween.dll:
     - DG.Tweening.Core.DOTweenSettings
     TheBackendSettings.dll:
@@ -45,6 +48,7 @@ ScriptsOnlyBuild:
     - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.EventTrigger
     - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
@@ -111,9 +115,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 14088}
     - Class: 114
-      Script: {instanceID: 14560}
+      Script: {instanceID: 14558}
     - Class: 114
-      Script: {instanceID: 14782}
+      Script: {instanceID: 14780}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -160,9 +164,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 14088}
     - Class: 114
-      Script: {instanceID: 14782}
+      Script: {instanceID: 14780}
     - Class: 114
-      Script: {instanceID: 14830}
+      Script: {instanceID: 14828}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -199,19 +203,13 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 700}
-    - Class: 114
       Script: {instanceID: 11294}
-    - Class: 114
-      Script: {instanceID: 11382}
     - Class: 114
       Script: {instanceID: 11630}
     - Class: 114
       Script: {instanceID: 11684}
     - Class: 114
       Script: {instanceID: 11712}
-    - Class: 114
-      Script: {instanceID: 12222}
     - Class: 114
       Script: {instanceID: 12416}
     - Class: 114
@@ -235,9 +233,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 14384}
     - Class: 114
-      Script: {instanceID: 14500}
+      Script: {instanceID: 14498}
     - Class: 114
-      Script: {instanceID: 14782}
+      Script: {instanceID: 14780}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -294,6 +292,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11798}
     - Class: 114
+      Script: {instanceID: 11972}
+    - Class: 114
       Script: {instanceID: 12226}
     - Class: 114
       Script: {instanceID: 12416}
@@ -318,15 +318,21 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13686}
     - Class: 114
+      Script: {instanceID: 13804}
+    - Class: 114
       Script: {instanceID: 14046}
     - Class: 114
       Script: {instanceID: 14088}
     - Class: 114
-      Script: {instanceID: 14670}
+      Script: {instanceID: 14668}
     - Class: 114
-      Script: {instanceID: 14782}
+      Script: {instanceID: 14702}
     - Class: 114
-      Script: {instanceID: 14806}
+      Script: {instanceID: 14780}
+    - Class: 114
+      Script: {instanceID: 14804}
+    - Class: 114
+      Script: {instanceID: 35066}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -334,6 +340,10 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
       Script: {instanceID: 0}
     - Class: 212
       Script: {instanceID: 0}
@@ -1278,6 +1288,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 00dd15e540ff19803b1ecafb3132a451
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Bath
   platform: 13
   scenePathNames:
   - Assets/Scenes/Login.unity

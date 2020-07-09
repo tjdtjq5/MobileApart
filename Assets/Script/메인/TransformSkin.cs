@@ -281,8 +281,8 @@ public class TransformSkin : MonoBehaviour
 
 
     }
- 
-    void body(string skinName)
+
+    public void body(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -298,7 +298,7 @@ public class TransformSkin : MonoBehaviour
         skinList.Add(skinName);
         SetEquip(skinList);
     }
-    void acc(string skinName)
+    public void acc(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -315,7 +315,7 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
     }
 
-    void top(string skinName)
+    public void top(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -333,7 +333,7 @@ public class TransformSkin : MonoBehaviour
      
     }
 
-    void pan(string skinName)
+    public void pan(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -350,7 +350,7 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
     }
 
-    void eye(string skinName)
+    public void eye(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -368,7 +368,7 @@ public class TransformSkin : MonoBehaviour
       
     }
 
-    void face(string skinName)
+    public void face(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -385,7 +385,7 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
       
     }
-    void haF(string skinName)
+    public void haF(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -402,7 +402,7 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
       
     }
-    void haB(string skinName)
+    public void haB(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -419,7 +419,7 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
      
     }
-    void outt(string skinName)
+    public void outt(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -436,7 +436,7 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
       
     }
-    void sho(string skinName)
+    public void sho(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -453,7 +453,7 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
     }
 
-    void cap(string skinName)
+    public void cap(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -470,7 +470,7 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
     }
 
-    void set(string skinName)
+    public void set(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
