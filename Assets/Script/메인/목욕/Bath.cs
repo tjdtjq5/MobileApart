@@ -20,6 +20,10 @@ public class Bath : MonoBehaviour
     [Header("켜지는 것들")]
     public GameObject[] setOn;
 
+    private void Start()
+    {
+    }
+
     public void BathOpen()
     {
         originCamPos = characterCam.position;
@@ -30,6 +34,7 @@ public class Bath : MonoBehaviour
 
         originSize = character.transform.localScale;
         character.transform.localScale = moveSize;
+
 
         currentAni = character.GetComponent<SkeletonAnimation>().AnimationName;
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0 ,"bath", true);
@@ -50,6 +55,8 @@ public class Bath : MonoBehaviour
         }
 
         AniCoroutine = Bath3Coroutine(1.5f);
+
+
     }
 
     public void BathClose()
@@ -73,7 +80,7 @@ public class Bath : MonoBehaviour
             setOn[i].SetActive(false);
         }
 
-        clickParticleWater.SetActive(false);
+        StopCoroutine(AniCoroutine);
     }
 
     bool touchFlag = false;
@@ -83,7 +90,6 @@ public class Bath : MonoBehaviour
         StopCoroutine(AniCoroutine);
 
         touchFlag = true;
-        touchParticleWater.SetActive(true);
         touchParticleWater.GetComponent<ParticleSystem>().Play();
         aniName = "";
     }
@@ -91,7 +97,8 @@ public class Bath : MonoBehaviour
     public void TouchUpWater()
     {
         touchFlag = false;
-        touchParticleWater.SetActive(false);
+        touchParticleWater.GetComponent<ParticleSystem>().Stop();
+        touchParticleWater.transform.position = new Vector2(2000, 2000);
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "bath", true);
     }
     string aniName;
@@ -137,12 +144,9 @@ public class Bath : MonoBehaviour
 
     IEnumerator Bath3Coroutine(float time)
     {
-        clickParticleWater.SetActive(true);
         clickParticleWater.GetComponent<ParticleSystem>().Play();
-        clickParticleWater.transform.position = new Vector3(-0.61f, clickParticleWater.transform.position.y, -2);
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "bath3", false);
         yield return new WaitForSeconds(time);
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "bath", true);
-        clickParticleWater.SetActive(false);
     }
 }

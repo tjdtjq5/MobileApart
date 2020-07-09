@@ -35,6 +35,9 @@ public class Cloth : MonoBehaviour
     [Header("캐릭터 스파인")]
     public TransformSkin transformSkin;
 
+    [Header("꺼지는 것들")]
+    public GameObject[] setOff;
+
     int currentState;
 
     bool clickFlag;
@@ -62,6 +65,11 @@ public class Cloth : MonoBehaviour
             currentState = 1;
 
             selectColorItemIndexNum = -1;
+
+            for (int i = 0; i < setOff.Length; i++)
+            {
+                setOff[i].gameObject.SetActive(false);
+            }
 
             int num = GameManager.instance.userInfoManager.GetIndexColorItem(Color.clear);
             colorSlotBtn01.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = randomColorIcon;
@@ -233,6 +241,11 @@ public class Cloth : MonoBehaviour
             clothBtn.SetActive(true);
             backBtn.SetActive(false);
 
+            for (int i = 0; i < setOff.Length; i++)
+            {
+                setOff[i].gameObject.SetActive(true);
+            }
+
             for (int i = 0; i < context.childCount; i++)
             {
                 Destroy(context.GetChild(i).gameObject);
@@ -248,7 +261,7 @@ public class Cloth : MonoBehaviour
         {
             callBack();
         }
-        characterCamera.transform.DOMove(moveChracterCamera, cameraMoveSpeed);
+        characterCamera.transform.DOMove(new Vector3(moveChracterCamera.x , moveChracterCamera.y, characterCamera.transform.position.z), cameraMoveSpeed);
         characterCamera.GetComponent<Camera>().DOOrthoSize(6.5f, cameraMoveSpeed);
         uiCamera.transform.DOMoveX(uiCamMoveX, cameraMoveSpeed);
         yield return new WaitForSeconds(cameraMoveSpeed);
