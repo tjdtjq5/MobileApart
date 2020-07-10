@@ -467,9 +467,6 @@ public class SlideCustom : MonoBehaviour
             context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * context_Height);
         }
 
-        GameManager.instance.userInfoManager.SaveSkinItem();
-        GameManager.instance.userInfoManager.SaveUserEqip();
-
         CheckPannelClose();
     }
 

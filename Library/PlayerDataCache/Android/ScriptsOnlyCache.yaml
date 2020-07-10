@@ -1116,7 +1116,7 @@ ScriptsOnlyBuild:
     className: SkeletonPartsRenderer
   - hash:
       serializedVersion: 2
-      Hash: dd1be4e4cff8b1f7a89d4825dbad9ee0
+      Hash: 07d3653bd0c50ffcf06b79be6f5e9ee7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UserInfoManager

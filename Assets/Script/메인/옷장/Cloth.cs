@@ -362,9 +362,11 @@ public class Cloth : MonoBehaviour
 
         currentState = 3;
         stage02_data = userSkin;
+
         // 스킨 장착
         GameManager.instance.userInfoManager.PushUserEqip(GameManager.instance.userInfoManager.skinItem[GameManager.instance.userInfoManager.GetSkinItemIndex(userSkin)]);
         transformSkin.UserEqipInfoSetting();
+        GameManager.instance.userInfoManager.SaveUserEqip(GameManager.instance.userInfoManager.currentCharacter);
 
         //컬러버튼 
         colorBtn.transform.position = new Vector3(colorBtn.transform.position.x, pos.position.y);
@@ -574,6 +576,7 @@ public class Cloth : MonoBehaviour
                     complete.transform.GetChild(0).GetComponent<Text>().DOFade(0, 1.3f);
 
                     transformSkin.UserEqipInfoSetting();
+
                 }
             }
             else
@@ -655,6 +658,11 @@ public class Cloth : MonoBehaviour
                 }
             }
         }
+
+        // 저장
+        GameManager.instance.userInfoManager.SaveSkinItem();
+        Debug.Log(GameManager.instance.userInfoManager.currentCharacter);
+        GameManager.instance.userInfoManager.SaveUserEqip(GameManager.instance.userInfoManager.currentCharacter);
     }
 
     [Header("경고창")]

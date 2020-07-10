@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using BackEnd;
 using UnityEngine.SceneManagement;
+using LitJson;
+
+/*
+ * [characterSelect씬]
+케릭터 선택 버튼 -> currentCharacter정보 업데이트 -> [CharacterData] 정보가 있는지 확인 (key가 있는지 확인) -> 있다면  [CharacterData] 정보 로드-> Loding 씬으로 이동 
+                                                                                                            -> 없다면  [CharacterData] 정보 초기정보 저장 및 로드 -> Loding씬으로 이동 
+ */
 
 public class Caracter01 : MonoBehaviour
 {
@@ -26,11 +33,35 @@ public class Caracter01 : MonoBehaviour
 
     public void SelectCaracter01()
     {
-        Param characterData = new Param();
-        characterData.Add("haveCharacter", "character01");
-        BackEndGameInfo.instance.GamePrivateInfoUpdate("UserInfo", characterData);
+        Param currentCharacterData = new Param();
+        currentCharacterData.Add("CurrentCharacter", "Caracter01");
 
-        SceneManager.LoadScene("Loding");
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
+        {
+            // 이후 처리
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
+            string dataIndate = jsonData["inDate"]["S"].ToString();
+
+            BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "UserInfo", dataIndate, currentCharacterData, (callback2) =>
+            {
+                // 이후 처리
+                BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback3) =>
+                {
+                    // 이후 처리
+                    JsonData jsonData2 = callback3.GetReturnValuetoJSON()["rows"][0];
+                    if (jsonData2.Keys.Contains("Caracter01" + "Eqip"))
+                    {
+
+                        GameManager.instance.userInfoManager.LoadUserEqip("Caracter01", ()=> SceneManager.LoadScene("Loding"));
+                    }
+                    else
+                    {
+                        GameManager.instance.userInfoManager.SaveUserEqip("Caracter01", () => SceneManager.LoadScene("Loding"));
+                    }
+                });
+
+            });
+        });
     }
 
     void body(string skinName)

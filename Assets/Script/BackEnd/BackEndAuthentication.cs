@@ -44,11 +44,7 @@ public class BackEndAuthentication : MonoBehaviour
         {
             Debug.Log("[동기방식] 로그인 완료");
             // SceneManager.LoadScene("Loding");
-
-
             AsyncGetUserInfo();
-
-
         }
 
         else
@@ -59,44 +55,82 @@ public class BackEndAuthentication : MonoBehaviour
         Debug.Log("동기 방식============================================= ");
     }
 
+    /*
+[CharacterData]
+장비하고 있는 옷 
+스태미너  지능 ... 
+호감도 
+기분 
+스토리 진행상황 
+케릭터 상태 청결 등 ... 
+     */
+
+
+    /*
+     * [Login씬]
+처음 시작 - 회원가입 로그인 -> 닉네임 생성 저장 -> 초기 스킨 아이템 지급 -> characterSelect씬으로 이동 
+이후 시작 - 로그인 -> CurrentCharacter정보가 있는지 확인 -> 있다면 [CharacterData] 정보 로드-> Loding 씬으로 이동 
+                                                         -> 없다면 characterSelect씬으로 이동 
+     */
+
 
     // 닉네임 정보 받아오기 순서 1 
     public void AsyncGetUserInfo()
     {
         BackendAsyncClass.BackendAsync(Backend.BMember.GetUserInfo, (callback) =>
         {
-            Debug.Log(callback.GetReturnValue());
             string[] userData = callback.GetReturnValue().Split('"');
             string inDate = userData[7];
             string nickname = userData[4];
             GameManager.instance.userInfoManager.inDate = inDate;
 
+            GameManager.instance.userInfoManager.Initialized(); // 첫 시작이든 아니든 일단 초기정보 넣기 
+
             Debug.Log("닉네임 및 inDate 받아오기 완료");
-            if (nickname == ":null,") // 닉네임이 안정해져 있을 경우
+            if (nickname == ":null,") // 닉네임이 안정해져 있을 경우 , 첫 시작 
             {
-                NicknameSet();
+                NicknameSet();  // 닉네임 정보 저장 
                 Param nicknameData = new Param();
                 nicknameData.Add("nickname", idInput.text);
-                BackEndGameInfo.instance.InsertData("UserInfo", nicknameData);
+                BackEndGameInfo.instance.InsertData("UserInfo", nicknameData); //private테이블 생성 
                 GameManager.instance.userInfoManager.nickname = idInput.text;
 
-                GameManager.instance.userInfoManager.Initialized();
-                GameManager.instance.userInfoManager.SaveSkinItem();
-                GameManager.instance.userInfoManager.SaveUserEqip();
-
-                SceneManager.LoadScene("CaracterSelect");
+                //초기 스킨 아이템 저장
+                GameManager.instance.userInfoManager.SaveSkinItem(() => {
+                    SceneManager.LoadScene("CaracterSelect");
+                });
             }
-            else // 닉네임이 있을 경우 
+            else // 닉네임이 있을 경우 , 이후시작
             {
-                GameManager.instance.userInfoManager.nickname = callback.GetReturnValuetoJSON()["row"]["nickname"].ToString();
+                GameManager.instance.userInfoManager.nickname = idInput.text;
 
-                GameManager.instance.userInfoManager.LoadSkinItem();
-                GameManager.instance.userInfoManager.LoadUserEqip();
+                // 스킨아이템 불러오기 
+                GameManager.instance.userInfoManager.LoadSkinItem(() => {
+                    BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback2) =>
+                    {
+                        // 이후 처리
+                        JsonData jsonData = callback2.GetReturnValuetoJSON()["rows"][0];
+                        if (jsonData.Keys.Contains("CurrentCharacter")) // CurrentCharacter 정보가 존재 한다면 
+                        {
+                            string temp = jsonData["inDate"]["S"].ToString();
+                            string currentCharacter = jsonData["CurrentCharacter"][0].ToString();
+                            GameManager.instance.userInfoManager.currentCharacter = currentCharacter;
+                            GameManager.instance.userInfoManager.LoadUserEqip(currentCharacter, () => {
+                                SceneManager.LoadScene("Loding");
+                            });
+                        }
+                        else
+                        {
+                            SceneManager.LoadScene("CaracterSelect");// CurrentCharacter 정보가 없다면 
+                        }
+                    });
+                });
 
-                SceneManager.LoadScene("Loding");
+        
             }
         });
     }
+
 
     private bool CheckNickname()
     {

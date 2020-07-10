@@ -122,7 +122,7 @@ public class Bath : MonoBehaviour
             {
                 if (aniName != "bath")
                 {
-                    character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "bath", true);
+                   character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "bath", true);
                     aniName = "bath";
                 }
             }
