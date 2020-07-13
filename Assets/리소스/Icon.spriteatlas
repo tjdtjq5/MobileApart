@@ -23,16 +23,16 @@ SpriteAtlas:
     platformSettings: []
     packingSettings:
       serializedVersion: 2
-      padding: 4
+      padding: 8
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
-      enableTightPacking: 0
+      enableRotation: 0
+      enableTightPacking: 1
     variantMultiplier: 1
     packables:
     - {fileID: 2800000, guid: 7d225548377af7842b5c1ef329a218b4, type: 3}
     - {fileID: 2800000, guid: 361c6b6a36bd4c94e9836c15d13f8163, type: 3}
-    - {fileID: 2800000, guid: 9adc97d8727cc3e4c9f5a68aa370ef79, type: 3}
+    - {fileID: 2800000, guid: e4b0387fde103614e948a8cb2972d440, type: 3}
     - {fileID: 2800000, guid: ea5ace200d4aa30479c088e7275b7d7e, type: 3}
     - {fileID: 2800000, guid: 62cbadb3073bdb345b5197a50ab3e94e, type: 3}
     - {fileID: 2800000, guid: fe347d8466cd1014998325761a26bef9, type: 3}
@@ -61,9 +61,7 @@ SpriteAtlas:
     - {fileID: 2800000, guid: e6a4db4b7c07abb47ae6782189229df1, type: 3}
     - {fileID: 2800000, guid: c8620daf95b6bd940ac6b8ee2c5f73cb, type: 3}
     - {fileID: 2800000, guid: dd3674f1803d89541929828671bee386, type: 3}
-    - {fileID: 2800000, guid: cd9ababa3079869428c1313756e3cf3e, type: 3}
-    - {fileID: 2800000, guid: e4b0387fde103614e948a8cb2972d440, type: 3}
-    totalSpriteSurfaceArea: 217370
+    totalSpriteSurfaceArea: 194116
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -81,10 +79,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 3359ab7524888934e9b64a0d6b4848a6, type: 3}
   - {fileID: 21300000, guid: 3ef6c1367525b45439438aa9495018d7, type: 3}
   - {fileID: 21300000, guid: 7d225548377af7842b5c1ef329a218b4, type: 3}
-  - {fileID: 21300000, guid: 9adc97d8727cc3e4c9f5a68aa370ef79, type: 3}
   - {fileID: 21300000, guid: 001d59b9b49bb9a41a3a28ca2c49b557, type: 3}
   - {fileID: 21300000, guid: 361c6b6a36bd4c94e9836c15d13f8163, type: 3}
-  - {fileID: 21300000, guid: cd9ababa3079869428c1313756e3cf3e, type: 3}
   - {fileID: 21300000, guid: 2ebe07fad85f7584ba491f9db4a91c84, type: 3}
   - {fileID: 21300000, guid: e6a4db4b7c07abb47ae6782189229df1, type: 3}
   - {fileID: 21300000, guid: e449dcbba22f02c4a8b8bbb84dc289fc, type: 3}
@@ -115,10 +111,8 @@ SpriteAtlas:
   - ui_roundcorner
   - icon_list_bar
   - arrow_speak
-  - icon_main_shop
   - icon_dress_under
   - circle
-  - icon_list_setting
   - icon_dress_eye
   - icon_list_box
   - icon_dress_skirt

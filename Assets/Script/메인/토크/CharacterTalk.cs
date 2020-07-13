@@ -59,7 +59,10 @@ public class CharacterTalk : MonoBehaviour
 
     public void Talk(string text, float time)
     {
-        StopCoroutine(tempTalkCoroutine);
+        if (tempTalkCoroutine != null)
+        {
+            StopCoroutine(tempTalkCoroutine);
+        }
         tempTalkCoroutine = TalkCoroutine(text, time);
         StartCoroutine(tempTalkCoroutine);
     }

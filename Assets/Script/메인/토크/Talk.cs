@@ -66,7 +66,7 @@ public class Talk : MonoBehaviour
             {
                 case "가위바위보":
                     TalkBtn();
-                    RockPaperScissors.instance.RockPaperScissorsOpen();
+                    talkBullon[i].GetComponent<Button>().onClick.AddListener(() => RockPaperScissors.instance.RockPaperScissorsOpen());
                     break;
                 default:
                     break;

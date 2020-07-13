@@ -6,6 +6,7 @@ public class Bath : MonoBehaviour
 {
     [Header("캐릭터 카메라")]
     public Transform characterCam;   Vector3 originCamPos;  public Vector3 camMovePos;
+    public Acceleration acceleration;
     [Header("케릭터")]
     public Transform character;      Vector3 originCharacterPos; public Vector3 characterMovePos;
     Vector3 originSize;               public Vector3 moveSize;
@@ -35,6 +36,7 @@ public class Bath : MonoBehaviour
         originSize = character.transform.localScale;
         character.transform.localScale = moveSize;
 
+  //      acceleration.StopRotation();
 
         currentAni = character.GetComponent<SkeletonAnimation>().AnimationName;
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0 ,"bath", true);
@@ -65,6 +67,8 @@ public class Bath : MonoBehaviour
         character.position = originCharacterPos;
 
         character.transform.localScale = originSize;
+
+      //  acceleration.DonStopRotation();
 
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, currentAni, true);
 
@@ -98,7 +102,7 @@ public class Bath : MonoBehaviour
     {
         touchFlag = false;
         touchParticleWater.GetComponent<ParticleSystem>().Stop();
-        touchParticleWater.transform.position = new Vector2(2000, 2000);
+        touchParticleWater.transform.position = new Vector3(2000, 2000, touchParticleWater.transform.position.z);
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "bath", true);
     }
     string aniName;
@@ -108,7 +112,7 @@ public class Bath : MonoBehaviour
         {
             Vector2 mousePos = Input.mousePosition;
             Vector2 touchPos = characterCam.GetComponent<Camera>().ScreenToWorldPoint(mousePos);
-            touchParticleWater.transform.position = new Vector3(touchPos.x, touchPos.y, -1);
+            touchParticleWater.transform.position = new Vector3(touchPos.x, touchPos.y, touchParticleWater.transform.position.z);
 
             if (Mathf.Abs(character.position.x + 4  - touchPos.x) < 1.3f)
             {
@@ -144,9 +148,11 @@ public class Bath : MonoBehaviour
 
     IEnumerator Bath3Coroutine(float time)
     {
-        clickParticleWater.GetComponent<ParticleSystem>().Play();
+        float tempTime = 0.3f;
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "bath3", false);
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(tempTime);
+        clickParticleWater.GetComponent<ParticleSystem>().Play();
+        yield return new WaitForSeconds(time - tempTime);
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "bath", true);
     }
 }
