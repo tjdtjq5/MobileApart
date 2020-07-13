@@ -88,6 +88,7 @@
     <Compile Include="Assets\Script\메인\Album.cs" />
     <Compile Include="Assets\Script\메인\MiniGame\RockPaperScissors.cs" />
     <Compile Include="Assets\Script\메인\TransformSkin.cs" />
+    <Compile Include="Assets\Script\메인\메뉴\Gift.cs" />
     <Compile Include="Assets\Script\메인\목욕\Bath.cs" />
     <Compile Include="Assets\Script\메인\상점\Shop.cs" />
     <Compile Include="Assets\Script\메인\옷장\Cloth.cs" />
@@ -130,7 +131,6 @@
     <None Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\CartoonFX Readme.txt" />
     <None Include="Assets\Material\additive.shader" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Prefabs\Texts\_Make your own text effect.txt" />
-    <None Include="Assets\Material\GlassStainedBumpDistort.shader" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\Readme Cartoon FX Remaster.txt" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
     <None Include="Assets\Demigiant\DOTween\readme.txt" />
@@ -773,21 +773,21 @@
       <Project>{EF87E9CF-D73C-A76C-8577-E55BB2BA8DF1}</Project>
       <Name>CFXREditor</Name>
     </ProjectReference>
-    <ProjectReference Include="CFXRDemo.csproj">
-      <Project>{AD0E4991-802F-4C9F-9069-67BF0D32D4C4}</Project>
-      <Name>CFXRDemo</Name>
-    </ProjectReference>
-    <ProjectReference Include="CFXRDemoEditor.csproj">
-      <Project>{03B2DFAC-B2A2-2D85-0C5A-D7AD7C5BB7A0}</Project>
-      <Name>CFXRDemoEditor</Name>
-    </ProjectReference>
     <ProjectReference Include="spine-unity.csproj">
       <Project>{AE495163-5226-83D5-9283-24DEBDEFA99D}</Project>
       <Name>spine-unity</Name>
     </ProjectReference>
+    <ProjectReference Include="CFXRDemo.csproj">
+      <Project>{AD0E4991-802F-4C9F-9069-67BF0D32D4C4}</Project>
+      <Name>CFXRDemo</Name>
+    </ProjectReference>
     <ProjectReference Include="spine-unity-editor.csproj">
       <Project>{007215B7-A2B9-B071-D18C-74F165DDEB91}</Project>
       <Name>spine-unity-editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="CFXRDemoEditor.csproj">
+      <Project>{03B2DFAC-B2A2-2D85-0C5A-D7AD7C5BB7A0}</Project>
+      <Name>CFXRDemoEditor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -16,3 +16,9 @@ public class Shop : MonoBehaviour
         shopPannel.gameObject.SetActive(false);
     }
 }
+
+public enum MoneyKind
+{
+    Gold,
+    Crystal
+}
