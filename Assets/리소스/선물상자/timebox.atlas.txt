@@ -1,0 +1,90 @@
+
+timebox.png
+size: 440,440
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+box-down
+  rotate: false
+  xy: 2, 2
+  size: 157, 144
+  orig: 157, 144
+  offset: 0, 0
+  index: -1
+box-down1
+  rotate: false
+  xy: 161, 2
+  size: 157, 144
+  orig: 157, 144
+  offset: 0, 0
+  index: -1
+box-down3
+  rotate: false
+  xy: 171, 148
+  size: 157, 144
+  orig: 157, 144
+  offset: 0, 0
+  index: -1
+box-up
+  rotate: false
+  xy: 2, 294
+  size: 167, 144
+  orig: 167, 144
+  offset: 0, 0
+  index: -1
+box-up1
+  rotate: false
+  xy: 171, 294
+  size: 167, 144
+  orig: 167, 144
+  offset: 0, 0
+  index: -1
+box-up3
+  rotate: false
+  xy: 2, 148
+  size: 167, 144
+  orig: 167, 144
+  offset: 0, 0
+  index: -1
+ribbon-l
+  rotate: false
+  xy: 330, 195
+  size: 56, 54
+  orig: 56, 54
+  offset: 0, 0
+  index: -1
+ribbon-l1
+  rotate: false
+  xy: 320, 83
+  size: 56, 54
+  orig: 56, 54
+  offset: 0, 0
+  index: -1
+ribbon-l3
+  rotate: false
+  xy: 330, 139
+  size: 56, 54
+  orig: 56, 54
+  offset: 0, 0
+  index: -1
+ribbon-r
+  rotate: false
+  xy: 340, 377
+  size: 68, 61
+  orig: 68, 61
+  offset: 0, 0
+  index: -1
+ribbon-r1
+  rotate: false
+  xy: 340, 251
+  size: 68, 61
+  orig: 68, 61
+  offset: 0, 0
+  index: -1
+ribbon-r3
+  rotate: false
+  xy: 340, 314
+  size: 68, 61
+  orig: 68, 61
+  offset: 0, 0
+  index: -1

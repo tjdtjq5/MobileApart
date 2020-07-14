@@ -129,6 +129,7 @@
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
     <None Include="Assets\Character\bodya.atlas.txt" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\CartoonFX Readme.txt" />
+    <None Include="Assets\리소스\선물상자\timebox.atlas.txt" />
     <None Include="Assets\Material\additive.shader" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Prefabs\Texts\_Make your own text effect.txt" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\Readme Cartoon FX Remaster.txt" />

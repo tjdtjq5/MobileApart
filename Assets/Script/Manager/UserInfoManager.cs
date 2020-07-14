@@ -479,7 +479,7 @@ public class UserInfoManager : MonoBehaviour
     }
 
     // 유저 재화 
-    public UserMoney userMoney;
+    public UserMoney userMoney = new UserMoney();
 
     public void SetUserMoney(MoneyKind moneyKind, int money)
     {

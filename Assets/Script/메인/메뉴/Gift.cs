@@ -3,6 +3,8 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using Spine;
+using Spine.Unity;
 
 public class Gift : MonoBehaviour
 {
@@ -124,7 +126,7 @@ public class Gift : MonoBehaviour
         tempCoroutine[index] = SliderCountCoroutine(gfitList[index].gfitPannel.Find("슬라이더배경"), gfitList[index].touchMaxCountSecond, streamTime, index);
         StartCoroutine(tempCoroutine[index]);
 
-        
+        gfitList[index].gfitPannel.Find("상자이미지").Find("상자스파인").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "touch", false);
     }
 
     public void Save()
