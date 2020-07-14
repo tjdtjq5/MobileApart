@@ -444,8 +444,6 @@ public class UserInfoManager : MonoBehaviour
                 }
             });
         });
-
-     
     }
 
     public void LoadUserEqip(string currentCharacter ,System.Action action = null)
@@ -480,7 +478,76 @@ public class UserInfoManager : MonoBehaviour
     
     }
 
+    // 유저 재화 
+    public UserMoney userMoney;
 
+    public void SetUserMoney(MoneyKind moneyKind, int money)
+    {
+        switch (moneyKind)
+        {
+            case MoneyKind.Gold:
+                userMoney.gold = money;
+                break;
+            case MoneyKind.Crystal:
+                userMoney.crystal = money;
+                break;
+        }
+    }
+
+    public int GetUserMoney(MoneyKind moneyKind)
+    {
+        switch (moneyKind)
+        {
+            case MoneyKind.Gold:
+                return userMoney.gold;
+            case MoneyKind.Crystal:
+                return userMoney.crystal;
+        }
+        return 0;
+    }
+
+    public void SaveUserMoney(System.Action action = null)
+    {
+        Param moneyData = new Param();
+        moneyData.Add("Gold", GetUserMoney(MoneyKind.Gold));
+        moneyData.Add("Crystal", GetUserMoney(MoneyKind.Crystal));
+
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
+        {
+            // 이후 처리
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
+            string dataIndate = jsonData["inDate"]["S"].ToString();
+
+            BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "UserInfo", dataIndate, moneyData, (callback2) =>
+            {
+                Debug.Log("성공했습니다");
+
+                // 이후 처리
+                if (action != null)
+                {
+                    action();
+                }
+            });
+        });
+    }
+
+    public void LoadUserMoney(System.Action action = null)
+    {
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
+        {
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
+            if (jsonData.Keys.Contains("Gold"))
+            {
+                int Gold = int.Parse(jsonData["Gold"][0].ToString());
+                SetUserMoney(MoneyKind.Gold, Gold);
+            }
+            if (jsonData.Keys.Contains("Crystal"))
+            {
+                int Crystal = int.Parse(jsonData["Crystal"][0].ToString());
+                SetUserMoney(MoneyKind.Crystal, Crystal);
+            }
+        });
+    }
 }
 
 public class UserSkin
@@ -531,4 +598,10 @@ public class UserEqip
         this.color_01 = color_01;
         this.color_02 = color_02;
     }
+}
+
+public class UserMoney
+{
+    public int gold;
+    public int crystal;
 }

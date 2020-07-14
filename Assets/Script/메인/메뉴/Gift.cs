@@ -1,9 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
-using DG.Tweening;
+using UnityEngine.Networking;
 
 public class Gift : MonoBehaviour
 {
@@ -18,39 +17,36 @@ public class Gift : MonoBehaviour
     {
         tempCoroutine = new IEnumerator[gfitList.Length];
         currentStreamTime = new float[gfitList.Length];
-        GiftSetting();
+        Load();
     }
 
-    public void GiftSetting()
+    public void GiftSetting(int index ,float streamTime)
     {
-        for (int i = 0; i < gfitList.Length; i++)
+        // 정보 입력
+        gfitList[index].gfitPannel.Find("상자이름 텍스트").GetComponent<Text>().text = gfitList[index].gfitName;
+        switch (gfitList[index].moneyKind)
         {
-            // 정보 입력
-            gfitList[i].gfitPannel.Find("상자이름 텍스트").GetComponent<Text>().text = gfitList[i].gfitName;
-            switch (gfitList[i].moneyKind)
-            {
-                case MoneyKind.Gold:
-                    gfitList[i].gfitPannel.Find("상자열기").Find("1회 열기").Find("재화").Find("이미지").GetComponent<Image>().sprite = glodSprite;
-                    gfitList[i].gfitPannel.Find("상자열기").Find("10회 열기").Find("재화").Find("이미지").GetComponent<Image>().sprite = glodSprite;
-                    break;
-                case MoneyKind.Crystal:
-                    gfitList[i].gfitPannel.Find("상자열기").Find("1회 열기").Find("재화").Find("이미지").GetComponent<Image>().sprite = crystalSprite;
-                    gfitList[i].gfitPannel.Find("상자열기").Find("1회 열기").Find("재화").Find("이미지").GetComponent<Image>().sprite = crystalSprite;
-                    break;
-            }
-            gfitList[i].gfitPannel.Find("상자열기").Find("1회 열기").Find("재화").Find("Text").GetComponent<Text>().text = gfitList[i].price.ToString();
-            gfitList[i].gfitPannel.Find("상자열기").Find("10회 열기").Find("재화").Find("Text").GetComponent<Text>().text = (gfitList[i].price * 10).ToString();
-
-            //버튼 넣기 
-            int index = i;
-            float touchSecond = gfitList[i].touchCountSecond;
-            gfitList[i].gfitPannel.Find("상자이미지").GetComponent<Button>().onClick.RemoveAllListeners();
-            gfitList[i].gfitPannel.Find("상자이미지").GetComponent<Button>().onClick.AddListener(() => ClickGfit(index, touchSecond));
-         
-            //슬라이드 코르틴 돌리기 
-            tempCoroutine[i] = SliderCountCoroutine(gfitList[i].gfitPannel.Find("슬라이더배경"), gfitList[i].touchMaxCountSecond, 300 , i);
-            StartCoroutine(tempCoroutine[i]);
+            case MoneyKind.Gold:
+                gfitList[index].gfitPannel.Find("상자열기").Find("1회 열기").Find("재화").Find("이미지").GetComponent<Image>().sprite = glodSprite;
+                gfitList[index].gfitPannel.Find("상자열기").Find("10회 열기").Find("재화").Find("이미지").GetComponent<Image>().sprite = glodSprite;
+                break;
+            case MoneyKind.Crystal:
+                gfitList[index].gfitPannel.Find("상자열기").Find("1회 열기").Find("재화").Find("이미지").GetComponent<Image>().sprite = crystalSprite;
+                gfitList[index].gfitPannel.Find("상자열기").Find("1회 열기").Find("재화").Find("이미지").GetComponent<Image>().sprite = crystalSprite;
+                break;
         }
+        gfitList[index].gfitPannel.Find("상자열기").Find("1회 열기").Find("재화").Find("Text").GetComponent<Text>().text = gfitList[index].price.ToString();
+        gfitList[index].gfitPannel.Find("상자열기").Find("10회 열기").Find("재화").Find("Text").GetComponent<Text>().text = (gfitList[index].price * 10).ToString();
+
+        //버튼 넣기 
+        int tempIndex = index;
+        float touchSecond = gfitList[index].touchCountSecond;
+        gfitList[index].gfitPannel.Find("상자이미지").GetComponent<Button>().onClick.RemoveAllListeners();
+        gfitList[index].gfitPannel.Find("상자이미지").GetComponent<Button>().onClick.AddListener(() => ClickGfit(tempIndex, touchSecond));
+
+        //슬라이드 코르틴 돌리기 
+        tempCoroutine[index] = SliderCountCoroutine(gfitList[index].gfitPannel.Find("슬라이더배경"), gfitList[index].touchMaxCountSecond, streamTime, index);
+        StartCoroutine(tempCoroutine[index]);
     }
 
     [Serializable]
@@ -109,19 +105,17 @@ public class Gift : MonoBehaviour
 
             //남은시간 전역변수로
             currentStreamTime[index] = touchMaxCountSecond - remainTime;
-           
+            PlayerPrefs.SetFloat("currentStreamTime" + index, currentStreamTime[index]);
         }
     }
 
     public void ClickGfit(int index, float clickTime)
     {
-        Debug.Log(index);
         if (tempCoroutine[index] == null)
             return;
         StopCoroutine(tempCoroutine[index]);
 
         float streamTime = currentStreamTime[index] + clickTime;
-        Debug.Log(currentStreamTime[index]);
         if (streamTime > gfitList[index].touchMaxCountSecond)
         {
             streamTime = gfitList[index].touchMaxCountSecond;
@@ -129,7 +123,77 @@ public class Gift : MonoBehaviour
 
         tempCoroutine[index] = SliderCountCoroutine(gfitList[index].gfitPannel.Find("슬라이더배경"), gfitList[index].touchMaxCountSecond, streamTime, index);
         StartCoroutine(tempCoroutine[index]);
+
+        
     }
+
+    public void Save()
+    {
+        for (int i = 0; i < currentStreamTime.Length; i++)
+        {
+            PlayerPrefs.SetFloat("currentStreamTime" + i, currentStreamTime[i]);
+        }
+
+        StartCoroutine(WebChk(() => {
+            PlayerPrefs.SetInt("net", (int)timestamp.TotalSeconds);
+        }));
+
+    }
+
+    public void Load()
+    {
+        for (int i = 0; i < currentStreamTime.Length; i++)
+        {
+            if (PlayerPrefs.HasKey("currentStreamTime" + i))
+            {
+                GiftSetting(i, PlayerPrefs.GetFloat("currentStreamTime" + i));
+            }
+            else
+            {
+                GiftSetting(i, 0);
+            }
+        }
+        StartCoroutine(WebChk(() => {
+            int stopwatch = 0;
+            if (PlayerPrefs.HasKey("net"))
+            {
+                stopwatch =
+                       (int)timestamp.TotalSeconds - PlayerPrefs.GetInt("net", (int)timestamp.TotalSeconds);
+                for (int i = 0; i < gfitList.Length; i++)
+                {
+                    ClickGfit(i, stopwatch);
+                }
+            }
+
+            Save();
+        }));
+    }
+    TimeSpan timestamp;
+
+    IEnumerator WebChk(Action callback)
+    {
+        UnityWebRequest request = new UnityWebRequest();
+        using (request = UnityWebRequest.Get("www.naver.com"))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.isNetworkError)
+            {
+                Debug.Log(request.error);
+            }
+            else
+            {
+                string date = request.GetResponseHeader("date");
+
+                DateTime dateTime = DateTime.Parse(date).ToUniversalTime();
+
+                timestamp = dateTime - new DateTime(1970, 1, 1, 0, 0, 0);
+
+                callback();
+            }
+        }
+    }
+
 }
 
 
