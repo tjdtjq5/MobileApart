@@ -5,16 +5,20 @@ using UnityEngine.UI;
 
 public class Test : MonoBehaviour
 {
-    public Text testText;
+    private Camera cam;
     void Start()
     {
-        
+        cam = GetComponent<Camera>();
+        StartCoroutine(DelayedRendering());
     }
 
-    
-    void Update()
+    public IEnumerator DelayedRendering()
     {
-        Vector3 a = Input.acceleration;
-        testText.text = a.ToString();
+        while (true)
+        {
+            cam.Render();
+            yield return new WaitForSeconds(0.0466667f);
+        }
     }
+
 }

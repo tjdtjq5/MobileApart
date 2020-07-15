@@ -1554,6 +1554,7 @@ GameObject:
   - component: {fileID: 1768284092}
   - component: {fileID: 1768284091}
   - component: {fileID: 1768284096}
+  - component: {fileID: 1768284097}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1590,6 +1591,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Skin_DB:
     txt: {fileID: 4900000, guid: 724beb5e5bef3794383c4dd0069ec5fc, type: 3}
+  Box_DB:
+    txt: {fileID: 4900000, guid: 6577a5122dfbdd04dac050fdfe6c3aa0, type: 3}
+  DailyShop_DB:
+    txt: {fileID: 4900000, guid: 4508c390960b8f5498fe66a580d6b76a, type: 3}
+  Item_DB:
+    txt: {fileID: 4900000, guid: 75b61555eff09e04cad03234260448fb, type: 3}
 --- !u!114 &1768284093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1644,6 +1651,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2105453930b56ce4980978b7349a40ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1768284097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768284090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 071c149754e7b344e96e4f4abd7aa2fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iconList: []
 --- !u!1 &1801361945
 GameObject:
   m_ObjectHideFlags: 0

@@ -70,6 +70,8 @@
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
+    <Compile Include="Assets\Material\MobileBlur\MobileBlur.cs" />
+    <Compile Include="Assets\Material\MobileBlur\Move.cs" />
     <Compile Include="Assets\Script\BackEnd\BackEndAuthentication.cs" />
     <Compile Include="Assets\Script\BackEnd\BackEndGameInfo.cs" />
     <Compile Include="Assets\Script\BackEnd\BackEndManager.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Assets\Script\Manager\FPS_Check.cs" />
     <Compile Include="Assets\Script\Manager\FrameChecker.cs" />
     <Compile Include="Assets\Script\Manager\GameManager.cs" />
+    <Compile Include="Assets\Script\Manager\IconManager.cs" />
     <Compile Include="Assets\Script\Manager\SpineSkinInfoManager.cs" />
     <Compile Include="Assets\Script\Manager\UserInfoManager.cs" />
     <Compile Include="Assets\Script\Test.cs" />
@@ -126,12 +129,16 @@
     <None Include="Assets\Script\TxT\스킨 정보_DB.txt" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR.cginc" />
     <None Include="Assets\리소스\메인화면\목욕\callOff.shader" />
+    <None Include="Assets\Script\TxT\데일리상점_DB.txt" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
+    <None Include="Assets\Script\TxT\박스_DB.txt" />
+    <None Include="Assets\Script\TxT\아이템_DB.txt" />
     <None Include="Assets\Character\bodya.atlas.txt" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\CartoonFX Readme.txt" />
     <None Include="Assets\리소스\선물상자\timebox.atlas.txt" />
     <None Include="Assets\Material\additive.shader" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Prefabs\Texts\_Make your own text effect.txt" />
+    <None Include="Assets\Material\MobileBlur\MobileBlur.shader" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\Readme Cartoon FX Remaster.txt" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
     <None Include="Assets\Demigiant\DOTween\readme.txt" />

@@ -6,6 +6,9 @@ using System;
 public class DatabaseManager : MonoBehaviour
 {
     public DataBase Skin_DB;
+    public DataBase Box_DB;
+    public DataBase DailyShop_DB;
+    public DataBase Item_DB;
 }
 
 [Serializable]

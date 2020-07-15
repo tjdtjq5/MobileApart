@@ -62,8 +62,6 @@ public class UserInfoManager : MonoBehaviour
         PushUserEqip(skinItem[8]);
     }
 
-    //랜덤박스아이템 이름, 아이템 수
-    public Dictionary<string, int> randomBoxItem = new Dictionary<string, int>();
     //컬러아이템 이름, 아이템 수
     public List<UserColorItem> colorItem = new List<UserColorItem>();
     public void PushColorItem(Color color)
@@ -153,11 +151,9 @@ public class UserInfoManager : MonoBehaviour
         return -1;
     }
 
-    public void PushSkinItem(string skinName)
+    public void PushSkinItem(UserSkin userSkin)
     {
-        Color color_01 = RandColor();
-        Color color_02 = RandColor();
-        skinItem.Add(new UserSkin(skinName, color_01, color_02));
+        skinItem.Add(userSkin);
     }
 
     Color RandColor()

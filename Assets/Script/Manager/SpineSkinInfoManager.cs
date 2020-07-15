@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using DG.Tweening.Plugins.Core.PathCore;
-using System.IO;
 
 public class SpineSkinInfoManager : MonoBehaviour
 {

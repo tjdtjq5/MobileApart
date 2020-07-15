@@ -109,6 +109,9 @@ public class BackEndAuthentication : MonoBehaviour
             {
                 GameManager.instance.userInfoManager.nickname = idInput.text;
 
+                // 돈 불러오기 
+                GameManager.instance.userInfoManager.LoadUserMoney();
+
                 // 스킨아이템 불러오기 
                 GameManager.instance.userInfoManager.LoadSkinItem(() => {
                     BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback2) =>
@@ -131,8 +134,7 @@ public class BackEndAuthentication : MonoBehaviour
                     });
                 });
 
-                // 돈 불러오기 
-                GameManager.instance.userInfoManager.LoadUserMoney();
+          
             }
         });
     }

@@ -62,11 +62,13 @@ public class LeftMenue : MonoBehaviour
             circle.SetActive(true);
             circle.transform.localPosition = leftPannel.Find("상자").localPosition;
             leftPannel.Find("상자").Find("상자").gameObject.SetActive(true);
+            leftPannel.Find("상자").Find("재화UI ").gameObject.SetActive(true);
         }
         else
         {
             openFlag = false;
             leftPannel.Find("상자").Find("상자").gameObject.SetActive(false);
+            leftPannel.Find("상자").Find("재화UI ").gameObject.SetActive(false);
             LeftMenueOpen();
         }
     }
