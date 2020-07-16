@@ -482,10 +482,10 @@ public class UserInfoManager : MonoBehaviour
         switch (moneyKind)
         {
             case MoneyKind.Gold:
-                userMoney.gold = money;
+                userMoney.Gold = money;
                 break;
             case MoneyKind.Crystal:
-                userMoney.crystal = money;
+                userMoney.Crystal = money;
                 break;
         }
     }
@@ -495,9 +495,9 @@ public class UserInfoManager : MonoBehaviour
         switch (moneyKind)
         {
             case MoneyKind.Gold:
-                return userMoney.gold;
+                return userMoney.Gold;
             case MoneyKind.Crystal:
-                return userMoney.crystal;
+                return userMoney.Crystal;
         }
         return 0;
     }
@@ -598,6 +598,6 @@ public class UserEqip
 
 public class UserMoney
 {
-    public int gold;
-    public int crystal;
+    public int Gold;
+    public int Crystal;
 }

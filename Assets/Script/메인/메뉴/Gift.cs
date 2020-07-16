@@ -19,6 +19,9 @@ public class Gift : MonoBehaviour
     IEnumerator[] tempCoroutine;
     float[] currentStreamTime;
 
+    //결과 담을 주머니
+    List<AlramBox> alramBoxList = new List<AlramBox>();
+
     private void Start()
     {
         tempCoroutine = new IEnumerator[gfitList.Length];
@@ -189,13 +192,17 @@ public class Gift : MonoBehaviour
         MoneySetting();
         GameManager.instance.userInfoManager.SaveUserMoney();
 
+        //알람박스 초기화
+        alramBoxList.Clear();
+
         // 아이템 얻기 
         for (int i = 0; i < num; i++)
         {
             float randomPercent = Random.RandomRange(0, 1000000) / 10000f;
-            Debug.Log(randomPercent);
+
             float itemPercent = 0;
             int count = 0;
+
             while (itemPercent < randomPercent)
             {
                 switch (index)
@@ -226,35 +233,84 @@ public class Gift : MonoBehaviour
             float randB2 = Random.RandomRange(0, 255) / (float)255;
             Color randomColor02 = new Color(randR2, randG2, randB2, 1);
 
+            ItemKind itemKind = GameManager.instance.itemManager.GetItemInfo(GameManager.instance.databaseManager.Box_DB.GetRowData(count)[1]).itemKind;
 
-            // 스킨아이템 목록에 있다면 유저정보에 넣어라 
-            for (int j = 0; j < GameManager.instance.spineSkinInfoManager.SpineSkinInfoList.Length; j++)
+            switch (itemKind)
             {
-                if (GameManager.instance.spineSkinInfoManager.SpineSkinInfoList[i].skinName == GameManager.instance.databaseManager.Box_DB.GetRowData(count)[2])
-                {
-                    GameManager.instance.userInfoManager.PushSkinItem(new UserSkin(GameManager.instance.databaseManager.Box_DB.GetRowData(count)[2], randomColor01, randomColor02));
+                case ItemKind.골드:
                     break;
-                }
+                case ItemKind.크리스탈:
+                    break;
+                case ItemKind.랜덤염색약:
+                    GameManager.instance.userInfoManager.PushColorItem(Color.clear);
+                    break;
+                case ItemKind.염색약:
+                    GameManager.instance.userInfoManager.PushColorItem(randomColor01);
+                    break;
+                case ItemKind.스킨:
+                    GameManager.instance.userInfoManager.PushSkinItem(new UserSkin(GameManager.instance.databaseManager.Box_DB.GetRowData(count)[1], randomColor01, randomColor02));
+                    break;
+                default:
+                    break;
             }
-            // 랜덤 컬러아이템 
-            if (GameManager.instance.databaseManager.Box_DB.GetRowData(count)[2] == "randomColorItem")
-            {
-                GameManager.instance.userInfoManager.PushColorItem(Color.clear);
-            }
-            // 컬러아이템 
-            if (GameManager.instance.databaseManager.Box_DB.GetRowData(count)[2] == "colorItem")
-            {
-                GameManager.instance.userInfoManager.PushColorItem(randomColor01);
-            }
-        }
-    }
 
-    void AlramBoxOpen(List<AlramBox> alramBoxList)
-    {
+            alramBoxList.Add(new AlramBox(GameManager.instance.databaseManager.Box_DB.GetRowData(count)[1], GameManager.instance.databaseManager.Box_DB.GetRowData(count)[0], randomColor01, randomColor02));
+        }
+
         alramBoxOpen.gameObject.SetActive(true);
         alramBoxOpen.Find("배경노란줄").Find("뽑기개수").GetComponent<Text>().text = 1 + " / " + alramBoxList.Count;
-        alramBoxOpen.Find("배경노란줄").Find("아이템이름").GetComponent<Text>().text = alramBoxList[0].itemName;
-      //  GameObject iconObj = Instantiate(GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(userSkinList[j].skinName).iconObj, prepab.transform.Find("ImgPos").position, Quaternion.identity, prepab.transform.Find("ImgPos"));
+        alramBoxOpen.Find("배경노란줄").Find("아이템이름").GetComponent<Text>().text = GameManager.instance.itemManager.GetItemInfo(alramBoxList[0].itemName).inGameName;
+        for (int i = 0; i < alramBoxOpen.Find("배경노란줄").Find("네모박스").childCount; i++)
+        {
+            Destroy(alramBoxOpen.Find("배경노란줄").Find("네모박스").GetChild(i).gameObject);
+        }
+        GameObject iconObj = Instantiate(GameManager.instance.itemManager.GetItemInfo(alramBoxList[0].itemName).iconObj, alramBoxOpen.Find("배경노란줄").Find("네모박스").position, Quaternion.identity, alramBoxOpen.Find("배경노란줄").Find("네모박스"));
+        for (int i = 0; i < iconObj.transform.childCount; i++)
+        {
+            if (iconObj.transform.GetChild(i).name == "color_01")
+            {
+                iconObj.transform.GetChild(i).GetComponent<Image>().color = alramBoxList[0].color01;
+            }
+            if (iconObj.transform.GetChild(i).name == "color_02")
+            {
+                iconObj.transform.GetChild(i).GetComponent<Image>().color = alramBoxList[0].color02;
+            }
+        }
+        
+        alramBoxCount = 1;
+        alramBoxOpen.Find("touchPannel").GetComponent<Button>().onClick.RemoveAllListeners();
+        alramBoxOpen.Find("touchPannel").GetComponent<Button>().onClick.AddListener(() => AlramBoxOpen());
+    }
+
+    int alramBoxCount;
+    void AlramBoxOpen()
+    {
+        if (alramBoxCount == alramBoxList.Count)
+        {
+            alramBoxOpen.gameObject.SetActive(false);
+            return;
+        }
+
+        alramBoxOpen.Find("배경노란줄").Find("뽑기개수").GetComponent<Text>().text = 1 + " / " + alramBoxList.Count;
+        alramBoxOpen.Find("배경노란줄").Find("아이템이름").GetComponent<Text>().text = GameManager.instance.itemManager.GetItemInfo(alramBoxList[alramBoxCount].itemName).inGameName;
+        for (int i = 0; i < alramBoxOpen.Find("배경노란줄").Find("네모박스").childCount; i++)
+        {
+            Destroy(alramBoxOpen.Find("배경노란줄").Find("네모박스").GetChild(i).gameObject);
+        }
+
+        GameObject iconObj = Instantiate(GameManager.instance.itemManager.GetItemInfo(alramBoxList[alramBoxCount].itemName).iconObj, alramBoxOpen.Find("배경노란줄").Find("네모박스").position, Quaternion.identity, alramBoxOpen.Find("배경노란줄").Find("네모박스"));
+        for (int i = 0; i < iconObj.transform.childCount; i++)
+        {
+            if (iconObj.transform.GetChild(i).name == "color_01")
+            {
+                iconObj.transform.GetChild(i).GetComponent<Image>().color = alramBoxList[alramBoxCount].color01;
+            }
+            if (iconObj.transform.GetChild(i).name == "color_02")
+            {
+                iconObj.transform.GetChild(i).GetComponent<Image>().color = alramBoxList[alramBoxCount].color02;
+            }
+        }
+        alramBoxCount++;
     }
 
     public void Save()

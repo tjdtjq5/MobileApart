@@ -84,7 +84,7 @@
     <Compile Include="Assets\Script\Manager\FPS_Check.cs" />
     <Compile Include="Assets\Script\Manager\FrameChecker.cs" />
     <Compile Include="Assets\Script\Manager\GameManager.cs" />
-    <Compile Include="Assets\Script\Manager\IconManager.cs" />
+    <Compile Include="Assets\Script\Manager\ItemManager.cs" />
     <Compile Include="Assets\Script\Manager\SpineSkinInfoManager.cs" />
     <Compile Include="Assets\Script\Manager\UserInfoManager.cs" />
     <Compile Include="Assets\Script\Test.cs" />

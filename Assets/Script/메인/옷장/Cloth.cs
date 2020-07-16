@@ -309,6 +309,9 @@ public class Cloth : MonoBehaviour
         currentState = 2;
         backBtn.GetComponent<Button>().onClick.RemoveAllListeners();
         backBtn.GetComponent<Button>().onClick.AddListener(() => { ClothOpen(); });
+
+        int contextSize = 0;
+
         StartCoroutine(Open_02_Coroutine(() =>
         {
             for (int i = 0; i < context.childCount; i++)
@@ -326,26 +329,26 @@ public class Cloth : MonoBehaviour
                 {
                     GameObject prepab = Instantiate(stage_02_btn_Prepab, context.transform.position, Quaternion.identity, context.transform);
                     prepab.transform.Find("이름").GetChild(0).GetComponent<Text>().text = GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(userSkinList[j].skinName).inGameName;
-                    GameObject iconObj = Instantiate(GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(userSkinList[j].skinName).iconObj, prepab.transform.Find("ImgPos").position, Quaternion.identity, prepab.transform.Find("ImgPos"));
+                    GameObject iconObj = Instantiate(GameManager.instance.itemManager.GetItemInfo(userSkinList[j].skinName).iconObj, prepab.transform.Find("ImgPos").position, Quaternion.identity, prepab.transform.Find("ImgPos"));
                     for (int k = 0; k < iconObj.transform.childCount; k++)
                     {
-                        if (iconObj.transform.GetChild(k).gameObject.activeSelf)
+                        if (iconObj.transform.GetChild(k).name == "color_01")
                         {
-                            if (iconObj.transform.GetChild(k).name.Contains("color_01"))
-                            {
-                                iconObj.transform.GetChild(k).GetComponent<Image>().color = userSkinList[i].color_01;
-                            }
-                            if (iconObj.transform.GetChild(k).name.Contains("color_02"))
-                            {
-                                iconObj.transform.GetChild(k).GetComponent<Image>().color = userSkinList[i].color_02;
-                            }
+                            iconObj.transform.GetChild(k).GetComponent<Image>().color = userSkinList[j].color_01;
+                        }
+                        if (iconObj.transform.GetChild(k).name == "color_02")
+                        {
+                            iconObj.transform.GetChild(k).GetComponent<Image>().color = userSkinList[j].color_02;
                         }
                     }
-                    context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * 235f);
+
+                    contextSize += 210;
                     UserSkin tempUserSkin = userSkinList[j];
                     prepab.GetComponent<Button>().onClick.AddListener(() => { State02_Btn(tempUserSkin, prepab.transform); });
                 }
             }
+            context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, contextSize);
+            Debug.Log(contextSize);
         }));
     }
 

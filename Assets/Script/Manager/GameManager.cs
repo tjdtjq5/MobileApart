@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public UserInfoManager userInfoManager;
     public SpineSkinInfoManager spineSkinInfoManager;
     public DatabaseManager databaseManager;
+    public ItemManager itemManager;
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);

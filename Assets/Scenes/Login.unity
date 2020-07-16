@@ -1625,6 +1625,7 @@ MonoBehaviour:
   userInfoManager: {fileID: 1768284091}
   spineSkinInfoManager: {fileID: 1768284093}
   databaseManager: {fileID: 1768284092}
+  itemManager: {fileID: 1768284097}
 --- !u!4 &1768284095
 Transform:
   m_ObjectHideFlags: 0
@@ -1660,10 +1661,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1768284090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 071c149754e7b344e96e4f4abd7aa2fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 456dc2b81b0b4334eae644ffe891ee85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconList: []
+  itemList: []
 --- !u!1 &1801361945
 GameObject:
   m_ObjectHideFlags: 0
