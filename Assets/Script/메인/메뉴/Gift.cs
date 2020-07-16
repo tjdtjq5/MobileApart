@@ -323,23 +323,31 @@ public class Gift : MonoBehaviour
         StartCoroutine(WebChk(() => {
             PlayerPrefs.SetInt("net", (int)timestamp.TotalSeconds);
         }));
-
     }
+
+    private void OnDisable()
+    {
+        Save();
+    }
+
+
 
     public void Load()
     {
-        for (int i = 0; i < currentStreamTime.Length; i++)
-        {
-            if (PlayerPrefs.HasKey("currentStreamTime" + i))
-            {
-                GiftSetting(i, PlayerPrefs.GetFloat("currentStreamTime" + i));
-            }
-            else
-            {
-                GiftSetting(i, 0);
-            }
-        }
         StartCoroutine(WebChk(() => {
+
+            for (int i = 0; i < currentStreamTime.Length; i++)
+            {
+                if (PlayerPrefs.HasKey("currentStreamTime" + i))
+                {
+                    GiftSetting(i, PlayerPrefs.GetFloat("currentStreamTime" + i));
+                }
+                else
+                {
+                    GiftSetting(i, 0);
+                }
+            }
+
             int stopwatch = 0;
             if (PlayerPrefs.HasKey("net"))
             {
@@ -379,7 +387,6 @@ public class Gift : MonoBehaviour
             }
         }
     }
-
 }
 
 class AlramBox
