@@ -1,33 +1,32 @@
-염색약	randomColorItem	Gold	450	#확인
-지정염색약	colorItem	Crystal	482	엉덩이
-더미1	cap_race_animal_01	Gold	1859	줄#바꿈
-더미2	cap_race_demon_horn_02	Crystal	1238	궁댕이
-더미3	eye_eye_01	Gold	1898	빵댕이
-더미4	eye_eye_02	Crystal	1478	더미4
-더미5	eye_eye_demon	Gold	32227	더미5
-더미6	face_face_01	Crystal	22668	더미6
-더미7	face_face_02	Gold	15972	더미7
-더미8	face_face_03	Crystal	123987	더미8
-더미9	face_face_04	Gold	1596987	더미9
-더미10	haF_hair_f_01	Crystal	15684	더미10
-더미11	haF_hair_f_02	Gold	32485	더미11
-더미12	haF_hair_f_03	Crystal	12684	더미12
-더미13	haB_hair_b_01	Gold	12035	더미13
-더미14	haB_hair_b_02	Crystal	48595	더미14
-더미15	haB_hair_b_03	Gold	123854	더미15
-더미16	outt_apron_01	Crystal	8956	더미16
-더미17	outt_jacket_01	Gold	2189	더미17
-더미18	outt_jacket_02	Crystal	1268	더미18
-더미19	pan_clo_under_01	Gold	217	더미19
-더미20	pan_skirt_01	Crystal	12689	함정이다 이새끼야
-더미21	sho_clothes_01	Gold	1238	더미21
-더미22	sho_shoes_01	Crystal	62185	함정이다#이새끼야
-더미23	top_clo_top_01	Gold	1568	함정이다 #이새끼야
-더미24	top_clo_top_02	Crystal	63188	더미24
-더미25	top_clo_top_school	Gold	65488	더미25
-더미26	acc_belt	Crystal	7981	더미26
-더미27	acc_race_demon_ear	Gold	1269	더미27
-더미28	acc_race_demon_tail	Crystal	15859	더미28
-더미29	acc_race_elf_01	Gold	15689	더미29
-더미30	acc_top_ribbon	Crystal	1595	더미30
-더미31	acc_top_tie	Gold	4859	더미31
+randomColorItem	염색약	랜덤염색약	Gold	450	#확인
+colorItem	지정염색약	염색약	Crystal	482	엉덩이
+cap/race_animal_01	더미1	스킨	Gold	1859	줄#바꿈
+cap/race_demon_horn_02	더미2	스킨	Crystal	1238	궁댕이
+eye/eye_01	더미3	스킨	Gold	1898	빵댕이
+eye/eye_02	더미4	스킨	Crystal	1478	더미4
+eye/eye_demon	더미5	스킨	Gold	32227	더미5
+face/face_01	더미6	스킨	Crystal	22668	더미6
+face/face_02	더미7	스킨	Gold	15972	더미7
+face/face_03	더미8	스킨	Crystal	123987	더미8
+face/face_04	더미9	스킨	Gold	1596987	더미9
+haF/hair_f_01	더미10	스킨	Crystal	15684	더미10
+haF/hair_f_02	더미11	스킨	Gold	32485	더미11
+haF/hair_f_03	더미12	스킨	Crystal	12684	더미12
+haB/hair_b_01	더미13	스킨	Gold	12035	더미13
+haB/hair_b_02	더미14	스킨	Crystal	48595	더미14
+haB/hair_b_03	더미15	스킨	Gold	123854	더미15
+outt/apron_01	더미16	스킨	Crystal	8956	더미16
+outt/jacket_01	더미17	스킨	Gold	2189	더미17
+outt/jacket_02	더미18	스킨	Crystal	1268	더미18
+pan/clo_under_01	더미19	스킨	Gold	217	더미19
+pan/skirt_01	더미20	스킨	Crystal	12689	함정이다 이새끼야
+sho/shoes_01	더미22	스킨	Crystal	62185	함정이다#이새끼야
+top/clo_top_01	더미23	스킨	Gold	1568	함정이다 #이새끼야
+top/clo_top_02	더미24	스킨	Crystal	63188	더미24
+top/clo_top_school	더미25	스킨	Gold	65488	더미25
+acc/belt	더미26	스킨	Crystal	7981	더미26
+acc/race_demon_ear	더미27	스킨	Gold	1269	더미27
+acc/race_demon_tail	더미28	스킨	Crystal	15859	더미28
+acc/race_elf_01	더미29	스킨	Gold	15689	더미29
+acc/top_ribbon	더미30	스킨	Crystal	1595	더미30
+acc/top_tie	더미31	스킨	Gold	4859	더미31

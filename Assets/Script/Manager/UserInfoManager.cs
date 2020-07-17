@@ -27,7 +27,6 @@ public class UserInfoManager : MonoBehaviour
 
     private void Start()
     {
-
         PushColorItem(Color.clear);
         PushColorItem(Color.clear);
         PushColorItem(Color.clear);
@@ -156,13 +155,13 @@ public class UserInfoManager : MonoBehaviour
         skinItem.Add(userSkin);
     }
 
-    Color RandColor()
+    public Color RandColor()
     {
         float randR = Random.RandomRange(0, 255) /(float)255;
         float randG = Random.RandomRange(0, 255) / (float)255;
         float randB = Random.RandomRange(0, 255) / (float)255;
 
-        return new Color(randR, randG, randB);
+        return new Color(randR, randG, randB , 1);
     }
 
     public void ChangeColorSkinItem(int index, Color color, int slotNum = 1)
