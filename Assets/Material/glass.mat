@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: glass
-  m_Shader: {fileID: 4800000, guid: 5ae370e3be3db4f4a86edbe96c661e39, type: 3}
+  m_Shader: {fileID: 4800000, guid: 2f171b239bc38d84eaa125744abfe24e, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: fe22f065b602c994d8b1540ce069de4d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 9396dd074b0bdc84ea852bda23a299fd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -56,7 +56,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BumpAmt: 3.9
+    - _BumpAmt: 4
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1

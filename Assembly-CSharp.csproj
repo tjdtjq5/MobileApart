@@ -144,6 +144,7 @@
     <None Include="Assets\Demigiant\DOTween\readme.txt" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Procedural Ring.shader" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_WaterWiggle.shader" />
+    <None Include="Assets\Material\GlassStainedBumpDistort.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

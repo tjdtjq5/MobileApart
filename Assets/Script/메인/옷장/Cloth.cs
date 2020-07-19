@@ -429,7 +429,6 @@ public class Cloth : MonoBehaviour
 
     public void ColorItemReset()
     {
-
         for (int i = 0; i < colorItemPannel.transform.Find("패널").childCount; i++)
         {
             Destroy(colorItemPannel.transform.Find("패널").GetChild(i).gameObject);
@@ -503,6 +502,13 @@ public class Cloth : MonoBehaviour
     {
         if (selectColorItemIndexNum == -1)
         {
+            colorSlotBtn01.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = randomColorIcon;
+            colorSlotBtn01.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
+            colorSlotBtn01.transform.GetChild(0).Find("수량").GetComponent<Text>().text = "x" + GameManager.instance.userInfoManager.colorItem[GameManager.instance.userInfoManager.GetIndexColorItem(Color.clear)].num;
+            colorSlotBtn02.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = randomColorIcon;
+            colorSlotBtn02.transform.GetChild(0).GetChild(0).GetChild(0).gameObject.SetActive(false);
+            colorSlotBtn02.transform.GetChild(0).Find("수량").GetComponent<Text>().text = "x" + GameManager.instance.userInfoManager.colorItem[GameManager.instance.userInfoManager.GetIndexColorItem(Color.clear)].num;
+
             ColorItemPannelClose();
             return;
         }

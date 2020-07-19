@@ -168,7 +168,15 @@ public class Gift : MonoBehaviour
 
     public void FreeGfit(int index)
     {
-        GiftSetting(index, 0);
+        giftList[index].gfitPannel.Find("상자이미지").GetComponent<Button>().onClick.RemoveAllListeners();
+        giftList[index].gfitPannel.Find("상자이미지").GetComponent<Button>().onClick.AddListener(() => ClickGfit(index, giftList[index].touchCountSecond));
+        //슬라이드 코르틴 돌리기 
+        if (tempCoroutine[index] != null)
+            StopCoroutine(tempCoroutine[index]);
+
+        tempCoroutine[index] = SliderCountCoroutine(giftList[index].gfitPannel.Find("슬라이더배경"), giftList[index].touchMaxCountSecond, 0, index);
+        StartCoroutine(tempCoroutine[index]);
+
         GiftOpen(index, 1);
     }
 
