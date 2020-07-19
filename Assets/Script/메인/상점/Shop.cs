@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using Spine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -10,6 +12,8 @@ public class Shop : MonoBehaviour
     public Transform context;
     public Sprite goldSprite;
     public Sprite crystalSprite;
+    public Transform AlramSucess;
+    public Transform AlramPerchaseCheck;
 
     public DailyGoods dailyGoods;
     public RandomGoodsInfo[] randomGoodsInfo;
@@ -40,6 +44,7 @@ public class Shop : MonoBehaviour
     public struct RandomGoodsInfo
     {
         public string GoodsName;
+        public string itemName;
         public GameObject GoodsObj;
         public ItemKind itemKind;
         [Header("상품 설명")]
@@ -54,6 +59,7 @@ public class Shop : MonoBehaviour
     public struct RandomGoods
     {
         public string GoodsName;
+        public string itemName;
         public ItemKind itemKind;
         [Header("컬러")]
         public Color color01;
@@ -79,6 +85,7 @@ public class Shop : MonoBehaviour
         {
             List<string> dataList = GameManager.instance.databaseManager.DailyShop_DB.GetRowData(i);
             randomGoodsInfo[i].GoodsName = dataList[1];
+            randomGoodsInfo[i].itemName = dataList[0];
             randomGoodsInfo[i].GoodsObj = GameManager.instance.itemManager.GetItemInfo(dataList[0]).iconObj;
             randomGoodsInfo[i].itemKind = (ItemKind)System.Enum.Parse(typeof(ItemKind), dataList[2]);
             string[] tempExplanation = dataList[5].Split('#');
@@ -92,8 +99,23 @@ public class Shop : MonoBehaviour
         }
     }
 
-    void RandomGoodsSetting()
+    public void RandomGoodsSetting()
     {
+        for (int i = 0; i < context.childCount; i++)
+        {
+            Transform tempGoodsTransform = context.GetChild(i);
+            for (int j = 0; j < tempGoodsTransform.childCount; j++)
+            {
+                if (tempGoodsTransform.GetChild(j).name == "상품" || tempGoodsTransform.GetChild(j).name == "그림자")
+                {
+                    if (tempGoodsTransform.GetChild(j).childCount > 0)
+                    {
+                        Destroy(tempGoodsTransform.GetChild(j).GetChild(0).gameObject);
+                    }
+                }
+            }
+        }
+
         List<int> randomList = new List<int>();
         while (randomList.Count < 6)
         {
@@ -107,6 +129,7 @@ public class Shop : MonoBehaviour
 
         // 1
         randomGoods[0].GoodsName = randomGoodsInfo[randomList[0]].GoodsName;
+        randomGoods[0].itemName = randomGoodsInfo[randomList[0]].itemName;
         randomGoods[0].itemKind = randomGoodsInfo[randomList[0]].itemKind;
         randomGoods[0].color01 = GameManager.instance.userInfoManager.RandColor();
         randomGoods[0].color02 = GameManager.instance.userInfoManager.RandColor();
@@ -151,6 +174,7 @@ public class Shop : MonoBehaviour
 
         // 2 
         randomGoods[1].GoodsName = randomGoodsInfo[randomList[1]].GoodsName;
+        randomGoods[1].itemName = randomGoodsInfo[randomList[1]].itemName;
         randomGoods[1].itemKind = randomGoodsInfo[randomList[1]].itemKind;
         randomGoods[1].color01 = GameManager.instance.userInfoManager.RandColor();
         randomGoods[1].color02 = GameManager.instance.userInfoManager.RandColor();
@@ -195,6 +219,7 @@ public class Shop : MonoBehaviour
 
         // 3 
         randomGoods[2].GoodsName = randomGoodsInfo[randomList[2]].GoodsName;
+        randomGoods[2].itemName = randomGoodsInfo[randomList[2]].itemName;
         randomGoods[2].itemKind = randomGoodsInfo[randomList[2]].itemKind;
         randomGoods[2].color01 = GameManager.instance.userInfoManager.RandColor();
         randomGoods[2].color02 = GameManager.instance.userInfoManager.RandColor();
@@ -240,6 +265,7 @@ public class Shop : MonoBehaviour
 
         // 4
         randomGoods[3].GoodsName = randomGoodsInfo[0].GoodsName;
+        randomGoods[3].itemName = randomGoodsInfo[0].itemName;
         randomGoods[3].itemKind = randomGoodsInfo[0].itemKind;
         randomGoods[3].color01 = Color.clear;
         randomGoods[3].color02 = Color.clear;
@@ -273,6 +299,7 @@ public class Shop : MonoBehaviour
 
         // 5
         randomGoods[4].GoodsName = randomGoodsInfo[0].GoodsName;
+        randomGoods[4].itemName = randomGoodsInfo[0].itemName;
         randomGoods[4].itemKind = randomGoodsInfo[0].itemKind;
         randomGoods[4].color01 = Color.clear;
         randomGoods[4].color02 = Color.clear;
@@ -306,6 +333,7 @@ public class Shop : MonoBehaviour
 
         // 6
         randomGoods[5].GoodsName = randomGoodsInfo[0].GoodsName;
+        randomGoods[5].itemName = randomGoodsInfo[0].itemName;
         randomGoods[5].itemKind = randomGoodsInfo[0].itemKind;
         randomGoods[5].color01 = Color.clear;
         randomGoods[5].color02 = Color.clear;
@@ -339,6 +367,7 @@ public class Shop : MonoBehaviour
 
         // 7 
         randomGoods[6].GoodsName = randomGoodsInfo[randomList[3]].GoodsName;
+        randomGoods[6].itemName = randomGoodsInfo[randomList[3]].itemName;
         randomGoods[6].itemKind = randomGoodsInfo[randomList[3]].itemKind;
         randomGoods[6].color01 = GameManager.instance.userInfoManager.RandColor();
         randomGoods[6].color02 = GameManager.instance.userInfoManager.RandColor();
@@ -383,6 +412,7 @@ public class Shop : MonoBehaviour
 
         // 8 
         randomGoods[7].GoodsName = randomGoodsInfo[randomList[4]].GoodsName;
+        randomGoods[7].itemName = randomGoodsInfo[randomList[4]].itemName;
         randomGoods[7].itemKind = randomGoodsInfo[randomList[4]].itemKind;
         randomGoods[7].color01 = GameManager.instance.userInfoManager.RandColor();
         randomGoods[7].color02 = GameManager.instance.userInfoManager.RandColor();
@@ -427,6 +457,7 @@ public class Shop : MonoBehaviour
 
         // 9
         randomGoods[8].GoodsName = randomGoodsInfo[randomList[5]].GoodsName;
+        randomGoods[8].itemName = randomGoodsInfo[randomList[5]].itemName;
         randomGoods[8].itemKind = randomGoodsInfo[randomList[5]].itemKind;
         randomGoods[8].color01 = GameManager.instance.userInfoManager.RandColor();
         randomGoods[8].color02 = GameManager.instance.userInfoManager.RandColor();
@@ -549,6 +580,71 @@ public class Shop : MonoBehaviour
             yield return new WaitForSeconds(10f);
         }
       
+    }
+
+    public void DailyPurchase()
+    {
+
+    }
+
+    public void RandomGoodsPurchase(int index)
+    {
+        // 돈이 없으면 리턴
+        if (GameManager.instance.userInfoManager.GetUserMoney(randomGoods[index].MoneyKind) < randomGoods[index].price)
+        {
+            return;
+        }
+
+        AlramPerchaseCheck.gameObject.SetActive(true);
+        string itemName = randomGoods[index].itemName;
+        ItemKind itemKind = randomGoods[index].itemKind;
+        Color color_01 = randomGoods[index].color01;
+        Color color_02 = randomGoods[index].color02;
+        MoneyKind moneyKind = randomGoods[index].MoneyKind;
+        int price = randomGoods[index].price;
+        AlramPerchaseCheck.Find("확인").GetComponent<Button>().onClick.AddListener(() => PerChase(itemName, itemKind, color_01, color_02, moneyKind, price));
+    }
+
+    public void PerChase(string itemName, ItemKind itemKind, Color color_01, Color color_02, MoneyKind moneyKind, int price)
+    {
+        AlramPerchaseCheck.gameObject.SetActive(false);
+
+        AlramSucess.gameObject.SetActive(true);
+        AlramSucess.GetComponent<Image>().DOFade(1, 0);
+        AlramSucess.GetChild(0).GetComponent<Text>().DOFade(1, 0);
+        AlramSucess.GetComponent<Image>().DOFade(0, 1.3f).OnComplete(() => { AlramSucess.gameObject.SetActive(false); });
+        AlramSucess.GetChild(0).GetComponent<Text>().DOFade(0, 1.3f);
+
+        GameManager.instance.userInfoManager.SetUserMoney(moneyKind, GameManager.instance.userInfoManager.GetUserMoney(moneyKind) - price);
+        SetMoneyText();
+        GameManager.instance.userInfoManager.SaveUserMoney();
+
+        switch (itemKind)
+        {
+            case ItemKind.골드:
+                break;
+            case ItemKind.크리스탈:
+                break;
+            case ItemKind.랜덤염색약:
+                GameManager.instance.userInfoManager.PushColorItem(Color.clear);
+                break;
+            case ItemKind.염색약:
+                GameManager.instance.userInfoManager.PushColorItem(color_01);
+                break;
+            case ItemKind.스킨:
+                GameManager.instance.userInfoManager.PushSkinItem(new UserSkin(itemName, color_01, color_02));
+                break;
+            default:
+                break;
+        }
+
+        //옷 저장
+        GameManager.instance.userInfoManager.SaveSkinItem();
+    }
+
+    public void PerChaseExit()
+    {
+        AlramPerchaseCheck.gameObject.SetActive(false);
     }
 }
 

@@ -3,9 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using Spine.Unity;
-using Spine;
-using Boo.Lang;
-using BackEnd.Tcp;
+using System.Collections.Generic;
 
 public class Gift : MonoBehaviour
 {
@@ -145,7 +143,8 @@ public class Gift : MonoBehaviour
             //남은시간 전역변수로
             PlayerPrefs.SetFloat("currentStreamTime" + index, touchMaxCountSecond - remainTime);
         }
-
+        giftList[index].gfitPannel.Find("상자열기").Find("1회 열기").Find("재화").Find("Text").GetComponent<Text>().text = "무료";
+        giftList[index].gfitPannel.Find("상자열기").Find("1회 열기").Find("재화").GetComponent<Button>().onClick.AddListener(() => FreeGfit(index));
     }
 
     public void ClickGfit(int index, float clickTime)
@@ -167,9 +166,10 @@ public class Gift : MonoBehaviour
     }
 
 
-    public void FreeGfit()
+    public void FreeGfit(int index)
     {
-
+        GiftSetting(index, 0);
+        GiftOpen(index, 1);
     }
 
     public void PurchaseCheckOpen(int index, int num)
@@ -270,6 +270,9 @@ public class Gift : MonoBehaviour
 
             alramBoxList.Add(new AlramBox(GameManager.instance.databaseManager.Box_DB.GetRowData(count)[1], GameManager.instance.databaseManager.Box_DB.GetRowData(count)[0], randomColor01, randomColor02));
         }
+
+        //옷 저장
+        GameManager.instance.userInfoManager.SaveSkinItem();
 
         alramBoxOpen.gameObject.SetActive(true);
         alramBoxOpen.Find("배경노란줄").Find("뽑기개수").GetComponent<Text>().text = 1 + " / " + alramBoxList.Count;
