@@ -97,13 +97,14 @@ public class BackEndAuthentication : MonoBehaviour
 
                 //초기 스킨 아이템 저장
                 GameManager.instance.userInfoManager.SaveSkinItem(() => {
-                    SceneManager.LoadScene("CaracterSelect");
+                    // 그 다음 돈  저장 
+                    GameManager.instance.userInfoManager.SetUserMoney(MoneyKind.Crystal, 1000000);
+                    GameManager.instance.userInfoManager.SetUserMoney(MoneyKind.Gold, 1000000);
+                    GameManager.instance.userInfoManager.SaveUserMoney(() => SceneManager.LoadScene("CaracterSelect"));
                 });
 
                 //초기 돈 
-                GameManager.instance.userInfoManager.SetUserMoney(MoneyKind.Crystal, 1000000);
-                GameManager.instance.userInfoManager.SetUserMoney(MoneyKind.Gold, 1000000);
-                GameManager.instance.userInfoManager.SaveUserMoney();
+            
             }
             else // 닉네임이 있을 경우 , 이후시작
             {

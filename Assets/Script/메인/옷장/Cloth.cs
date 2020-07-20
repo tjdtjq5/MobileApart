@@ -348,7 +348,6 @@ public class Cloth : MonoBehaviour
                 }
             }
             context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, contextSize);
-            Debug.Log(contextSize);
         }));
     }
 
