@@ -10,7 +10,7 @@ public class Talk : MonoBehaviour
     public GameObject[] talkBullon;
     [Header("출력 대사 텍스트")]
     public string[] bullonText;
-    string[] originText;
+    List<string> originText = new List<string>();
 
     float fadeSpeed = 0.3f;
     bool flag = false;
@@ -20,16 +20,20 @@ public class Talk : MonoBehaviour
 
     private void Start()
     {
-        originText = new string[bullonText.Length];
         for (int i = 0; i < bullonText.Length; i++)
         {
-            originText[i] = bullonText[i];
+            originText.Add(bullonText[i]);
         }
     }
 
     
     public void TalkBtn(bool re = false)
     {
+        for (int i = 0; i < talkBullon.Length; i++)
+        {
+            talkBullon[i].SetActive(false);
+        }
+
         if (!flag || re)
         {
             flag = true;
@@ -67,20 +71,16 @@ public class Talk : MonoBehaviour
         else
         {
             flag = false;
-            for (int i = 0; i < bullonText.Length; i++)
-            {
-                bullonText[i] = originText[i];
-                talkBullon[i].SetActive(false);
-            }
+            TalkBullonTextChange(originText);
         }
     }
 
     public void TalkAction(string text)
     {
+        List<string> tempString = new List<string>();
         switch (text)
         {
             case "상태어때?":
-                List<string> tempString = new List<string>();
                 tempString.Add("씻을까?");
                 tempString.Add("놀까?");
                 tempString.Add("잘래?");
@@ -92,15 +92,22 @@ public class Talk : MonoBehaviour
                 TalkBtn();
                 bath.BathOpen();
                 break;
+            case "놀까?":
+                tempString.Add("가위바위보");
+                TalkBullonTextChange(tempString);
+                TalkBtn(true);
+                break;
+            case "가위바위보":
+                RockPaperScissors.instance.RockPaperScissorsOpen();
+                TalkBtn();
+                break;
         }
     }
 
     public void TalkBullonTextChange(List<string> bullonText)
     {
-        for (int i = 0; i < this.bullonText.Length; i++)
-        {
-            this.bullonText[i] = "";
-        }
+
+        this.bullonText = new string[bullonText.Count];
 
         for (int i = 0; i < bullonText.Count; i++)
         {
