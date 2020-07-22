@@ -330,6 +330,7 @@ public class Gift : MonoBehaviour
         GameManager.instance.userInfoManager.SaveSkinItem();
         GameManager.instance.userInfoManager.SaveUserMoney();
 
+        alramBoxOpen.gameObject.SetActive(false);
         alramBoxOpen.gameObject.SetActive(true);
         alramBoxOpen.Find("배경노란줄").Find("뽑기개수").GetComponent<Text>().text = 1 + " / " + alramBoxList.Count;
         alramBoxOpen.Find("배경노란줄").Find("아이템이름").GetComponent<Text>().text = GameManager.instance.itemManager.GetItemInfo(alramBoxList[0].itemName).inGameName;
@@ -340,6 +341,7 @@ public class Gift : MonoBehaviour
         GameObject iconObj = Instantiate(GameManager.instance.itemManager.GetItemInfo(alramBoxList[0].itemName).iconObj, alramBoxOpen.Find("배경노란줄").Find("네모박스").position, Quaternion.identity, alramBoxOpen.Find("배경노란줄").Find("네모박스"));
         for (int i = 0; i < iconObj.transform.childCount; i++)
         {
+            iconObj.transform.GetChild(i).transform.localScale = new Vector3(.7f, .7f, .7f);
             if (iconObj.transform.GetChild(i).name == "color_01")
             {
                 iconObj.transform.GetChild(i).GetComponent<Image>().color = alramBoxList[0].color01;
@@ -353,11 +355,22 @@ public class Gift : MonoBehaviour
         alramBoxCount = 1;
         alramBoxOpen.Find("touchPannel").GetComponent<Button>().onClick.RemoveAllListeners();
         alramBoxOpen.Find("touchPannel").GetComponent<Button>().onClick.AddListener(() => AlramBoxOpen(totalGold, totalCrystal));
+
+        StartCoroutine(DontClick(1f));
     }
 
     int alramBoxCount;
     void AlramBoxOpen(int gold, int crystal)
     {
+        if (dontClick)
+        {
+            return;
+        }
+
+        StartCoroutine(DontClick(1f));
+        alramBoxOpen.gameObject.SetActive(false);
+        alramBoxOpen.gameObject.SetActive(true);
+
         if (alramBoxCount == alramBoxList.Count)
         {
             alramBoxOpen.gameObject.SetActive(false);
@@ -385,6 +398,7 @@ public class Gift : MonoBehaviour
         GameObject iconObj = Instantiate(GameManager.instance.itemManager.GetItemInfo(alramBoxList[alramBoxCount].itemName).iconObj, alramBoxOpen.Find("배경노란줄").Find("네모박스").position, Quaternion.identity, alramBoxOpen.Find("배경노란줄").Find("네모박스"));
         for (int i = 0; i < iconObj.transform.childCount; i++)
         {
+            iconObj.transform.GetChild(i).transform.localScale = new Vector3(.7f, .7f, .7f);
             if (iconObj.transform.GetChild(i).name == "color_01")
             {
                 iconObj.transform.GetChild(i).GetComponent<Image>().color = alramBoxList[alramBoxCount].color01;
@@ -395,6 +409,14 @@ public class Gift : MonoBehaviour
             }
         }
         alramBoxCount++;
+    }
+
+    bool dontClick = false;
+    IEnumerator DontClick(float time)
+    {
+        dontClick = true;
+        yield return new WaitForSeconds(time);
+        dontClick = false;
     }
 
     

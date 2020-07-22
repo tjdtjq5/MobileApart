@@ -88,7 +88,9 @@
     <Compile Include="Assets\Script\Manager\SpineSkinInfoManager.cs" />
     <Compile Include="Assets\Script\Manager\UserInfoManager.cs" />
     <Compile Include="Assets\Script\Test.cs" />
+    <Compile Include="Assets\Script\TestCharacterAni.cs" />
     <Compile Include="Assets\Script\메인\Album.cs" />
+    <Compile Include="Assets\Script\메인\CharacterMotion.cs" />
     <Compile Include="Assets\Script\메인\MiniGame\RockPaperScissors.cs" />
     <Compile Include="Assets\Script\메인\TransformSkin.cs" />
     <Compile Include="Assets\Script\메인\메뉴\Gift.cs" />

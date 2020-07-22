@@ -543,6 +543,26 @@ public class UserInfoManager : MonoBehaviour
             }
         });
     }
+
+    public Status userStatus = new Status();
+
+    public void SetUserStatus(int wisdom, int intelligent, int will)
+    {
+        userStatus.wisdom = wisdom;
+        userStatus.intelligent = intelligent;
+        userStatus.will = will;
+    }
+
+
+    public Need userNeed = new Need();
+
+    public void SetUserNeed(int pleasure, int satiety, int cleanliness, int vitality)
+    {
+        userNeed.pleasure = pleasure;
+        userNeed.satiety = satiety;
+        userNeed.cleanliness = cleanliness;
+        userNeed.vitality = vitality;
+    }
 }
 
 public class UserSkin
@@ -600,3 +620,20 @@ public class UserMoney
     public int Gold;
     public int Crystal;
 }
+
+public class Status
+{
+    // 지혜 마력 의지 
+    public int wisdom;
+    public int intelligent;
+    public int will; 
+}
+
+public class Need 
+{
+    // 즐거움, 포만감, 청결함, 활력
+    public int pleasure;
+    public int satiety;
+    public int cleanliness;
+    public int vitality;
+} 

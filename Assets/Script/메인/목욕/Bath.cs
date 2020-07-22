@@ -21,10 +21,6 @@ public class Bath : MonoBehaviour
     [Header("켜지는 것들")]
     public GameObject[] setOn;
 
-    private void Start()
-    {
-    }
-
     public void BathOpen()
     {
         originCamPos = characterCam.position;
@@ -36,7 +32,7 @@ public class Bath : MonoBehaviour
         originSize = character.transform.localScale;
         character.transform.localScale = moveSize;
 
-  //      acceleration.StopRotation();
+        character.GetComponent<CharacterMotion>().SetFlag(true);
 
         currentAni = character.GetComponent<SkeletonAnimation>().AnimationName;
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0 ,"bath", true);
@@ -58,7 +54,8 @@ public class Bath : MonoBehaviour
 
         AniCoroutine = Bath3Coroutine(1.5f);
 
-
+        touchParticleWater.SetActive(true);
+        clickParticleWater.SetActive(true);
     }
 
     public void BathClose()
@@ -68,7 +65,7 @@ public class Bath : MonoBehaviour
 
         character.transform.localScale = originSize;
 
-      //  acceleration.DonStopRotation();
+        character.GetComponent<CharacterMotion>().SetFlag(false);
 
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, currentAni, true);
 
@@ -85,6 +82,9 @@ public class Bath : MonoBehaviour
         }
 
         StopCoroutine(AniCoroutine);
+
+        touchParticleWater.SetActive(false);
+        clickParticleWater.SetActive(false);
     }
 
     bool touchFlag = false;

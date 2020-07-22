@@ -10,19 +10,36 @@ public class Talk : MonoBehaviour
     public GameObject[] talkBullon;
     [Header("출력 대사 텍스트")]
     public string[] bullonText;
+    string[] originText;
 
     float fadeSpeed = 0.3f;
-
     bool flag = false;
-    public void TalkBtn()
+
+    [Header("다른 스크립트 불러오기")]
+    public Bath bath;
+
+    private void Start()
     {
-        if (!flag)
+        originText = new string[bullonText.Length];
+        for (int i = 0; i < bullonText.Length; i++)
+        {
+            originText[i] = bullonText[i];
+        }
+    }
+
+    
+    public void TalkBtn(bool re = false)
+    {
+        if (!flag || re)
         {
             flag = true;
-
             for (int i = 0; i < bullonText.Length; i++)
             {
                 talkBullon[i].SetActive(true);
+
+                talkBullon[i].GetComponent<Button>().onClick.RemoveAllListeners();
+                string tempText = bullonText[i];
+                talkBullon[i].GetComponent<Button>().onClick.AddListener(() => TalkAction(tempText));
 
                 talkBullon[i].transform.Find("Text").GetComponent<Text>().text = bullonText[i];
 
@@ -52,25 +69,29 @@ public class Talk : MonoBehaviour
             flag = false;
             for (int i = 0; i < bullonText.Length; i++)
             {
+                bullonText[i] = originText[i];
                 talkBullon[i].SetActive(false);
             }
         }
     }
 
-    public void TalkAction()
+    public void TalkAction(string text)
     {
-        for (int i = 0; i < bullonText.Length; i++)
+        switch (text)
         {
-            talkBullon[i].GetComponent<Button>().onClick.RemoveAllListeners();
-            switch (bullonText[i])
-            {
-                case "가위바위보":
-                    TalkBtn();
-                    talkBullon[i].GetComponent<Button>().onClick.AddListener(() => RockPaperScissors.instance.RockPaperScissorsOpen());
-                    break;
-                default:
-                    break;
-            }
+            case "상태어때?":
+                List<string> tempString = new List<string>();
+                tempString.Add("씻을까?");
+                tempString.Add("놀까?");
+                tempString.Add("잘래?");
+                tempString.Add("먹을래?");
+                TalkBullonTextChange(tempString);
+                TalkBtn(true);
+                break;
+            case "씻을까?":
+                TalkBtn();
+                bath.BathOpen();
+                break;
         }
     }
 
