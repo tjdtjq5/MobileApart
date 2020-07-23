@@ -42,21 +42,34 @@ public class Caracter01 : MonoBehaviour
             JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
             string dataIndate = jsonData["inDate"]["S"].ToString();
 
+            // 캐릭터 01 정보 저장 
             BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "UserInfo", dataIndate, currentCharacterData, (callback2) =>
             {
                 // 이후 처리
                 BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback3) =>
                 {
-                    // 이후 처리
+                    // 정보 로드 : 캐릭터 셀렉을 선택했던 사람
                     JsonData jsonData2 = callback3.GetReturnValuetoJSON()["rows"][0];
                     if (jsonData2.Keys.Contains("Caracter01" + "Eqip"))
                     {
-
-                        GameManager.instance.userInfoManager.LoadUserEqip("Caracter01", ()=> SceneManager.LoadScene("Loding"));
+                        GameManager.instance.userInfoManager.LoadUserEqip("Caracter01", ()=> {
+                            GameManager.instance.userInfoManager.LoadUserStatus("Caracter01", () => {
+                                GameManager.instance.userInfoManager.LoadUserNeed("Caracter01", () => {
+                                    SceneManager.LoadScene("Loding");
+                                });
+                            });
+                        });
                     }
                     else
                     {
-                        GameManager.instance.userInfoManager.SaveUserEqip("Caracter01", () => SceneManager.LoadScene("Loding"));
+                        // 정보 로드 : 캐릭터 셀렉을 선택하지 않고 나갔던 사람 + 처음 
+                        GameManager.instance.userInfoManager.SaveUserEqip("Caracter01", () => {
+                            GameManager.instance.userInfoManager.SaveUserStatus("Caracter01", () => {
+                                GameManager.instance.userInfoManager.SaveUserNeed("Caracter01", () => {
+                                    SceneManager.LoadScene("Loding");
+                                });
+                            });
+                        });
                     }
                 });
 

@@ -59,6 +59,9 @@ public class UserInfoManager : MonoBehaviour
         PushUserEqip(skinItem[6]);
         PushUserEqip(skinItem[7]);
         PushUserEqip(skinItem[8]);
+
+        SetUserStatus(0, 0, 0);
+        SetUserNeed(100, 100, 100, 100);
     }
 
     //컬러아이템 이름, 아이템 수
@@ -541,6 +544,11 @@ public class UserInfoManager : MonoBehaviour
                 int Crystal = int.Parse(jsonData["Crystal"][0].ToString());
                 SetUserMoney(MoneyKind.Crystal, Crystal);
             }
+
+            if (action != null)
+            {
+                action();
+            }
         });
     }
 
@@ -553,6 +561,53 @@ public class UserInfoManager : MonoBehaviour
         userStatus.will = will;
     }
 
+    public void SaveUserStatus(string currentCharacter, System.Action action = null)
+    {
+        string dataString = userStatus.wisdom + "-" + userStatus.intelligent + "-" + userStatus.will;
+        Param dataParam = new Param();
+        dataParam.Add(currentCharacter + "Status", dataString);
+
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
+        {
+            // 이후 처리
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
+            string dataIndate = jsonData["inDate"]["S"].ToString();
+
+            BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "UserInfo", dataIndate, dataParam, (callback2) =>
+            {
+                Debug.Log("성공했습니다");
+
+                // 이후 처리
+                if (action != null)
+                {
+                    action();
+                }
+            });
+        });
+    }
+
+    public void LoadUserStatus(string currentCharacter, System.Action action = null)
+    {
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
+        {
+            // 이후 처리
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
+            if (jsonData.Keys.Contains(currentCharacter + "Status"))
+            {
+                string tempUserStatus = jsonData[currentCharacter + "Status"][0].ToString();
+                string[] tempUserStatusList = tempUserStatus.Split('-');
+
+                userStatus.wisdom = int.Parse(tempUserStatusList[0]);
+                userStatus.intelligent = int.Parse(tempUserStatusList[1]);
+                userStatus.will = int.Parse(tempUserStatusList[2]);
+
+                if (action != null)
+                {
+                    action();
+                }
+            }
+        });
+    }
 
     public Need userNeed = new Need();
 
@@ -562,6 +617,71 @@ public class UserInfoManager : MonoBehaviour
         userNeed.satiety = satiety;
         userNeed.cleanliness = cleanliness;
         userNeed.vitality = vitality;
+    }
+
+    public int GetUserNeed(NeedKind needKind)
+    {
+        switch (needKind)
+        {
+            case NeedKind.즐거움:
+                return userNeed.pleasure;
+            case NeedKind.포만감:
+                return userNeed.satiety;
+            case NeedKind.청결함:
+                return userNeed.cleanliness;
+            case NeedKind.활력:
+                return userNeed.vitality;
+        }
+        return -1;
+    }
+
+    public void SaveUserNeed(string currentCharacter, System.Action action = null)
+    {
+        string dataString = userNeed.pleasure + "-" + userNeed.satiety + "-" + userNeed.cleanliness + "-" + userNeed.vitality;
+        Param dataParam = new Param();
+        dataParam.Add(currentCharacter + "Need", dataString);
+
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
+        {
+            // 이후 처리
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
+            string dataIndate = jsonData["inDate"]["S"].ToString();
+
+            BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "UserInfo", dataIndate, dataParam, (callback2) =>
+            {
+                Debug.Log("성공했습니다");
+
+                // 이후 처리
+                if (action != null)
+                {
+                    action();
+                }
+            });
+        });
+    }
+
+    public void LoadUserNeed(string currentCharacter, System.Action action = null)
+    {
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
+        {
+            // 이후 처리
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
+            if (jsonData.Keys.Contains(currentCharacter + "Need"))
+            {
+                string tempUserNeed = jsonData[currentCharacter + "Need"][0].ToString();
+                string[] tempUserNeedList = tempUserNeed.Split('-');
+
+                userNeed.pleasure = int.Parse(tempUserNeedList[0]);
+                userNeed.satiety = int.Parse(tempUserNeedList[1]);
+                userNeed.cleanliness = int.Parse(tempUserNeedList[2]);
+                userNeed.vitality = int.Parse(tempUserNeedList[3]);
+
+                if (action != null)
+                {
+                    action();
+                }
+            }
+        });
     }
 }
 

@@ -8,6 +8,7 @@ ScriptsOnlyBuild:
     - Bath
     - CameraResolution2
     - Caracter01
+    - CharacterMotion
     - CharacterTalk
     - Cloth
     - DatabaseManager
@@ -22,6 +23,7 @@ ScriptsOnlyBuild:
     - Shop
     - SpineSkinInfoManager
     - Talk
+    - TestCharacterAni
     - TransformSkin
     - UserInfoManager
     CFXRRuntime.dll:
@@ -55,6 +57,7 @@ ScriptsOnlyBuild:
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.EventTrigger
+    - UnityEngine.EventSystems.Physics2DRaycaster
     - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
@@ -74,6 +77,8 @@ ScriptsOnlyBuild:
     - Spine.Unity.SkeletonAnimation
     - Spine.Unity.SkeletonDataAsset
     - Spine.Unity.SkeletonGraphic
+    - Spine.Unity.SkeletonUtility
+    - Spine.Unity.SkeletonUtilityBone
     - Spine.Unity.SpineAtlasAsset
   sceneClasses:
     Assets/Scenes/CaracterSelect.unity:
@@ -108,23 +113,23 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11714}
     - Class: 114
-      Script: {instanceID: 12448}
+      Script: {instanceID: 12450}
     - Class: 114
-      Script: {instanceID: 12716}
+      Script: {instanceID: 12718}
     - Class: 114
-      Script: {instanceID: 13248}
+      Script: {instanceID: 13252}
     - Class: 114
-      Script: {instanceID: 13328}
+      Script: {instanceID: 13332}
     - Class: 114
-      Script: {instanceID: 13498}
+      Script: {instanceID: 13502}
     - Class: 114
-      Script: {instanceID: 13726}
+      Script: {instanceID: 13730}
     - Class: 114
-      Script: {instanceID: 14132}
+      Script: {instanceID: 14136}
     - Class: 114
-      Script: {instanceID: 14604}
+      Script: {instanceID: 14608}
     - Class: 114
-      Script: {instanceID: 14828}
+      Script: {instanceID: 14832}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -167,13 +172,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11714}
     - Class: 114
-      Script: {instanceID: 12448}
+      Script: {instanceID: 12450}
     - Class: 114
-      Script: {instanceID: 14132}
+      Script: {instanceID: 14136}
     - Class: 114
-      Script: {instanceID: 14828}
+      Script: {instanceID: 14832}
     - Class: 114
-      Script: {instanceID: 14876}
+      Script: {instanceID: 14880}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -218,35 +223,35 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11742}
     - Class: 114
-      Script: {instanceID: 12448}
+      Script: {instanceID: 12450}
     - Class: 114
-      Script: {instanceID: 13090}
+      Script: {instanceID: 13094}
     - Class: 114
-      Script: {instanceID: 13248}
+      Script: {instanceID: 13252}
     - Class: 114
-      Script: {instanceID: 13266}
+      Script: {instanceID: 13270}
     - Class: 114
-      Script: {instanceID: 13354}
+      Script: {instanceID: 13358}
     - Class: 114
-      Script: {instanceID: 13388}
+      Script: {instanceID: 13392}
     - Class: 114
-      Script: {instanceID: 13444}
+      Script: {instanceID: 13448}
     - Class: 114
-      Script: {instanceID: 13522}
+      Script: {instanceID: 13526}
     - Class: 114
-      Script: {instanceID: 13586}
+      Script: {instanceID: 13590}
     - Class: 114
-      Script: {instanceID: 13956}
+      Script: {instanceID: 13960}
     - Class: 114
-      Script: {instanceID: 13974}
+      Script: {instanceID: 13978}
     - Class: 114
-      Script: {instanceID: 14132}
+      Script: {instanceID: 14136}
     - Class: 114
-      Script: {instanceID: 14430}
+      Script: {instanceID: 14434}
     - Class: 114
-      Script: {instanceID: 14544}
+      Script: {instanceID: 14548}
     - Class: 114
-      Script: {instanceID: 14828}
+      Script: {instanceID: 14832}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -284,7 +289,15 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 49
       Script: {instanceID: 0}
+    - Class: 61
+      Script: {instanceID: 0}
+    - Class: 74
+      Script: {instanceID: 0}
     - Class: 81
+      Script: {instanceID: 0}
+    - Class: 91
+      Script: {instanceID: 0}
+    - Class: 95
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
@@ -305,57 +318,67 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11828}
     - Class: 114
-      Script: {instanceID: 12002}
+      Script: {instanceID: 11994}
     - Class: 114
-      Script: {instanceID: 12258}
+      Script: {instanceID: 12004}
     - Class: 114
-      Script: {instanceID: 12448}
+      Script: {instanceID: 12260}
     - Class: 114
-      Script: {instanceID: 12716}
+      Script: {instanceID: 12450}
     - Class: 114
-      Script: {instanceID: 12734}
+      Script: {instanceID: 12718}
     - Class: 114
-      Script: {instanceID: 12848}
+      Script: {instanceID: 12736}
     - Class: 114
-      Script: {instanceID: 13014}
+      Script: {instanceID: 12850}
     - Class: 114
-      Script: {instanceID: 13182}
+      Script: {instanceID: 13016}
     - Class: 114
-      Script: {instanceID: 13248}
+      Script: {instanceID: 13044}
     - Class: 114
-      Script: {instanceID: 13328}
+      Script: {instanceID: 13048}
     - Class: 114
-      Script: {instanceID: 13410}
+      Script: {instanceID: 13186}
     - Class: 114
-      Script: {instanceID: 13498}
+      Script: {instanceID: 13252}
     - Class: 114
-      Script: {instanceID: 13514}
+      Script: {instanceID: 13332}
     - Class: 114
-      Script: {instanceID: 13676}
+      Script: {instanceID: 13414}
     - Class: 114
-      Script: {instanceID: 13698}
+      Script: {instanceID: 13502}
     - Class: 114
-      Script: {instanceID: 13726}
+      Script: {instanceID: 13518}
     - Class: 114
-      Script: {instanceID: 13846}
+      Script: {instanceID: 13680}
     - Class: 114
-      Script: {instanceID: 13864}
+      Script: {instanceID: 13684}
     - Class: 114
-      Script: {instanceID: 14090}
+      Script: {instanceID: 13702}
     - Class: 114
-      Script: {instanceID: 14132}
+      Script: {instanceID: 13730}
     - Class: 114
-      Script: {instanceID: 14140}
+      Script: {instanceID: 13850}
     - Class: 114
-      Script: {instanceID: 14714}
+      Script: {instanceID: 13868}
     - Class: 114
-      Script: {instanceID: 14750}
+      Script: {instanceID: 14094}
     - Class: 114
-      Script: {instanceID: 14828}
+      Script: {instanceID: 14136}
     - Class: 114
-      Script: {instanceID: 14852}
+      Script: {instanceID: 14144}
     - Class: 114
-      Script: {instanceID: 14876}
+      Script: {instanceID: 14476}
+    - Class: 114
+      Script: {instanceID: 14718}
+    - Class: 114
+      Script: {instanceID: 14754}
+    - Class: 114
+      Script: {instanceID: 14832}
+    - Class: 114
+      Script: {instanceID: 14856}
+    - Class: 114
+      Script: {instanceID: 14880}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -597,6 +620,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: PhysicsRaycaster
+  - hash:
+      serializedVersion: 2
+      Hash: 1559cd1d8a9c9e5491254a75c608203e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CharacterMotion
   - hash:
       serializedVersion: 2
       Hash: fa3e4585868a251c4fc15b64875ea790
@@ -855,6 +884,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_SpriteAnimator
+  - hash:
+      serializedVersion: 2
+      Hash: 73293331c3a900c2bf383851bf8fca43
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TestCharacterAni
   - hash:
       serializedVersion: 2
       Hash: 68d39a695e8b76d141388d1ed60f2635
@@ -1145,7 +1180,7 @@ ScriptsOnlyBuild:
     className: GraphicRaycaster
   - hash:
       serializedVersion: 2
-      Hash: 5eb907c7cabc54e879444f4c5a9bf0c9
+      Hash: a49b1947109f8318bbcc9550d87f1300
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Talk

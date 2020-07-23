@@ -11,6 +11,9 @@ public class BackEndAuthentication : MonoBehaviour
     public InputField idInput;
     public InputField paInput;
 
+    public GameObject alramPannel;
+    public Text oderInfo;
+
     // 회원가입1 - 동기 방식
     public void OnClickSignUp1()
     {
@@ -77,6 +80,9 @@ public class BackEndAuthentication : MonoBehaviour
     // 닉네임 정보 받아오기 순서 1 
     public void AsyncGetUserInfo()
     {
+        alramPannel.SetActive(true);
+        
+        oderInfo.text = "닉네임 받아오는 중 ...";
         BackendAsyncClass.BackendAsync(Backend.BMember.GetUserInfo, (callback) =>
         {
             string[] userData = callback.GetReturnValue().Split('"');
@@ -95,11 +101,13 @@ public class BackEndAuthentication : MonoBehaviour
                 BackEndGameInfo.instance.InsertData("UserInfo", nicknameData); //private테이블 생성 
                 GameManager.instance.userInfoManager.nickname = idInput.text;
 
+                oderInfo.text = "초기 스킨 아이템 저장중 ...";
                 //초기 스킨 아이템 저장
                 GameManager.instance.userInfoManager.SaveSkinItem(() => {
                     // 그 다음 돈  저장 
                     GameManager.instance.userInfoManager.SetUserMoney(MoneyKind.Crystal, 1000000);
                     GameManager.instance.userInfoManager.SetUserMoney(MoneyKind.Gold, 1000000);
+                    oderInfo.text = "초기 돈 정보 저장중 ...";
                     GameManager.instance.userInfoManager.SaveUserMoney(() => SceneManager.LoadScene("CaracterSelect"));
                 });
 
@@ -110,32 +118,51 @@ public class BackEndAuthentication : MonoBehaviour
             {
                 GameManager.instance.userInfoManager.nickname = idInput.text;
 
+                oderInfo.text = "기존 유저의 돈 정보 받아오는 중 ...";
                 // 돈 불러오기 
-                GameManager.instance.userInfoManager.LoadUserMoney();
+                GameManager.instance.userInfoManager.LoadUserMoney(() =>
+                {
+                    oderInfo.text = "기존 유저의 스킨 정보 받아오는 중 ...";
+                    // 스킨아이템 불러오기 
+                    GameManager.instance.userInfoManager.LoadSkinItem(() => {
 
-                // 스킨아이템 불러오기 
-                GameManager.instance.userInfoManager.LoadSkinItem(() => {
-                    BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback2) =>
-                    {
-                        // 이후 처리
-                        JsonData jsonData = callback2.GetReturnValuetoJSON()["rows"][0];
-                        if (jsonData.Keys.Contains("CurrentCharacter")) // CurrentCharacter 정보가 존재 한다면 
+                        oderInfo.text = "현재 캐릭터 정보 받아오는중 ...";
+                        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback2) =>
                         {
-                            string temp = jsonData["inDate"]["S"].ToString();
-                            string currentCharacter = jsonData["CurrentCharacter"][0].ToString();
-                            GameManager.instance.userInfoManager.currentCharacter = currentCharacter;
-                            GameManager.instance.userInfoManager.LoadUserEqip(currentCharacter, () => {
-                                SceneManager.LoadScene("Loding");
-                            });
-                        }
-                        else
-                        {
-                            SceneManager.LoadScene("CaracterSelect");// CurrentCharacter 정보가 없다면 
-                        }
+                            // 이후 처리
+                            JsonData jsonData = callback2.GetReturnValuetoJSON()["rows"][0];
+                            if (jsonData.Keys.Contains("CurrentCharacter")) // CurrentCharacter 정보가 존재 한다면 
+                            {
+                                //현재 캐릭터 불러오기
+                                string temp = jsonData["inDate"]["S"].ToString();
+                                string currentCharacter = jsonData["CurrentCharacter"][0].ToString();
+                                GameManager.instance.userInfoManager.currentCharacter = currentCharacter;
+
+                                oderInfo.text = "캐릭터의 장비정보 로드 ...";
+                                // 그 캐릭터의 장비정보 로드 
+                                GameManager.instance.userInfoManager.LoadUserEqip(currentCharacter, () => {
+                                    oderInfo.text = "캐릭터의 스테이터스 로드 ...";
+                                    // 그 캐릭터의 스테이터스 로드
+                                    GameManager.instance.userInfoManager.LoadUserStatus(currentCharacter, () =>
+                                    {
+                                        oderInfo.text = "캐릭터의 욕구정보 로드 ...";
+                                        // 그 캐릭터의 욕구 로드 
+                                        GameManager.instance.userInfoManager.LoadUserNeed(currentCharacter, () =>
+                                        {
+                                            Debug.Log("성공");
+                                            SceneManager.LoadScene("Loding");
+                                        });
+                                    }); 
+                                });
+                            }
+                            else
+                            {
+                                SceneManager.LoadScene("CaracterSelect");// CurrentCharacter 정보가 없다면 
+                            }
+                        });
                     });
-                });
 
-          
+                });
             }
         });
     }

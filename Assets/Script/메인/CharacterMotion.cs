@@ -8,6 +8,7 @@ public class CharacterMotion : MonoBehaviour, IPointerClickHandler, IDragHandler
 {
     public Camera characterCam;
 
+    [HideInInspector]
     public bool stopFlag = false;
     bool flag = false;
     IEnumerator aniCoroutine;
