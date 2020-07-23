@@ -2,6 +2,9 @@
 using UnityEngine;
 using BackEnd;
 using LitJson;
+using System.Collections;
+using UnityEngine.Networking;
+using System.Runtime.InteropServices;
 
 public class UserInfoManager : MonoBehaviour
 {
@@ -610,6 +613,10 @@ public class UserInfoManager : MonoBehaviour
     }
 
     public Need userNeed = new Need();
+    float pleasureTime = 216f; //6시간
+    float satietyTime = 532f; //12시간
+    float cleanlinessTime = 1064f; //24시간
+    float vitalityTime = 1064f; //24시간
 
     public void SetUserNeed(int pleasure, int satiety, int cleanliness, int vitality)
     {
@@ -617,7 +624,50 @@ public class UserInfoManager : MonoBehaviour
         userNeed.satiety = satiety;
         userNeed.cleanliness = cleanliness;
         userNeed.vitality = vitality;
+
+        StartCoroutine(UserNeedStream(NeedKind.즐거움, pleasureTime));
+        StartCoroutine(UserNeedStream(NeedKind.청결함, satietyTime));
+        StartCoroutine(UserNeedStream(NeedKind.포만감, cleanlinessTime));
+        StartCoroutine(UserNeedStream(NeedKind.활력, vitalityTime));
     }
+
+    IEnumerator UserNeedStream(NeedKind needKind, float time)
+    {
+        if (!PlayerPrefs.HasKey(needKind.ToString() + "Time"))
+        {
+            PlayerPrefs.SetFloat(needKind.ToString() + "Time", time);
+        }
+
+        WaitForSeconds loopTime = new WaitForSeconds(1f);
+
+        while (true)
+        {
+            yield return loopTime;
+            PlayerPrefs.SetFloat(needKind.ToString() + "Time", PlayerPrefs.GetFloat(needKind.ToString() + "Time") - 1);
+            if (PlayerPrefs.GetFloat(needKind.ToString() + "Time") < 0)
+            {
+                PlayerPrefs.SetFloat(needKind.ToString() + "Time", time);
+
+                switch (needKind)
+                {
+                    case NeedKind.즐거움:
+                        userNeed.pleasure--;
+                        break;
+                    case NeedKind.포만감:
+                        userNeed.satiety--;
+                        break;
+                    case NeedKind.청결함:
+                        userNeed.cleanliness--;
+                        break;
+                    case NeedKind.활력:
+                        userNeed.vitality--;
+                        break;
+                }
+                SaveUserNeed(currentCharacter);
+            }
+        }
+    }
+
 
     public int GetUserNeed(NeedKind needKind)
     {
@@ -637,51 +687,86 @@ public class UserInfoManager : MonoBehaviour
 
     public void SaveUserNeed(string currentCharacter, System.Action action = null)
     {
-        string dataString = userNeed.pleasure + "-" + userNeed.satiety + "-" + userNeed.cleanliness + "-" + userNeed.vitality;
-        Param dataParam = new Param();
-        dataParam.Add(currentCharacter + "Need", dataString);
+        StartCoroutine(NeedTime(() => {
+            string dataString = userNeed.pleasure + "-" + userNeed.satiety + "-" + userNeed.cleanliness + "-" + userNeed.vitality;
+            int second = (int)needTimestamp.TotalSeconds;
 
-        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
-        {
-            // 이후 처리
-            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
-            string dataIndate = jsonData["inDate"]["S"].ToString();
+            Param dataParam = new Param();
+            dataParam.Add(currentCharacter + "Need", dataString);
+            dataParam.Add(currentCharacter + "NeedTime", second);
 
-            BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "UserInfo", dataIndate, dataParam, (callback2) =>
+            BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
             {
-                Debug.Log("성공했습니다");
-
                 // 이후 처리
-                if (action != null)
+                JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
+                string dataIndate = jsonData["inDate"]["S"].ToString();
+
+                BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "UserInfo", dataIndate, dataParam, (callback2) =>
                 {
-                    action();
-                }
+                    Debug.Log("성공했습니다");
+
+                    // 이후 처리
+                    if (action != null)
+                    {
+                        action();
+                    }
+                });
             });
-        });
+        }));
     }
 
     public void LoadUserNeed(string currentCharacter, System.Action action = null)
     {
-        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
-        {
-            // 이후 처리
-            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
-            if (jsonData.Keys.Contains(currentCharacter + "Need"))
+        StartCoroutine(NeedTime(() => {
+            BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
             {
-                string tempUserNeed = jsonData[currentCharacter + "Need"][0].ToString();
-                string[] tempUserNeedList = tempUserNeed.Split('-');
-
-                userNeed.pleasure = int.Parse(tempUserNeedList[0]);
-                userNeed.satiety = int.Parse(tempUserNeedList[1]);
-                userNeed.cleanliness = int.Parse(tempUserNeedList[2]);
-                userNeed.vitality = int.Parse(tempUserNeedList[3]);
-
-                if (action != null)
+                // 이후 처리
+                JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
+                if (jsonData.Keys.Contains(currentCharacter + "Need"))
                 {
-                    action();
+                    string tempUserNeed = jsonData[currentCharacter + "Need"][0].ToString();
+                    int tempStreamTime = (int)needTimestamp.TotalSeconds - int.Parse(jsonData[currentCharacter + "NeedTime"][0].ToString());
+                  
+                    string[] tempUserNeedList = tempUserNeed.Split('-');
+                    int tempPleasure = int.Parse(tempUserNeedList[0]) - (int)(tempStreamTime / pleasureTime);
+                    int tempSatiety = int.Parse(tempUserNeedList[1]) - (int)(tempStreamTime / satietyTime);
+                    int tempCleanliness = int.Parse(tempUserNeedList[2]) - (int)(tempStreamTime / cleanlinessTime);
+                    int tempVitality = int.Parse(tempUserNeedList[3]) - (int)(tempStreamTime / vitalityTime);
+
+                    SetUserNeed(tempPleasure, tempSatiety, tempCleanliness, tempVitality);
+
+                    if (action != null)
+                    {
+                        action();
+                    }
                 }
+            });
+        }));
+    }
+
+    System.TimeSpan needTimestamp;
+    IEnumerator NeedTime(System.Action callback)
+    {
+        UnityWebRequest request = new UnityWebRequest();
+        using (request = UnityWebRequest.Get("www.naver.com"))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.isNetworkError)
+            {
+                Debug.Log(request.error);
             }
-        });
+            else
+            {
+                string date = request.GetResponseHeader("date");
+
+                System.DateTime dateTime = System.DateTime.Parse(date).ToUniversalTime();
+
+                needTimestamp = dateTime - new System.DateTime(1970, 1, 1, 0, 0, 0);
+
+                callback();
+            }
+        }
     }
 }
 

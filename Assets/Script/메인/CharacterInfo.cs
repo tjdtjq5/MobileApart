@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class CharacterInfo : MonoBehaviour
@@ -84,6 +86,7 @@ public class CharacterInfo : MonoBehaviour
         GameObject needUI = this.transform.GetChild(0).Find("욕구UI").gameObject;
         needUI.SetActive(false);
     }
+
 }
 
 public enum NeedKind
