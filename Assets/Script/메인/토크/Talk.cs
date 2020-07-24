@@ -1,17 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
-using System.CodeDom.Compiler;
 
 public class Talk : MonoBehaviour
 {
+    [Header("토크 풍선 오브젝트")]
     public GameObject[] talkBullon;
-    [Header("출력 대사 텍스트")]
-    public string[] bullonText;
-    List<string> originText = new List<string>();
+    [Header("기타 스크립트")]
+    public CharacterInfo characterInfo;
 
+    string[] bullonText;
+    List<string> originText = new List<string>();
     float fadeSpeed = 0.3f;
     bool flag = false;
 
@@ -20,6 +20,35 @@ public class Talk : MonoBehaviour
 
     private void Start()
     {
+        if (GameManager.instance.userInfoManager.GetUserNeed(characterInfo.theWorstNeed()) < 20)
+        {
+            bullonText = new string[3];
+            bullonText[0] = "잡담";
+            switch (characterInfo.theWorstNeed())
+            {
+                case NeedKind.즐거움:
+                    bullonText[1] = "놀까?";
+                    break;
+                case NeedKind.포만감:
+                    bullonText[1] = "먹을래?";
+                    break;
+                case NeedKind.청결함:
+                    bullonText[1] = "씻을까?";
+                    break;
+                case NeedKind.활력:
+                    bullonText[1] = "잘래?";
+                    break;
+            }
+            bullonText[2] = "상태어때?";
+        }
+        else
+        {
+            bullonText = new string[2];
+            bullonText[0] = "잡담";
+            bullonText[1] = "상태어때?";
+        }
+
+
         for (int i = 0; i < bullonText.Length; i++)
         {
             originText.Add(bullonText[i]);

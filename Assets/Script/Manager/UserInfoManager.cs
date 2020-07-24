@@ -620,6 +620,24 @@ public class UserInfoManager : MonoBehaviour
 
     public void SetUserNeed(int pleasure, int satiety, int cleanliness, int vitality)
     {
+        if (pleasure < 0)
+            pleasure = 0;
+        if (pleasure > 100)
+            pleasure = 100;
+        if (satiety < 0)
+            satiety = 0;
+        if (satiety > 100)
+            satiety = 100;
+        if (cleanliness < 0)
+            cleanliness = 0;
+        if (cleanliness > 100)
+            cleanliness = 100;
+        if (vitality < 0)
+            vitality = 0;
+        if (vitality > 100)
+            vitality = 100;
+
+
         userNeed.pleasure = pleasure;
         userNeed.satiety = satiety;
         userNeed.cleanliness = cleanliness;
@@ -651,16 +669,16 @@ public class UserInfoManager : MonoBehaviour
                 switch (needKind)
                 {
                     case NeedKind.즐거움:
-                        userNeed.pleasure--;
+                        SetUserNeed(userNeed.pleasure--, userNeed.satiety, userNeed.cleanliness, userNeed.vitality);
                         break;
                     case NeedKind.포만감:
-                        userNeed.satiety--;
+                        SetUserNeed(userNeed.pleasure, userNeed.satiety--, userNeed.cleanliness, userNeed.vitality);
                         break;
                     case NeedKind.청결함:
-                        userNeed.cleanliness--;
+                        SetUserNeed(userNeed.pleasure, userNeed.satiety, userNeed.cleanliness--, userNeed.vitality);
                         break;
                     case NeedKind.활력:
-                        userNeed.vitality--;
+                        SetUserNeed(userNeed.pleasure, userNeed.satiety, userNeed.cleanliness, userNeed.vitality--);
                         break;
                 }
                 SaveUserNeed(currentCharacter);
