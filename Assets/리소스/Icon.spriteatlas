@@ -49,7 +49,7 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 00567494518a038468757d7ce547dafb, type: 3}
     - {fileID: 2800000, guid: bd97076236ede3d41bc17ea349c1876f, type: 3}
     - {fileID: 2800000, guid: b16e7aebaeb97c5428946d92311a4337, type: 3}
-    - {fileID: 2800000, guid: 54024dad0825f3344ad6f59067e4cf19, type: 3}
+    - {fileID: 2800000, guid: dd3674f1803d89541929828671bee386, type: 3}
     - {fileID: 2800000, guid: 22ef821389b2fe2459d710558a6a0275, type: 3}
     - {fileID: 2800000, guid: 7f58afcd66f5967409d2b02be98ce05d, type: 3}
     - {fileID: 2800000, guid: 9fe5c791a13c6a1428291e3a9bd0053a, type: 3}
@@ -60,8 +60,7 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 3ef6c1367525b45439438aa9495018d7, type: 3}
     - {fileID: 2800000, guid: e6a4db4b7c07abb47ae6782189229df1, type: 3}
     - {fileID: 2800000, guid: c8620daf95b6bd940ac6b8ee2c5f73cb, type: 3}
-    - {fileID: 2800000, guid: dd3674f1803d89541929828671bee386, type: 3}
-    totalSpriteSurfaceArea: 194116
+    totalSpriteSurfaceArea: 179484
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -87,7 +86,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: b16e7aebaeb97c5428946d92311a4337, type: 3}
   - {fileID: 21300000, guid: 99220a1ccdbef83498265f9883f0e892, type: 3}
   - {fileID: 21300000, guid: 337cdd9d1fbc6d847934856e2cf54ee2, type: 3}
-  - {fileID: 21300000, guid: 54024dad0825f3344ad6f59067e4cf19, type: 3}
   - {fileID: 21300000, guid: 7f58afcd66f5967409d2b02be98ce05d, type: 3}
   - {fileID: 21300000, guid: 447dd0ed4ee3d044a8e14ee078f68035, type: 3}
   - {fileID: 21300000, guid: 48f66c3e7d3639041a96700d00721c46, type: 3}
@@ -119,7 +117,6 @@ SpriteAtlas:
   - icon_main_game
   - icon_dress_top
   - icon_dress_dyeing
-  - icon_main_likability
   - ui_button_outline
   - icon_main_story
   - gradation

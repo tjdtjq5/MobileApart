@@ -136,6 +136,7 @@
     <None Include="Assets\Script\TxT\데일리상점_DB.txt" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
     <None Include="Assets\Script\TxT\박스_DB.txt" />
+    <None Include="Assets\Material\Multiple.shader" />
     <None Include="Assets\Script\TxT\아이템_DB.txt" />
     <None Include="Assets\Character\bodya.atlas.txt" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\CartoonFX Readme.txt" />

@@ -9,6 +9,7 @@ public class Talk : MonoBehaviour
     public GameObject[] talkBullon;
     [Header("기타 스크립트")]
     public CharacterInfo characterInfo;
+    public Sleep sleep;
 
     string[] bullonText;
     List<string> originText = new List<string>();
@@ -125,6 +126,10 @@ public class Talk : MonoBehaviour
                 tempString.Add("가위바위보");
                 TalkBullonTextChange(tempString);
                 TalkBtn(true);
+                break;
+            case "잘래?":
+                sleep.SleepOpen();
+                TalkBtn();
                 break;
             case "가위바위보":
                 RockPaperScissors.instance.RockPaperScissorsOpen();
