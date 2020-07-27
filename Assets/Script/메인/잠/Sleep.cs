@@ -1,9 +1,6 @@
-﻿using BackEnd.Tcp;
-using DG.Tweening;
+﻿using DG.Tweening;
 using Spine.Unity;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -76,12 +73,10 @@ public class Sleep : MonoBehaviour
         }
 
         // 활력 셋팅
-        StartCoroutine(VitalityUp(50, () => {
-            // 저장
-            Debug.Log("aa");
-            GameManager.instance.userInfoManager.SaveUserNeed(GameManager.instance.userInfoManager.currentCharacter);
-            flag = false;
-        }));
+        int needV = GameManager.instance.userInfoManager.GetUserNeed(NeedKind.활력);
+        this.transform.Find("활력").GetChild(1).GetChild(2).GetComponent<Image>().sprite = GetNeedIcon(needV);
+        this.transform.Find("활력").GetChild(1).GetChild(0).GetComponent<Text>().text = needV.ToString();
+        StartCoroutine(VitalityUp(50));
     }
 
     public Sprite GetNeedIcon(int needPercent)
@@ -122,13 +117,12 @@ public class Sleep : MonoBehaviour
 
         if (GhostCoroutine != null)
             StopCoroutine(GhostCoroutine);
+
         for (int i = 0; i < this.transform.Find("유령").childCount; i++)
         {
             if (this.transform.Find("유령").GetChild(i).gameObject.activeSelf)
             {
-                this.transform.Find("유령").GetChild(i).GetComponent<Image>().DOFade(0, .5f).OnComplete(()=> { 
-                    this.transform.Find("유령").GetChild(i).gameObject.SetActive(false);
-                });
+                this.transform.Find("유령").GetChild(i).GetChild(0).GetComponent<Image>().DOFade(0, .5f);
             }
         }
 
@@ -137,6 +131,11 @@ public class Sleep : MonoBehaviour
         multipleBg.GetComponent<Image>().DOFade(0, 1.3f);
 
         yield return new WaitForSeconds(2.4f);
+
+        for (int i = 0; i < this.transform.Find("유령").childCount; i++)
+        {
+            this.transform.Find("유령").GetChild(i).gameObject.SetActive(false);
+        }
 
         character.position = originPos;
         character.localScale = new Vector3(originSize, originSize, originSize);
@@ -163,12 +162,73 @@ public class Sleep : MonoBehaviour
     {
         flag = true;
         candlePurchase.SetActive(true);
+        Time.timeScale = 0;
     }
 
     public void SelectCandle(int index)
     {
+        // 구매 
+        switch (index)
+        {
+            case 1: // 라벤더
+                int money = 1000;
+                MoneyKind moneykind = MoneyKind.Gold;
+                if (GameManager.instance.userInfoManager.GetUserMoney(moneykind) < money)
+                {
+                    return;
+                }
+                else
+                {
+                    GameManager.instance.userInfoManager.SetUserMoney(moneykind, GameManager.instance.userInfoManager.GetUserMoney(moneykind) - money);
+                    GameManager.instance.userInfoManager.SaveUserMoney();
+                }
+                break;
+            case 2: // 장미 
+                int money2 = 1000;
+                MoneyKind moneykind2 = MoneyKind.Crystal;
+                if (GameManager.instance.userInfoManager.GetUserMoney(moneykind2) < money2)
+                {
+                    return;
+                }
+                else
+                {
+                    GameManager.instance.userInfoManager.SetUserMoney(moneykind2, GameManager.instance.userInfoManager.GetUserMoney(moneykind2) - money2);
+                    GameManager.instance.userInfoManager.SaveUserMoney();
+                }
+                break;
+        }
+
         flag = false;
         candlePurchase.SetActive(false);
+        Time.timeScale = 1;
+
+        switch (index)
+        {
+            case 1:
+                flag = true;
+                // 활력 셋팅
+                StartCoroutine(VitalityUp(GameManager.instance.userInfoManager.GetUserNeed(NeedKind.활력) + 20));
+
+                break;
+            case 2:
+                isComplete = true;
+                flag = true;
+                // 활력 셋팅
+                StartCoroutine(VitalityUp(GameManager.instance.userInfoManager.GetUserNeed(NeedKind.활력) + 40));
+                fillGage = 1;
+                gage.DOFillAmount(fillGage, 1F);
+                if (GhostCoroutine != null)
+                    StopCoroutine(GhostCoroutine);
+
+                for (int i = 0; i < this.transform.Find("유령").childCount; i++)
+                {
+                    if (this.transform.Find("유령").GetChild(i).gameObject.activeSelf)
+                    {
+                        this.transform.Find("유령").GetChild(i).GetChild(0).GetComponent<Image>().DOFade(0, .5f);
+                    }
+                }
+                break;
+        }
     }
 
     IEnumerator GhostStart()
@@ -176,7 +236,7 @@ public class Sleep : MonoBehaviour
         while (true)
         {
             SpawnGhost();
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(1);
         }
     }
 
@@ -189,10 +249,9 @@ public class Sleep : MonoBehaviour
                 float randomX = Random.RandomRange(-130, 130);
                 float randomY = Random.RandomRange(-200, 200);
                 this.transform.Find("유령").GetChild(i).localPosition = new Vector2(randomX, randomY);
-
+                this.transform.Find("유령").GetChild(i).GetChild(0).GetComponent<Image>().DOFade(0, 0);
+                this.transform.Find("유령").GetChild(i).GetChild(0).GetComponent<Image>().DOFade(1, .5f);
                 this.transform.Find("유령").GetChild(i).gameObject.SetActive(true);
-                this.transform.Find("유령").GetChild(i).GetComponent<Image>().DOFade(0, 0);
-                this.transform.Find("유령").GetChild(i).GetComponent<Image>().DOFade(1, .5f);
 
                 if (i == this.transform.Find("유령").childCount - 1)
                 {
@@ -211,26 +270,19 @@ public class Sleep : MonoBehaviour
             {
                 return;
             }
-            else
-            {
-                if (this.transform.Find("유령").GetChild(i).GetComponent<Image>().color.a != 1)
-                {
-                    return;
-                }
-            }
         }
         SleepClose();
     }
 
     public void GhostTouch(int index)
     {
-        if (this.transform.Find("유령").GetChild(index).GetComponent<Image>().color.a < 1)
+        if (this.transform.Find("유령").GetChild(index).GetChild(0).GetComponent<Image>().color.a < 1)
         {
             return;
         }
 
         GageUp(0.1F);
-        this.transform.Find("유령").GetChild(index).GetComponent<Image>().DOFade(0, .5f).OnComplete(()=> {
+        this.transform.Find("유령").GetChild(index).GetChild(0).GetComponent<Image>().DOFade(0, .5f).OnComplete(()=> {
             this.transform.Find("유령").GetChild(index).gameObject.SetActive(false);
         });
     }
@@ -242,33 +294,28 @@ public class Sleep : MonoBehaviour
     void GageUp(float percent)
     {
         fillGage += percent;
-        gage.DOFillAmount(fillGage, 1F);
+        gage.DOFillAmount(fillGage, 1F).OnComplete(()=> {
+            if (fillGage >= 1 && !isComplete)
+            {
+                isComplete = true;
+                flag = true;
 
-        if (fillGage >= 1 && !isComplete)
-        {
-            Debug.Log("aa");
-            isComplete = true;
-            flag = true;
+                if (GhostCoroutine != null)
+                    StopCoroutine(GhostCoroutine);
 
-            if (GhostCoroutine != null)
-                StopCoroutine(GhostCoroutine);
-
-            // 활력 셋팅
-            StartCoroutine(VitalityUp(GameManager.instance.userInfoManager.GetUserNeed(NeedKind.활력 + 20), () => {
-                // 저장
-                GameManager.instance.userInfoManager.SaveUserNeed(GameManager.instance.userInfoManager.currentCharacter);
-                flag = false;
-            }));
-        }
+                // 활력 셋팅
+                StartCoroutine(VitalityUp(GameManager.instance.userInfoManager.GetUserNeed(NeedKind.활력) + 20));
+            }
+        });
     }
 
     IEnumerator VitalityUp(int num, System.Action callback = null)
     {
         if (GameManager.instance.userInfoManager.GetUserNeed(NeedKind.활력) >= num)
         {
+            flag = false;
             yield break;
         }
-
         // 활력 셋팅
         float countSpeed = 0.03f;
         WaitForSeconds wait = new WaitForSeconds(countSpeed);
@@ -276,8 +323,10 @@ public class Sleep : MonoBehaviour
         this.transform.Find("활력").GetChild(1).GetChild(2).GetComponent<Image>().sprite = GetNeedIcon(needV);
         this.transform.Find("활력").GetChild(1).GetChild(0).GetComponent<Text>().text = needV.ToString();
 
-        while (needV < num + 1)
+        while (needV < num)
         {
+            if (needV > 100)
+                break;
             this.transform.Find("활력").GetChild(1).GetChild(0).GetComponent<Text>().text = needV.ToString();
             Sprite tempSprite = this.transform.Find("활력").GetChild(1).GetChild(2).GetComponent<Image>().sprite;
             this.transform.Find("활력").GetChild(1).GetChild(2).GetComponent<Image>().sprite = GetNeedIcon(needV);
@@ -287,18 +336,22 @@ public class Sleep : MonoBehaviour
                     this.transform.Find("활력").GetChild(1).GetChild(2).DOScale(new Vector3(.3f, .3f, .3f), .35f);
                 });
             }
-
-            GameManager.instance.userInfoManager.SetUserNeed(GameManager.instance.userInfoManager.GetUserNeed(NeedKind.즐거움),
-                GameManager.instance.userInfoManager.GetUserNeed(NeedKind.청결함),
-                GameManager.instance.userInfoManager.GetUserNeed(NeedKind.포만감),
-                needV);
             yield return wait;
             needV++;
         }
 
+        GameManager.instance.userInfoManager.SetUserNeed(GameManager.instance.userInfoManager.GetUserNeed(NeedKind.즐거움),
+            GameManager.instance.userInfoManager.GetUserNeed(NeedKind.청결함),
+            GameManager.instance.userInfoManager.GetUserNeed(NeedKind.포만감),
+            needV);
+        this.transform.Find("활력").GetChild(1).GetChild(0).GetComponent<Text>().text = GameManager.instance.userInfoManager.GetUserNeed(NeedKind.활력).ToString();
+
+        GameManager.instance.userInfoManager.SaveUserNeed(GameManager.instance.userInfoManager.currentCharacter);
+        flag = false;
         if (callback != null)
         {
             callback();
         }
+
     }
 }

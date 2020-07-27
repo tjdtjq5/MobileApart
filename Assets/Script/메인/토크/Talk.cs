@@ -12,7 +12,6 @@ public class Talk : MonoBehaviour
     public Sleep sleep;
 
     string[] bullonText;
-    List<string> originText = new List<string>();
     float fadeSpeed = 0.3f;
     bool flag = false;
 
@@ -20,6 +19,11 @@ public class Talk : MonoBehaviour
     public Bath bath;
 
     private void Start()
+    {
+        Init();
+    }
+
+    void Init()
     {
         if (GameManager.instance.userInfoManager.GetUserNeed(characterInfo.theWorstNeed()) < 20)
         {
@@ -49,16 +53,18 @@ public class Talk : MonoBehaviour
             bullonText[1] = "상태어때?";
         }
 
+       
 
-        for (int i = 0; i < bullonText.Length; i++)
-        {
-            originText.Add(bullonText[i]);
-        }
     }
 
     
     public void TalkBtn(bool re = false)
     {
+        if (!flag)
+        {
+            Init();
+        }
+
         for (int i = 0; i < talkBullon.Length; i++)
         {
             talkBullon[i].SetActive(false);
@@ -101,7 +107,6 @@ public class Talk : MonoBehaviour
         else
         {
             flag = false;
-            TalkBullonTextChange(originText);
         }
     }
 

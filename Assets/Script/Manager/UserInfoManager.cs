@@ -766,6 +766,7 @@ public class UserInfoManager : MonoBehaviour
     IEnumerator NeedTime(System.Action callback)
     {
         UnityWebRequest request = new UnityWebRequest();
+        bool flag = false;
         using (request = UnityWebRequest.Get("www.naver.com"))
         {
             yield return request.SendWebRequest();
@@ -776,14 +777,19 @@ public class UserInfoManager : MonoBehaviour
             }
             else
             {
+                flag = true;
+
                 string date = request.GetResponseHeader("date");
 
                 System.DateTime dateTime = System.DateTime.Parse(date).ToUniversalTime();
 
                 needTimestamp = dateTime - new System.DateTime(1970, 1, 1, 0, 0, 0);
 
-                callback();
             }
+        }
+        if (flag)
+        {
+            callback();
         }
     }
 }
