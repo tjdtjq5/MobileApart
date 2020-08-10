@@ -30,6 +30,8 @@ public class Sleep : MonoBehaviour
     public Sprite soso_icon;
     public Sprite notBad_icon;
     public Sprite bad_icon;
+    [Header("연기 파티클")]
+    public GameObject smokeParticle;
 
     IEnumerator GhostCoroutine;
     bool flag;
@@ -167,6 +169,11 @@ public class Sleep : MonoBehaviour
 
     public void SelectCandle(int index)
     {
+        for (int i = 0; i < this.transform.Find("향초").Find("CandleKind").childCount; i++)
+        {
+            this.transform.Find("향초").Find("CandleKind").GetChild(i).gameObject.SetActive(false);
+        }
+        this.transform.Find("향초").Find("CandleKind").Find("기본").gameObject.SetActive(true);
         // 구매 
         switch (index)
         {
@@ -181,6 +188,11 @@ public class Sleep : MonoBehaviour
                 {
                     GameManager.instance.userInfoManager.SetUserMoney(moneykind, GameManager.instance.userInfoManager.GetUserMoney(moneykind) - money);
                     GameManager.instance.userInfoManager.SaveUserMoney();
+                    for (int i = 0; i < this.transform.Find("향초").Find("CandleKind").childCount; i++)
+                    {
+                        this.transform.Find("향초").Find("CandleKind").GetChild(i).gameObject.SetActive(false);
+                    }
+                    this.transform.Find("향초").Find("CandleKind").Find("라벤더").gameObject.SetActive(true);
                 }
                 break;
             case 2: // 장미 
@@ -194,6 +206,11 @@ public class Sleep : MonoBehaviour
                 {
                     GameManager.instance.userInfoManager.SetUserMoney(moneykind2, GameManager.instance.userInfoManager.GetUserMoney(moneykind2) - money2);
                     GameManager.instance.userInfoManager.SaveUserMoney();
+                    for (int i = 0; i < this.transform.Find("향초").Find("CandleKind").childCount; i++)
+                    {
+                        this.transform.Find("향초").Find("CandleKind").GetChild(i).gameObject.SetActive(false);
+                    }
+                    this.transform.Find("향초").Find("CandleKind").Find("장미").gameObject.SetActive(true);
                 }
                 break;
         }
@@ -281,6 +298,7 @@ public class Sleep : MonoBehaviour
             return;
         }
 
+        Instantiate(smokeParticle, new Vector3(this.transform.Find("유령").GetChild(index).position.x , this.transform.Find("유령").GetChild(index).position.y + 0.5f, this.transform.Find("유령").GetChild(index).position.z), Quaternion.identity, this.transform.Find("유령"));
         GageUp(0.1F);
         this.transform.Find("유령").GetChild(index).GetChild(0).GetComponent<Image>().DOFade(0, .5f).OnComplete(()=> {
             this.transform.Find("유령").GetChild(index).gameObject.SetActive(false);
@@ -305,8 +323,35 @@ public class Sleep : MonoBehaviour
 
                 // 활력 셋팅
                 StartCoroutine(VitalityUp(GameManager.instance.userInfoManager.GetUserNeed(NeedKind.활력) + 20));
+                StartCoroutine(GageUpCoroutine());
             }
         });
+    }
+
+    IEnumerator GageUpCoroutine()
+    {
+        this.transform.Find("악몽퇴치").gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
+        this.transform.Find("악몽퇴치").gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        this.transform.Find("악몽퇴치").gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
+        this.transform.Find("악몽퇴치").gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        this.transform.Find("악몽퇴치").gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
+        this.transform.Find("악몽퇴치").gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        this.transform.Find("악몽퇴치").gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
+        this.transform.Find("악몽퇴치").gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        this.transform.Find("악몽퇴치").gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
+        this.transform.Find("악몽퇴치").gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        this.transform.Find("악몽퇴치").gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
     }
 
     IEnumerator VitalityUp(int num, System.Action callback = null)

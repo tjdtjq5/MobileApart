@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 public class Gift : MonoBehaviour
 {
+
     public GfitKind[] giftList;
 
     public Sprite glodSprite;
@@ -17,6 +18,7 @@ public class Gift : MonoBehaviour
 
     IEnumerator[] tempCoroutine;
     IEnumerator timeCheckCoroutine;
+    IEnumerator GiftOpenCoroutine;
 
     //결과 담을 주머니
     List<AlramBox> alramBoxList = new List<AlramBox>();
@@ -40,6 +42,11 @@ public class Gift : MonoBehaviour
         if (timeCheckCoroutine != null)
         {
             StopCoroutine(timeCheckCoroutine);
+        }
+
+        if (GiftOpenCoroutine != null)
+        {
+            StopCoroutine(GiftOpenCoroutine);
         }
     }
 
@@ -209,6 +216,12 @@ public class Gift : MonoBehaviour
 
     public void GiftOpen(int index , int num, bool isFree = false)
     {
+        GiftOpenCoroutine = TempGiftOpenCoroutine(index, num, isFree);
+        StartCoroutine(GiftOpenCoroutine);
+    }
+
+    IEnumerator TempGiftOpenCoroutine(int index, int num, bool isFree)
+    {
         if (!isFree)
         {
             // 돈 차감 
@@ -219,6 +232,7 @@ public class Gift : MonoBehaviour
 
         alramPurchaseCheck.SetActive(false);
         giftList[index].gfitPannel.Find("상자이미지").Find("상자스파인").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "open", false);
+        yield return new WaitForSeconds(1);
 
         //알람박스 초기화
         alramBoxList.Clear();
@@ -285,7 +299,7 @@ public class Gift : MonoBehaviour
 
             alramBoxList.Add(new AlramBox(GameManager.instance.databaseManager.Box_DB.GetRowData(count)[1], GameManager.instance.databaseManager.Box_DB.GetRowData(count)[0], randomColor01, randomColor02));
 
-          
+
         }
 
         // 골드와 크리스탈 시행 
@@ -351,7 +365,7 @@ public class Gift : MonoBehaviour
                 iconObj.transform.GetChild(i).GetComponent<Image>().color = alramBoxList[0].color02;
             }
         }
-        
+
         alramBoxCount = 1;
         alramBoxOpen.Find("touchPannel").GetComponent<Button>().onClick.RemoveAllListeners();
         alramBoxOpen.Find("touchPannel").GetComponent<Button>().onClick.AddListener(() => AlramBoxOpen(totalGold, totalCrystal));

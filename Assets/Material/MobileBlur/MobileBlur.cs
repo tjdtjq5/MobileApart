@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 [ExecuteInEditMode]
 public class MobileBlur : MonoBehaviour
@@ -92,5 +93,21 @@ public class MobileBlur : MonoBehaviour
         RenderTexture.ReleaseTemporary(blurTex);
 
         Graphics.Blit(source, destination, material, 1);
+    }
+
+    private Camera cam;
+    void Start()
+    {
+        cam = GetComponent<Camera>();
+        StartCoroutine(DelayedRendering());
+    }
+
+    public IEnumerator DelayedRendering()
+    {
+        while (true)
+        {
+            cam.Render();
+            yield return new WaitForSeconds(0.0466667f);
+        }
     }
 }

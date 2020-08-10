@@ -133,7 +133,7 @@ public class Talk : MonoBehaviour
                 TalkBtn(true);
                 break;
             case "잘래?":
-                sleep.SleepOpen();
+                ScreenTrans.instance.Play(()=> { sleep.SleepOpen(); });
                 TalkBtn();
                 break;
             case "가위바위보":

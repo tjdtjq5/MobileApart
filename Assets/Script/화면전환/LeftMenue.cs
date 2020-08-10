@@ -15,6 +15,8 @@ public class LeftMenue : MonoBehaviour
     public float movePosX;        float originMovePosX;
     [Header("circle")]
     public GameObject circle;
+    [Header("블러처리 카메라")]
+    public Camera theBlurCam;
 
     [Header("SetOff")]
     public GameObject[] setOff;
@@ -63,6 +65,8 @@ public class LeftMenue : MonoBehaviour
             circle.transform.localPosition = leftPannel.Find("상자").localPosition;
             leftPannel.Find("상자").Find("상자").gameObject.SetActive(true);
             leftPannel.Find("상자").Find("재화UI ").gameObject.SetActive(true);
+
+            theBlurCam.GetComponent<MobileBlur>().enabled = true;
         }
         else
         {
@@ -70,6 +74,8 @@ public class LeftMenue : MonoBehaviour
             leftPannel.Find("상자").Find("상자").gameObject.SetActive(false);
             leftPannel.Find("상자").Find("재화UI ").gameObject.SetActive(false);
             LeftMenueOpen();
+
+            theBlurCam.GetComponent<MobileBlur>().enabled = false;
         }
     }
 
