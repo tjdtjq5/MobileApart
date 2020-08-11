@@ -1,24 +1,49 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class Test : MonoBehaviour
 {
-    private Camera cam;
     void Start()
     {
-        cam = GetComponent<Camera>();
-        StartCoroutine(DelayedRendering());
+        StartCoroutine(CheckSecretShopTime());
     }
 
-    public IEnumerator DelayedRendering()
+    IEnumerator CheckSecretShopTime()
     {
-        while (true)
+        yield return null;
+        StartCoroutine(WebChk(() =>
         {
-            cam.Render();
-            yield return new WaitForSeconds(0.0466667f);
+           
+        }));
+    }
+
+    System.TimeSpan timestamp;
+
+    IEnumerator WebChk(System.Action callback)
+    {
+        UnityWebRequest request = new UnityWebRequest();
+        using (request = UnityWebRequest.Get("www.naver.com"))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.isNetworkError)
+            {
+                Debug.Log(request.error);
+            }
+            else
+            {
+                string date = request.GetResponseHeader("date");
+                Debug.Log(date);
+
+                System.DateTime dateTime = System.DateTime.Parse(date).ToUniversalTime();
+
+                timestamp = dateTime - new System.DateTime(1970, 1, 1, 0, 0, 0);
+
+                callback();
+            }
         }
     }
-
 }

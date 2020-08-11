@@ -97,6 +97,7 @@
     <Compile Include="Assets\Script\메인\TransformSkin.cs" />
     <Compile Include="Assets\Script\메인\메뉴\Gift.cs" />
     <Compile Include="Assets\Script\메인\목욕\Bath.cs" />
+    <Compile Include="Assets\Script\메인\비밀상점\SecretShop.cs" />
     <Compile Include="Assets\Script\메인\상점\Shop.cs" />
     <Compile Include="Assets\Script\메인\옷장\Cloth.cs" />
     <Compile Include="Assets\Script\메인\옷장\SlideCustom.cs" />

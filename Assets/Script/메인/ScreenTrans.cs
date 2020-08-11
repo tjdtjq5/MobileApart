@@ -19,7 +19,7 @@ public class ScreenTrans : MonoBehaviour
     IEnumerator PlayCoroutine(System.Action callback)
     {
         this.GetComponent<Animator>().SetTrigger("01");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1);
         callback();
     }
 }
