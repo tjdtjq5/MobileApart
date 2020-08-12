@@ -10,6 +10,7 @@ public class Talk : MonoBehaviour
     [Header("기타 스크립트")]
     public CharacterInfo characterInfo;
     public Sleep sleep;
+    public Cook cook;
 
     string[] bullonText;
     float fadeSpeed = 0.3f;
@@ -134,6 +135,10 @@ public class Talk : MonoBehaviour
                 break;
             case "잘래?":
                 ScreenTrans.instance.Play(()=> { sleep.SleepOpen(); });
+                TalkBtn();
+                break;
+            case "먹을래?":
+                ScreenTrans.instance.Play(() => { cook.CookOpen(); });
                 TalkBtn();
                 break;
             case "가위바위보":

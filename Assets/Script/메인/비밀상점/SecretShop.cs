@@ -10,6 +10,11 @@ public class SecretShop : MonoBehaviour
     public Text timeText;
     IEnumerator tempCoroutine;
 
+    [Header("SetOn")]
+    public GameObject[] setOn;
+    [Header("SetOff")]
+    public GameObject[] setOff;
+
     private void OnEnable()
     {
         tempCoroutine = CheckSecretShopTime();
@@ -31,10 +36,10 @@ public class SecretShop : MonoBehaviour
         int closeTime = 15;
         StartCoroutine(WebChk(() =>
         {
-            if (week == "Tue" || week == "Wed" || week == "Sat")
+            if (week == "Mon" || week == "Wed" || week == "Sat")
             {
                 int hour = timestamp.Hours;
-                Debug.Log(hour);
+
                 if (openTime <= hour && hour <= closeTime)
                 {
                     btn.gameObject.SetActive(true);
@@ -58,7 +63,6 @@ public class SecretShop : MonoBehaviour
         }));
     }
 
-
     IEnumerator WebChk(System.Action callback)
     {
         UnityWebRequest request = new UnityWebRequest();
@@ -81,6 +85,35 @@ public class SecretShop : MonoBehaviour
 
                 callback();
             }
+        }
+    }
+
+    public void OpenSecretShop()
+    {
+        if (btn.GetComponent<Image>().color == Color.white)
+        {
+            return;
+        }
+
+        for (int i = 0; i < setOn.Length; i++)
+        {
+            setOn[i].SetActive(true);
+        }
+        for (int i = 0; i < setOff.Length; i++)
+        {
+            setOff[i].SetActive(false);
+        }
+    }
+
+    public void CloseSecretShop()
+    {
+        for (int i = 0; i < setOff.Length; i++)
+        {
+            setOff[i].SetActive(true);
+        }
+        for (int i = 0; i < setOn.Length; i++)
+        {
+            setOn[i].SetActive(false);
         }
     }
 }

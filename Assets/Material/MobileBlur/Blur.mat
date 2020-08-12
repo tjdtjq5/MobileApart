@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Blur
   m_Shader: {fileID: 4800000, guid: 3b4b9d4e00adeaf41901e773a9d556ac, type: 3}
-  m_ShaderKeywords: KERNEL
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

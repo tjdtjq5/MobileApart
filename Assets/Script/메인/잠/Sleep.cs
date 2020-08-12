@@ -41,6 +41,9 @@ public class Sleep : MonoBehaviour
     {
         flag = true;
 
+        //캐릭터 애니메이션 막아두기 
+        character.GetComponent<CharacterMotion>().SetFlag(true);
+
         //초기화 
         gage.fillAmount = 0;
         fillGage = 0;
@@ -110,6 +113,9 @@ public class Sleep : MonoBehaviour
         if (flag)
             return;
 
+        //캐릭터 애니메이션 열기
+        character.GetComponent<CharacterMotion>().SetFlag(false);
+
         StartCoroutine(SleepCloseCoroutine());
     }
 
@@ -122,7 +128,7 @@ public class Sleep : MonoBehaviour
 
         for (int i = 0; i < this.transform.Find("유령").childCount; i++)
         {
-            if (this.transform.Find("유령").GetChild(i).gameObject.activeSelf)
+            if (this.transform.Find("유령").GetChild(i).gameObject.activeSelf && this.transform.Find("유령").GetChild(i).gameObject.name.Contains("유령"))
             {
                 this.transform.Find("유령").GetChild(i).GetChild(0).GetComponent<Image>().DOFade(0, .5f);
             }
