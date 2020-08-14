@@ -11,7 +11,6 @@ public class Sleep : MonoBehaviour
     [Header("캐릭터")]
     public Transform character; Vector3 originPos; //위치
     public float characterTransSize;  float originSize; // 사이즈
-    string originAni;
     [Header("캐릭터 카메라")]
     public Transform theCam; Vector3 originCamPos;
 
@@ -66,8 +65,8 @@ public class Sleep : MonoBehaviour
         theCam.position = new Vector3(theCam.position.x, (originCamPos.y - originPos.y) + sleepTrans.position.y, theCam.position.z);
 
         //캐릭터 애니 
-        originAni = character.GetComponent<SkeletonAnimation>().AnimationName;
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "sleep", true);
+
         for (int i = 0; i < setOff.Length; i++)
         {
             setOff[i].SetActive(false);
@@ -148,7 +147,7 @@ public class Sleep : MonoBehaviour
         character.position = originPos;
         character.localScale = new Vector3(originSize, originSize, originSize);
         theCam.position = originCamPos;
-        character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, originAni, true);
+        character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, GameManager.instance.userInfoManager.currentAnimation, true);
         multipleBg.GetComponent<Image>().color = originMultipleColor;
 
         for (int i = 0; i < setOff.Length; i++)
@@ -392,9 +391,9 @@ public class Sleep : MonoBehaviour
         }
 
         GameManager.instance.userInfoManager.SetUserNeed(GameManager.instance.userInfoManager.GetUserNeed(NeedKind.즐거움),
-            GameManager.instance.userInfoManager.GetUserNeed(NeedKind.청결함),
-            GameManager.instance.userInfoManager.GetUserNeed(NeedKind.포만감),
-            needV);
+                                                         GameManager.instance.userInfoManager.GetUserNeed(NeedKind.포만감),
+                                                         GameManager.instance.userInfoManager.GetUserNeed(NeedKind.청결함),
+                                                         needV);
         this.transform.Find("활력").GetChild(1).GetChild(0).GetComponent<Text>().text = GameManager.instance.userInfoManager.GetUserNeed(NeedKind.활력).ToString();
 
         GameManager.instance.userInfoManager.SaveUserNeed(GameManager.instance.userInfoManager.currentCharacter);

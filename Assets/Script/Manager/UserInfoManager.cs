@@ -12,6 +12,7 @@ public class UserInfoManager : MonoBehaviour
     [HideInInspector] public string nickname;
     [HideInInspector] public string inDate;
     [HideInInspector] public string currentCharacter;
+    [HideInInspector] public string currentAnimation;
 
 
     //현재 유저가 장착중인 옷
@@ -30,6 +31,8 @@ public class UserInfoManager : MonoBehaviour
 
     private void Start()
     {
+        PullCurrentAni();
+
         PushColorItem(Color.clear);
         PushColorItem(Color.clear);
         PushColorItem(Color.clear);
@@ -792,6 +795,19 @@ public class UserInfoManager : MonoBehaviour
             callback();
         }
     }
+
+    public void PullCurrentAni()
+    {
+        if (!PlayerPrefs.HasKey("CurrentAni"))
+        {
+            PlayerPrefs.SetString("CurrentAni", "idle_01");
+            currentAnimation = "idle_01";
+            return;
+        }
+        currentAnimation = PlayerPrefs.GetString("CurrentAni");
+    }
+
+
 }
 
 public class UserSkin

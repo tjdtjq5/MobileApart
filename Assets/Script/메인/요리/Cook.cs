@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,6 +34,17 @@ public class Cook : MonoBehaviour
     [Header("정지")]
     public Transform stop;
 
+    [Header("진행도")]
+    public GameObject gameIndex01;
+    public GameObject gameIndex02;
+    public GameObject gameIndex03;
+
+    [Header("캐릭터 애니")]
+    public TransformSkin transformSkin;
+
+    int gameIndex;
+    int score;
+
     public void CookOpen()
     {
         for (int i = 0; i < setOff.Length; i++)
@@ -44,6 +56,8 @@ public class Cook : MonoBehaviour
         select.SetActive(true);
 
         mobileBlur.enabled = true;
+
+        score = 0;
     }
 
     public void CoolClose()
@@ -68,22 +82,66 @@ public class Cook : MonoBehaviour
         }
 
         mobileBlur.enabled = false;
+
+        int randomFood = Random.RandomRange(0, 4);
+        string food = "";
+        switch (randomFood)
+        {
+            case 0:
+                food = "food/apple";
+                break;
+            case 1:
+                food = "food/banana";
+                break;
+            case 2:
+                food = "food/sandwich1";
+                break;
+            case 3:
+                food = "food/sandwich2";
+                break;
+        }
+        transformSkin.Animation("eating_food", 5.5f, false, food);
+
+        if (score > 20)
+            score = 20;
+
+        GameManager.instance.userInfoManager.SetUserNeed(GameManager.instance.userInfoManager.GetUserNeed(NeedKind.즐거움),
+                   GameManager.instance.userInfoManager.GetUserNeed(NeedKind.포만감) + score,
+                   GameManager.instance.userInfoManager.GetUserNeed(NeedKind.청결함),
+                   GameManager.instance.userInfoManager.GetUserNeed(NeedKind.활력));
+
+        GameManager.instance.userInfoManager.SaveUserNeed(GameManager.instance.userInfoManager.currentCharacter);
     }
 
     public void Select(int index)
     {
+        int needP = 0;
         switch (index)
         {
             case 0: // 인공재료 
                 selectString = "인공재료";
+                needP = 50;
                 break;
             case 1: // 기본재료
                 selectString = "기본재료";
+                needP = 70;
                 break;
             case 2: // 고급재료
                 selectString = "고급재료";
+                needP = 90;
                 break;
         }
+
+        if (GameManager.instance.userInfoManager.GetUserNeed(NeedKind.포만감) < needP)
+        {
+            GameManager.instance.userInfoManager.SetUserNeed(GameManager.instance.userInfoManager.GetUserNeed(NeedKind.즐거움),
+                                                             needP,
+                                                             GameManager.instance.userInfoManager.GetUserNeed(NeedKind.청결함),
+                                                             GameManager.instance.userInfoManager.GetUserNeed(NeedKind.활력));
+
+            GameManager.instance.userInfoManager.SaveUserNeed(GameManager.instance.userInfoManager.currentCharacter);
+        }
+
         select.SetActive(false);
         playBtn.SetActive(true);
     }
@@ -98,7 +156,8 @@ public class Cook : MonoBehaviour
                 {
                     game[i].SetActive(true);
                 }
-                GamePlay();
+                gameIndex = 0;
+                GamePlay(0);
                 break;
             case 1: // 볼일을 보러 간다
                 CoolClose();
@@ -106,8 +165,29 @@ public class Cook : MonoBehaviour
         }
     }
 
-    public void GamePlay()
+    public void GamePlay(int index)
     {
+        switch (index)
+        {
+            case 0:
+                gameIndex01.SetActive(true);
+                gameIndex02.SetActive(false);
+                gameIndex03.SetActive(false);
+                break;
+            case 1:
+                gameIndex01.SetActive(false);
+                gameIndex02.SetActive(true);
+                gameIndex03.SetActive(false);
+                break;
+            case 2:
+                gameIndex01.SetActive(false);
+                gameIndex02.SetActive(false);
+                gameIndex03.SetActive(true);
+                break;
+            default:
+                CoolClose();
+                return;
+        }
         if (CountDownCoroutine != null)
         {
             StopCoroutine(CountDownCoroutine);
@@ -140,9 +220,24 @@ public class Cook : MonoBehaviour
     {
         stop.GetComponent<Animator>().SetTrigger("play");
 
+        int tempScore = 0;
         if (slider.Find("foreground").GetComponent<Image>().fillAmount != 0)
         {
-            GamePlay();
+            if (slider.Find("foreground").GetComponent<Image>().fillAmount <= 0.8) // 베스트
+            {
+                tempScore = 7;
+            }
+            if (slider.Find("foreground").GetComponent<Image>().fillAmount <= 0.7) // 노멀
+            {
+                tempScore = 5;
+            }
+            if (slider.Find("foreground").GetComponent<Image>().fillAmount <= 0.3) // 워스트
+            {
+                tempScore = 3;
+            }
+            score += tempScore;
+            gameIndex++;
+            GamePlay(gameIndex);
         }
     }
 }

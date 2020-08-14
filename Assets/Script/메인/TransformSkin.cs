@@ -1,5 +1,6 @@
 ﻿using Spine;
 using Spine.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,13 +9,52 @@ public class TransformSkin : MonoBehaviour
 {
     SkeletonAnimation skeletonAnimation;
     List<string> skinList = new List<string>();
-    
 
     private void Start()
     {
         skeletonAnimation = transform.GetComponent<SkeletonAnimation>();
         UserEqipInfoSetting();
         UserEqipInfoSetting();
+    }
+
+    IEnumerator tempAnimationCoroutine;
+    public void Animation(string ani, float time, bool loop = false, string skinName = "")
+    {
+        if (tempAnimationCoroutine != null)
+        {
+            StopCoroutine(tempAnimationCoroutine);
+        }
+        tempAnimationCoroutine = AnimationCoroutine(ani, time, loop, skinName);
+        StartCoroutine(tempAnimationCoroutine);
+    }
+
+    IEnumerator AnimationCoroutine(string ani, float time, bool loop = false, string skinName = "")
+    {
+        if (skinName != "")
+        {
+            skeletonAnimation.skeleton.Skin = null;
+            skeletonAnimation.Skeleton.SetSlotsToSetupPose();
+            skeletonAnimation.LateUpdate();
+
+            List<string> tempSkinList = skinList;
+            tempSkinList.Add(skinName);
+            SetEquip(tempSkinList);
+        }
+        else
+        {
+            skeletonAnimation.skeleton.Skin = null;
+            skeletonAnimation.Skeleton.SetSlotsToSetupPose();
+            skeletonAnimation.LateUpdate();
+            SetEquip(skinList);
+        }
+        skeletonAnimation.AnimationState.SetAnimation(0, ani, loop);
+        yield return new WaitForSeconds(time);
+        skeletonAnimation.AnimationState.SetAnimation(0, GameManager.instance.userInfoManager.currentAnimation, true);
+
+        skeletonAnimation.skeleton.Skin = null;
+        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
+        skeletonAnimation.LateUpdate();
+        SetEquip(skinList);
     }
 
     // 유저정보에 저장된 eqip 정보 세팅 
