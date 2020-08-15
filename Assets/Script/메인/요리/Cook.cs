@@ -42,6 +42,9 @@ public class Cook : MonoBehaviour
     [Header("캐릭터 애니")]
     public TransformSkin transformSkin;
 
+    [Header("다이아")]
+    public Image[] dia;
+
     int gameIndex;
     int score;
 
@@ -124,12 +127,35 @@ public class Cook : MonoBehaviour
                 break;
             case 1: // 기본재료
                 selectString = "기본재료";
+                int userGold = GameManager.instance.userInfoManager.GetUserMoney(MoneyKind.Gold);
+                if (userGold < 100000000)
+                {
+                    OverrideCanvas.instance.RedAlram("골드가 부족합니다.");
+                    return;
+                }
+                GameManager.instance.userInfoManager.SetUserMoney(MoneyKind.Gold, userGold - 1000);
+                GameManager.instance.userInfoManager.SaveUserMoney();
                 needP = 70;
                 break;
             case 2: // 고급재료
                 selectString = "고급재료";
-                needP = 90;
-                break;
+                int userCrystal = GameManager.instance.userInfoManager.GetUserMoney(MoneyKind.Crystal);
+                if (userCrystal < 1000)
+                {
+                    OverrideCanvas.instance.RedAlram("크리스탈이 부족합니다.");
+                    return;
+                }
+                GameManager.instance.userInfoManager.SetUserMoney(MoneyKind.Gold, userCrystal - 1000);
+                GameManager.instance.userInfoManager.SaveUserMoney();
+                needP = 100;
+                GameManager.instance.userInfoManager.SetUserNeed(GameManager.instance.userInfoManager.GetUserNeed(NeedKind.즐거움),
+                                                             needP,
+                                                             GameManager.instance.userInfoManager.GetUserNeed(NeedKind.청결함),
+                                                             GameManager.instance.userInfoManager.GetUserNeed(NeedKind.활력));
+
+                GameManager.instance.userInfoManager.SaveUserNeed(GameManager.instance.userInfoManager.currentCharacter);
+                CoolClose();
+                return;
         }
 
         if (GameManager.instance.userInfoManager.GetUserNeed(NeedKind.포만감) < needP)
@@ -193,12 +219,18 @@ public class Cook : MonoBehaviour
             StopCoroutine(CountDownCoroutine);
         }
         slider.Find("foreground").GetComponent<Image>().fillAmount = 0;
+        for (int i = 0; i < dia.Length; i++)
+        {
+            dia[i].color = new Color(142 / 255f, 139 / 255f, 143 / 255f, 1);
+        }
         CountDownCoroutine = CountDown();
         StartCoroutine(CountDownCoroutine);
     }
 
     IEnumerator CountDown()
     {
+ 
+
         countDown.SetActive(true);
         countDown.transform.GetChild(0).GetComponent<Text>().text = "3";
         yield return new WaitForSeconds(1f);
@@ -212,8 +244,30 @@ public class Cook : MonoBehaviour
         while (slider.Find("foreground").GetComponent<Image>().fillAmount != 1)
         {
             slider.Find("foreground").GetComponent<Image>().fillAmount += 0.015f;
+
+            if (slider.Find("foreground").GetComponent<Image>().fillAmount >= 0)
+            {
+                dia[0].color = new Color(0, 213 / 255f, 165 / 255f, 1);
+            }
+            if (slider.Find("foreground").GetComponent<Image>().fillAmount >= 0.3)
+            {
+                dia[1].color = new Color(0, 213 / 255f, 165 / 255f, 1);
+            }
+            if (slider.Find("foreground").GetComponent<Image>().fillAmount >= 0.7)
+            {
+                dia[2].color = new Color(0, 213 / 255f, 165 / 255f, 1);
+            }
+            if (slider.Find("foreground").GetComponent<Image>().fillAmount >= 0.8)
+            {
+                dia[3].color = new Color(0, 213 / 255f, 165 / 255f, 1);
+            }
+            if (slider.Find("foreground").GetComponent<Image>().fillAmount >= 1)
+            {
+                dia[4].color = new Color(0, 213 / 255f, 165 / 255f, 1);
+            }
             yield return waitTime;
         }
+        Stop();
     }
 
     public void Stop()

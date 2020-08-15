@@ -93,6 +93,7 @@
     <Compile Include="Assets\Script\메인\CharacterInfo.cs" />
     <Compile Include="Assets\Script\메인\CharacterMotion.cs" />
     <Compile Include="Assets\Script\메인\MiniGame\RockPaperScissors.cs" />
+    <Compile Include="Assets\Script\메인\OverrideCanvas\OverrideCanvas.cs" />
     <Compile Include="Assets\Script\메인\ScreenTrans.cs" />
     <Compile Include="Assets\Script\메인\TransformSkin.cs" />
     <Compile Include="Assets\Script\메인\메뉴\Gift.cs" />
