@@ -1,6 +1,8 @@
-﻿using Spine.Unity;
+﻿using DG.Tweening;
+using Spine.Unity;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bath : MonoBehaviour
 {
@@ -20,6 +22,20 @@ public class Bath : MonoBehaviour
     public GameObject[] setOff;
     [Header("켜지는 것들")]
     public GameObject[] setOn;
+
+    [Header("청결")]
+    public Transform cleanliness;
+
+    [Header("욕구 상태 아이콘")]
+    public Sprite best_icon;
+    public Sprite good_icon;
+    public Sprite soso_icon;
+    public Sprite notBad_icon;
+    public Sprite bad_icon;
+
+    [Header("게이지")]
+    public Transform gage;
+    float gagePercent;
 
     public void BathOpen()
     {
@@ -56,10 +72,20 @@ public class Bath : MonoBehaviour
 
         touchParticleWater.SetActive(true);
         clickParticleWater.SetActive(true);
+
+        StartCoroutine(CleanlinessUp(50));
+
+        gage.GetChild(0).GetComponent<Image>().fillAmount = 0;
+        gagePercent = 0;
     }
 
     public void BathClose()
     {
+        if (cleanlinessUpFlag || gageUpFlag)
+        {
+            return;
+        }
+
         characterCam.position = originCamPos;
         character.position = originCharacterPos;
 
@@ -131,6 +157,18 @@ public class Bath : MonoBehaviour
                 }
             }
         }
+
+        if (Input.GetMouseButton(0))
+        {
+            Vector2 mousePos = Input.mousePosition;
+            Vector2 touchPos = characterCam.GetComponent<Camera>().ScreenToWorldPoint(mousePos);
+
+            RaycastHit2D hit = Physics2D.Raycast(touchPos, Vector2.zero, 10);
+            if (hit && hit.transform.tag == "꽃병")
+            {
+               
+            }
+        }
     }
 
     IEnumerator AniCoroutine;
@@ -154,5 +192,104 @@ public class Bath : MonoBehaviour
         clickParticleWater.GetComponent<ParticleSystem>().Play();
         yield return new WaitForSeconds(time - tempTime);
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "bath", true);
+    }
+
+    bool cleanlinessUpFlag = false;
+    IEnumerator CleanlinessUp(float num, System.Action callback = null)
+    {
+   
+        if (GameManager.instance.userInfoManager.GetUserNeed(NeedKind.청결함) >= num)
+        {
+            yield break;
+        }
+
+        cleanlinessUpFlag = true;
+
+        // 청결 셋팅
+        float countSpeed = 0.03f;
+        WaitForSeconds wait = new WaitForSeconds(countSpeed);
+        int needC = GameManager.instance.userInfoManager.GetUserNeed(NeedKind.청결함);
+        cleanliness.GetChild(1).GetChild(2).GetComponent<Image>().sprite = GetNeedIcon(needC);
+        cleanliness.GetChild(1).GetChild(0).GetComponent<Text>().text = needC.ToString();
+
+        while (needC < num)
+        {
+            if (needC > 100)
+                break;
+            cleanliness.GetChild(1).GetChild(0).GetComponent<Text>().text = needC.ToString();
+            Sprite tempSprite = cleanliness.GetChild(1).GetChild(2).GetComponent<Image>().sprite;
+            cleanliness.GetChild(1).GetChild(2).GetComponent<Image>().sprite = GetNeedIcon(needC);
+            if (tempSprite != GetNeedIcon(needC))
+            {
+                cleanliness.GetChild(1).GetChild(2).DOScale(new Vector3(.45f, .45f, .45f), .35f).OnComplete(() => {
+                    cleanliness.GetChild(1).GetChild(2).DOScale(new Vector3(.3f, .3f, .3f), .35f);
+                });
+            }
+            yield return wait;
+            needC++;
+        }
+
+        GameManager.instance.userInfoManager.SetUserNeed(GameManager.instance.userInfoManager.GetUserNeed(NeedKind.즐거움),
+                                                     GameManager.instance.userInfoManager.GetUserNeed(NeedKind.포만감),
+                                                     needC,
+                                                       GameManager.instance.userInfoManager.GetUserNeed(NeedKind.활력));
+        cleanliness.GetChild(1).GetChild(0).GetComponent<Text>().text = GameManager.instance.userInfoManager.GetUserNeed(NeedKind.청결함).ToString();
+
+        GameManager.instance.userInfoManager.SaveUserNeed(GameManager.instance.userInfoManager.currentCharacter);
+
+        if (callback != null)
+        {
+            callback();
+        }
+
+        cleanlinessUpFlag = false;
+    }
+
+    public Sprite GetNeedIcon(int needPercent)
+    {
+        if (needPercent >= 80)
+        {
+            return best_icon;
+        }
+        else if (needPercent >= 60)
+        {
+            return good_icon;
+        }
+        else if (needPercent >= 40)
+        {
+            return soso_icon;
+        }
+        else if (needPercent >= 20)
+        {
+            return notBad_icon;
+        }
+        else
+        {
+            return bad_icon;
+        }
+    }
+
+    bool gageUpFlag = false;
+    IEnumerator GageUp(int num)
+    {
+        yield return null;
+
+        gageUpFlag = true;
+        float countSpeed = 0.03f;
+        WaitForSeconds wait = new WaitForSeconds(countSpeed);
+
+        while (gagePercent > num)
+        {
+            gagePercent += countSpeed;
+            gage.GetChild(0).GetComponent<Image>().fillAmount = gagePercent / 100f;
+            yield return wait;
+
+            if (gagePercent >= 100)
+            {
+                gagePercent = 100;
+                break;
+            }
+        }
+        gageUpFlag = false;
     }
 }

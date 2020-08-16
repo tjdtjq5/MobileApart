@@ -13,14 +13,12 @@ public class ScreenShotHandler : MonoBehaviour
     string fileName = "ScreenShot_";
     int currentNum;
 
-    public Image screenshot_img;
-  
-
     private void Awake()
     {
         instance = this;
         myCamera = GetComponent<Camera>();
         path = Path.Combine(PathForDocumentsFile(""), fileName);
+
     }
 
     // 사진 찍고 저장
@@ -37,9 +35,6 @@ public class ScreenShotHandler : MonoBehaviour
 
 
             byte[] byteArray = renderResult.EncodeToPNG();
-
-            // 미리보기 창 
-            screenshot_img.sprite = ScreenshotImg(byteArray);
 
             myCamera.targetTexture = null;
 
@@ -130,6 +125,36 @@ public class ScreenShotHandler : MonoBehaviour
         }
     }
 
+    // 사진 제거 
+    public void Remove(int index)
+    {
+        string saveGameFileName = fileName + index.ToString() + ".png";
+        string pathAndFile = Path.Combine(path, saveGameFileName);
 
- 
+        if (!File.Exists(pathAndFile))
+        {
+            return;
+        }
+
+        File.Delete(pathAndFile);
+
+        int tempIndex = index;
+        Debug.Log(tempIndex);
+        while (true)
+        {
+            tempIndex = tempIndex + 1;
+            saveGameFileName = fileName + tempIndex.ToString() + ".png";
+            pathAndFile = Path.Combine(path, saveGameFileName);
+            Debug.Log(tempIndex);
+            if (!File.Exists(pathAndFile))
+            {
+                break;
+            }
+            int moveIndex = tempIndex - 1;
+            string moveFileName = fileName + moveIndex.ToString() + ".png";
+            string movePathAndFile = Path.Combine(path, moveFileName);
+            File.Move(pathAndFile, movePathAndFile);
+            Debug.Log(tempIndex);
+        }
+    }
 }
