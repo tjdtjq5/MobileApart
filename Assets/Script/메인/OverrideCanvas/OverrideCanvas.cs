@@ -14,6 +14,8 @@ public class OverrideCanvas : MonoBehaviour
     public Transform redAlram;
     public Transform caution;
     public Transform purchaseAlram;
+    public Transform polaroid;
+    public Transform screenPhoto;
 
     void Start()
     {
@@ -65,5 +67,27 @@ public class OverrideCanvas : MonoBehaviour
         purchaseAlram.Find("확인").GetComponent<Button>().onClick.AddListener(() => { function(); donTouchPannel.SetActive(false); });
         caution.Find("취소").GetComponent<Button>().onClick.RemoveAllListeners();
         caution.Find("취소").GetComponent<Button>().onClick.AddListener(() => { donTouchPannel.SetActive(false); });
+    }
+
+    public void PolaroidPhoto(Sprite screenShot, int month, int day)
+    {
+        polaroid.gameObject.SetActive(true);
+        polaroid.Find("ScreenShot").GetComponent<Image>().sprite = screenShot;
+        polaroid.Find("ScreenShot").GetComponent<Button>().onClick.RemoveAllListeners();
+        polaroid.Find("ScreenShot").GetComponent<Button>().onClick.AddListener(() => { ScreenPhoto(screenShot); });
+        polaroid.Find("날짜").GetComponent<Text>().text = month + "월" + day + "일";
+        polaroid.Find("Skip").GetComponent<Button>().onClick.RemoveAllListeners();
+        polaroid.Find("Skip").GetComponent<Button>().onClick.AddListener(() => {
+            polaroid.gameObject.SetActive(false);
+        });
+    }
+
+    public void ScreenPhoto(Sprite screenShot)
+    {
+        screenPhoto.gameObject.SetActive(true);
+
+        screenPhoto.GetChild(0).GetComponent<Image>().sprite = screenShot;
+        screenPhoto.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
+        screenPhoto.GetChild(0).GetComponent<Button>().onClick.AddListener(() => { screenPhoto.gameObject.SetActive(false); });
     }
 }

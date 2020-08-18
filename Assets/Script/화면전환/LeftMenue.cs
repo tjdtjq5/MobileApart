@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class LeftMenue : MonoBehaviour
 {
@@ -22,7 +23,9 @@ public class LeftMenue : MonoBehaviour
     [Header("Mobile Blur")]
     public MobileBlur mobileBlur;
 
-    bool openFlag = false;
+    [Header("드래그 패널")]
+    public GameObject dragPannel;
+
 
     private void Start()
     {
@@ -61,26 +64,28 @@ public class LeftMenue : MonoBehaviour
 
     public void Gift()
     {
-        if (!openFlag)
-        {
-            openFlag = true;
-            leftPannel.DOMoveX(movePosX, moveSpeed);
+        leftPannel.DOMoveX(movePosX, moveSpeed);
 
-            circle.SetActive(true);
-            circle.transform.localPosition = leftPannel.Find("상자").localPosition;
-            leftPannel.Find("상자").Find("상자").gameObject.SetActive(true);
-            leftPannel.Find("상자").Find("재화UI ").gameObject.SetActive(true);
+        circle.SetActive(true);
+        circle.transform.localPosition = leftPannel.Find("상자").localPosition;
+        leftPannel.Find("상자").Find("상자").gameObject.SetActive(true);
+        leftPannel.Find("상자").Find("재화UI ").gameObject.SetActive(true);
 
-        }
-        else
-        {
-            openFlag = false;
-            leftPannel.Find("상자").Find("상자").gameObject.SetActive(false);
-            leftPannel.Find("상자").Find("재화UI ").gameObject.SetActive(false);
-            LeftMenueOpen();
+        dragPannel.SetActive(true);
 
-        }
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.Drag;
+        entry.callback.AddListener((data) => { GiftClose((PointerEventData)data); });
+        dragPannel.GetComponent<EventTrigger>().triggers.Add(entry);
     }
 
+    void GiftClose(PointerEventData data)
+    {
+        leftPannel.Find("상자").Find("상자").gameObject.SetActive(false);
+        leftPannel.Find("상자").Find("재화UI ").gameObject.SetActive(false);
+        LeftMenueOpen();
+
+        dragPannel.SetActive(false);
+    }
 
 }

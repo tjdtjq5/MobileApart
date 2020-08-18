@@ -37,6 +37,11 @@ public class Bath : MonoBehaviour
     public Transform gage;
     float gagePercent;
 
+    [Header("꽃잎구매패널")]
+    public GameObject purchasePannel;
+
+    float bath02Time;
+
     public void BathOpen()
     {
         originCamPos = characterCam.position;
@@ -77,6 +82,8 @@ public class Bath : MonoBehaviour
 
         gage.GetChild(0).GetComponent<Image>().fillAmount = 0;
         gagePercent = 0;
+
+        gameEndFlag = false;
     }
 
     public void BathClose()
@@ -120,6 +127,7 @@ public class Bath : MonoBehaviour
         StopCoroutine(AniCoroutine);
 
         touchFlag = true;
+        touchParticleWater.SetActive(true);
         touchParticleWater.GetComponent<ParticleSystem>().Play();
         aniName = "";
     }
@@ -128,11 +136,13 @@ public class Bath : MonoBehaviour
     {
         touchFlag = false;
         touchParticleWater.GetComponent<ParticleSystem>().Stop();
+        touchParticleWater.SetActive(false);
         touchParticleWater.transform.position = new Vector3(2000, 2000, touchParticleWater.transform.position.z);
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "bath", true);
+
     }
     string aniName;
-    private void Update()
+    private void FixedUpdate()
     {
         if (touchFlag)
         {
@@ -147,6 +157,13 @@ public class Bath : MonoBehaviour
                     character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0, "bath2", true);
                     aniName = "bath2";
                 }
+
+                bath02Time += 0.02f;
+                if (bath02Time >= 1)
+                {
+                    bath02Time = 0;
+                    StartCoroutine(GageUp(gagePercent + 10));
+                }
             }
             else
             {
@@ -157,7 +174,7 @@ public class Bath : MonoBehaviour
                 }
             }
         }
-
+      
         if (Input.GetMouseButton(0))
         {
             Vector2 mousePos = Input.mousePosition;
@@ -166,7 +183,15 @@ public class Bath : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(touchPos, Vector2.zero, 10);
             if (hit && hit.transform.tag == "꽃병")
             {
-               
+                purchasePannel.SetActive(true);
+                characterCam.GetComponent<MobileBlur>().enabled = true;
+
+                purchasePannel.transform.Find("기본").GetComponent<Button>().onClick.RemoveAllListeners();
+                purchasePannel.transform.Find("기본").GetComponent<Button>().onClick.AddListener(() => { Nomal(); });
+                purchasePannel.transform.Find("라벤더").GetComponent<Button>().onClick.RemoveAllListeners();
+                purchasePannel.transform.Find("라벤더").GetComponent<Button>().onClick.AddListener(() => { High(); });
+                purchasePannel.transform.Find("장미").GetComponent<Button>().onClick.RemoveAllListeners();
+                purchasePannel.transform.Find("장미").GetComponent<Button>().onClick.AddListener(() => { Rare(); });
             }
         }
     }
@@ -182,6 +207,8 @@ public class Bath : MonoBehaviour
 
         AniCoroutine = Bath3Coroutine(1.5f);
         StartCoroutine(AniCoroutine);
+
+        StartCoroutine(GageUp(gagePercent + 10));
     }
 
     IEnumerator Bath3Coroutine(float time)
@@ -270,15 +297,18 @@ public class Bath : MonoBehaviour
     }
 
     bool gageUpFlag = false;
-    IEnumerator GageUp(int num)
+    IEnumerator GageUp(float num)
     {
-        yield return null;
+        if (gameEndFlag || gagePercent >= 100)
+        {
+            yield break;
+        }
 
         gageUpFlag = true;
-        float countSpeed = 0.03f;
-        WaitForSeconds wait = new WaitForSeconds(countSpeed);
+        float countSpeed = 0.6f;
+        WaitForSeconds wait = new WaitForSeconds(0.02f);
 
-        while (gagePercent > num)
+        while (gagePercent < num)
         {
             gagePercent += countSpeed;
             gage.GetChild(0).GetComponent<Image>().fillAmount = gagePercent / 100f;
@@ -287,9 +317,59 @@ public class Bath : MonoBehaviour
             if (gagePercent >= 100)
             {
                 gagePercent = 100;
+                StartCoroutine(CleanlinessUp(GameManager.instance.userInfoManager.GetUserNeed(NeedKind.청결함) + 20));
+                GameEnd();
                 break;
             }
         }
         gageUpFlag = false;
+    }
+
+    bool gameEndFlag = false;
+    void GameEnd()
+    {
+        gameEndFlag = true;
+        gage.gameObject.SetActive(false);
+    }
+
+    void Nomal()
+    {
+        purchasePannel.SetActive(false);
+        characterCam.GetComponent<MobileBlur>().enabled = false;
+    }
+
+    void High()
+    {
+        purchasePannel.SetActive(false);
+        characterCam.GetComponent<MobileBlur>().enabled = false;
+        int userMoney = GameManager.instance.userInfoManager.GetUserMoney(MoneyKind.Gold);
+        if (userMoney < 1000)
+        {
+            OverrideCanvas.instance.RedAlram("골드가 부족합니다.");
+            return;
+        }
+
+        GameManager.instance.userInfoManager.SetUserMoney(MoneyKind.Gold, userMoney - 1000);
+        GameManager.instance.userInfoManager.SaveUserMoney();
+
+        StartCoroutine(CleanlinessUp(GameManager.instance.userInfoManager.GetUserNeed(NeedKind.청결함) + 20));
+    }
+
+    void Rare()
+    {
+        purchasePannel.SetActive(false);
+        characterCam.GetComponent<MobileBlur>().enabled = false;
+        int userMoney = GameManager.instance.userInfoManager.GetUserMoney(MoneyKind.Crystal);
+        if (userMoney < 1000)
+        {
+            OverrideCanvas.instance.RedAlram("크리스탈이 부족합니다.");
+            return;
+        }
+
+        GameManager.instance.userInfoManager.SetUserMoney(MoneyKind.Crystal, userMoney - 1000);
+        GameManager.instance.userInfoManager.SaveUserMoney();
+
+        StartCoroutine(CleanlinessUp(100));
+        GameEnd();
     }
 }

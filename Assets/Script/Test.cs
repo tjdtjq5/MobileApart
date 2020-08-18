@@ -36,7 +36,6 @@ public class Test : MonoBehaviour
             else
             {
                 string date = request.GetResponseHeader("date");
-                Debug.Log(date);
 
                 System.DateTime dateTime = System.DateTime.Parse(date).ToUniversalTime();
 

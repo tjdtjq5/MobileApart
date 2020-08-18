@@ -157,4 +157,20 @@ public class ScreenShotHandler : MonoBehaviour
             Debug.Log(tempIndex);
         }
     }
+
+    public int LastIndex()
+    {
+        int index = 0;
+        while (true)
+        {
+            string saveGameFileName = fileName + index.ToString() + ".png";
+            string pathAndFile = Path.Combine(path, saveGameFileName);
+            if (!File.Exists(pathAndFile))
+            {
+                return index;
+            }
+            index++;
+        }
+    
+    }
 }

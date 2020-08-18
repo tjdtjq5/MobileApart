@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class TakePhoto : MonoBehaviour
 {
-    public void TakePhotoScreen(int index)
+    public void TakePhotoScreen()
     {
+        int index = ScreenShotHandler.instance.LastIndex();
+        ScreenShotHandler.TakeScreenshot_Static(Screen.width, Screen.height, index);
+
         ScreenTrans.instance.ScreenTrans05(() => {
-           // ScreenShotHandler.TakeScreenshot_Static(Screen.width, Screen.height, index);
-            ScreenShotHandler.instance.Remove(2);
+            OverrideCanvas.instance.PolaroidPhoto(ScreenShotHandler.instance.SystemIOFileLoad(index), 8, 17);
         });
     }
 }
