@@ -86,8 +86,8 @@ public class OverrideCanvas : MonoBehaviour
     {
         screenPhoto.gameObject.SetActive(true);
 
-        screenPhoto.GetChild(0).GetComponent<Image>().sprite = screenShot;
-        screenPhoto.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
-        screenPhoto.GetChild(0).GetComponent<Button>().onClick.AddListener(() => { screenPhoto.gameObject.SetActive(false); });
+        screenPhoto.GetChild(1).GetComponent<Image>().sprite = screenShot;
+        screenPhoto.GetChild(1).GetComponent<Button>().onClick.RemoveAllListeners();
+        screenPhoto.GetChild(1).GetComponent<Button>().onClick.AddListener(() => { screenPhoto.gameObject.SetActive(false); });
     }
 }
