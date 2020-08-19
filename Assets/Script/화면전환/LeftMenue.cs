@@ -88,4 +88,31 @@ public class LeftMenue : MonoBehaviour
         dragPannel.SetActive(false);
     }
 
+    public void AlbumOpen()
+    {
+        leftPannel.DOMoveX(movePosX, moveSpeed);
+
+        circle.SetActive(true);
+        circle.transform.localPosition = leftPannel.Find("앨범").localPosition;
+
+        leftPannel.Find("앨범").Find("앨범").gameObject.SetActive(true);
+        leftPannel.Find("앨범").Find("휴지통").gameObject.SetActive(true);
+        leftPannel.Find("앨범").GetComponent<Album>().AlbumOpen();
+       
+        dragPannel.SetActive(true);
+
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.Drag;
+        entry.callback.AddListener((data) => { AlbumClose((PointerEventData)data); });
+        dragPannel.GetComponent<EventTrigger>().triggers.Add(entry);
+    }
+
+    public void AlbumClose(PointerEventData data)
+    {
+        leftPannel.Find("앨범").Find("앨범").gameObject.SetActive(false);
+        leftPannel.Find("앨범").Find("휴지통").gameObject.SetActive(false);
+        LeftMenueOpen();
+
+        dragPannel.SetActive(false);
+    }
 }

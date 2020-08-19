@@ -131,21 +131,20 @@ public class ScreenShotHandler : MonoBehaviour
         string saveGameFileName = fileName + index.ToString() + ".png";
         string pathAndFile = Path.Combine(path, saveGameFileName);
 
+        Debug.Log(pathAndFile);
         if (!File.Exists(pathAndFile))
         {
             return;
         }
-
+        Debug.Log(pathAndFile);
         File.Delete(pathAndFile);
 
         int tempIndex = index;
-        Debug.Log(tempIndex);
         while (true)
         {
             tempIndex = tempIndex + 1;
             saveGameFileName = fileName + tempIndex.ToString() + ".png";
             pathAndFile = Path.Combine(path, saveGameFileName);
-            Debug.Log(tempIndex);
             if (!File.Exists(pathAndFile))
             {
                 break;
@@ -154,7 +153,6 @@ public class ScreenShotHandler : MonoBehaviour
             string moveFileName = fileName + moveIndex.ToString() + ".png";
             string movePathAndFile = Path.Combine(path, moveFileName);
             File.Move(pathAndFile, movePathAndFile);
-            Debug.Log(tempIndex);
         }
     }
 

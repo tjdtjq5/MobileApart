@@ -2,6 +2,7 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - Acceleration
+    - Album
     - BackEndAuthentication
     - BackEndGameInfo
     - BackEndManager
@@ -327,6 +328,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11812}
     - Class: 114
+      Script: {instanceID: 11824}
+    - Class: 114
       Script: {instanceID: 11832}
     - Class: 114
       Script: {instanceID: 11998}
@@ -601,7 +604,7 @@ ScriptsOnlyBuild:
     className: RockPaperScissors
   - hash:
       serializedVersion: 2
-      Hash: 0437f6b1bb6c442888d984d674c37dda
+      Hash: 5cbcfe9bff204c2dab08a15f68845f69
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Album
@@ -1075,7 +1078,7 @@ ScriptsOnlyBuild:
     className: SignalReceiver
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 919b890747b2692c9a2b470d250b3457
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TakePhoto
@@ -1183,7 +1186,7 @@ ScriptsOnlyBuild:
     className: BoneFollowerGraphic
   - hash:
       serializedVersion: 2
-      Hash: adc8acb41bb4215c359ee5e189c5e9af
+      Hash: 08d6243b1c7ef4bbc7a2155193ffa063
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: OverrideCanvas

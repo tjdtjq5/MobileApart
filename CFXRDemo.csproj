@@ -69,11 +69,11 @@
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\Demo Assets\CFXR Demo.asmdef" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\Demo Assets\Kino Bloom\Shader\Bloom.shader" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\Demo Assets\Kino Bloom\Shader\Bloom.cginc" />
-    <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/UnityWorkspace/2019.3.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

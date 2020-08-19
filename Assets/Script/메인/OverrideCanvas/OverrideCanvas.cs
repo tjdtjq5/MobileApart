@@ -16,6 +16,7 @@ public class OverrideCanvas : MonoBehaviour
     public Transform purchaseAlram;
     public Transform polaroid;
     public Transform screenPhoto;
+    public Transform wating;
 
     void Start()
     {
@@ -53,9 +54,9 @@ public class OverrideCanvas : MonoBehaviour
         caution.gameObject.SetActive(true);
         caution.Find("Text").GetComponent<Text>().text = text;
         caution.Find("확인").GetComponent<Button>().onClick.RemoveAllListeners();
-        caution.Find("확인").GetComponent<Button>().onClick.AddListener(() => { function(); donTouchPannel.SetActive(false); });
+        caution.Find("확인").GetComponent<Button>().onClick.AddListener(() => { function(); donTouchPannel.SetActive(false); caution.gameObject.SetActive(false); });
         caution.Find("취소").GetComponent<Button>().onClick.RemoveAllListeners();
-        caution.Find("취소").GetComponent<Button>().onClick.AddListener(() => { donTouchPannel.SetActive(false); });
+        caution.Find("취소").GetComponent<Button>().onClick.AddListener(() => { donTouchPannel.SetActive(false); caution.gameObject.SetActive(false); });
     }
 
     public void PurchaseAlram(System.Action function)
@@ -64,9 +65,9 @@ public class OverrideCanvas : MonoBehaviour
 
         purchaseAlram.gameObject.SetActive(true);
         purchaseAlram.Find("확인").GetComponent<Button>().onClick.RemoveAllListeners();
-        purchaseAlram.Find("확인").GetComponent<Button>().onClick.AddListener(() => { function(); donTouchPannel.SetActive(false); });
+        purchaseAlram.Find("확인").GetComponent<Button>().onClick.AddListener(() => { function(); donTouchPannel.SetActive(false); purchaseAlram.gameObject.SetActive(false); });
         caution.Find("취소").GetComponent<Button>().onClick.RemoveAllListeners();
-        caution.Find("취소").GetComponent<Button>().onClick.AddListener(() => { donTouchPannel.SetActive(false); });
+        caution.Find("취소").GetComponent<Button>().onClick.AddListener(() => { donTouchPannel.SetActive(false); purchaseAlram.gameObject.SetActive(false); });
     }
 
     public void PolaroidPhoto(Sprite screenShot, int month, int day)
@@ -89,5 +90,11 @@ public class OverrideCanvas : MonoBehaviour
         screenPhoto.GetChild(1).GetComponent<Image>().sprite = screenShot;
         screenPhoto.GetChild(1).GetComponent<Button>().onClick.RemoveAllListeners();
         screenPhoto.GetChild(1).GetComponent<Button>().onClick.AddListener(() => { screenPhoto.gameObject.SetActive(false); });
+    }
+
+    public void Wating(string text, bool flag)
+    {
+        wating.gameObject.SetActive(flag);
+        wating.GetChild(0).GetChild(0).GetComponent<Text>().text = text;
     }
 }

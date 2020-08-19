@@ -1,14 +1,23 @@
-﻿using System.Collections;
+﻿using Spine;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 public class TakePhoto : MonoBehaviour
 {
+    public Transform AlbumContext;
     public void TakePhotoScreen()
     {
         int index = ScreenShotHandler.instance.LastIndex();
-        ScreenShotHandler.TakeScreenshot_Static(Screen.width, Screen.height, index);
+
+        if (AlbumContext.childCount < index)
+        {
+            OverrideCanvas.instance.RedAlram("앨범 허용량 초과");
+            return;
+        }
+
+        ScreenShotHandler.TakeScreenshot_Static(540, 1080, index);
 
         ScreenTrans.instance.ScreenTrans05(() => {
             OverrideCanvas.instance.PolaroidPhoto(ScreenShotHandler.instance.SystemIOFileLoad(index), 8, 17);
