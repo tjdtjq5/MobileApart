@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using BackEnd.Tcp;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,27 +9,54 @@ public class Album : MonoBehaviour
 {
     [Header("이미지 패널")]
     public Transform ImgPannel;
-
+    IEnumerator OpenCoroutine;
+  
     public void AlbumOpen()
     {
         int index = ScreenShotHandler.instance.LastIndex();
-        for (int i = 0; i < ImgPannel.childCount; i++)
+
+        for (int i = index; i < ImgPannel.childCount; i++)
         {
-            if (i < index)
-            {
-                ImgPannel.GetChild(i).gameObject.SetActive(true);
-                ImgPannel.GetChild(i).GetChild(0).GetComponent<Image>().sprite = ScreenShotHandler.instance.SystemIOFileLoad(i);
-                ImgPannel.GetChild(i).GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
-                ImgPannel.GetChild(i).GetChild(1).gameObject.SetActive(false);
-            }
-            else
-            {
-                ImgPannel.GetChild(i).gameObject.SetActive(false);
-            }
+            ImgPannel.GetChild(i).gameObject.SetActive(false);
         }
+
+        OpenCoroutine = LoadSpriteCoroutine();
+        StartCoroutine(OpenCoroutine);
 
         this.transform.Find("휴지통").GetComponent<Button>().onClick.RemoveAllListeners();
         this.transform.Find("휴지통").GetComponent<Button>().onClick.AddListener(() => { Treash(); });
+    }
+    bool loadFlag = false;
+    void LoadSprite(int iCount)
+    {
+        loadFlag = true;
+        ScreenShotHandler.instance.SystemIOFileLoad(iCount, () => {
+            ImgPannel.GetChild(iCount).gameObject.SetActive(true);
+            ImgPannel.GetChild(iCount).GetChild(0).GetComponent<Image>().sprite = ScreenShotHandler.instance.loadSprite[iCount];
+            ImgPannel.GetChild(iCount).GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
+            ImgPannel.GetChild(iCount).GetChild(1).gameObject.SetActive(false);
+            loadFlag = false;
+        });
+    }
+    IEnumerator LoadSpriteCoroutine()
+    {
+        int index = ScreenShotHandler.instance.LastIndex();
+        int iCount = 0;
+        while(iCount < index)
+        {
+            if (!loadFlag)
+            {
+                LoadSprite(iCount);
+                iCount++;
+            }
+            yield return null;
+        }
+    }
+
+    public void AlbumClose()
+    {
+        StopCoroutine(OpenCoroutine);
+        ScreenShotHandler.instance.AllStopLoad();
     }
 
     public void Treash()

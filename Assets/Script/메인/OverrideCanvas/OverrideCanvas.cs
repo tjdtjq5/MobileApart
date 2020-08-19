@@ -72,6 +72,11 @@ public class OverrideCanvas : MonoBehaviour
 
     public void PolaroidPhoto(Sprite screenShot, int month, int day)
     {
+        if (screenShot == null)
+        {
+            Debug.Log("aa");
+        }
+        Debug.Log("bb");
         polaroid.gameObject.SetActive(true);
         polaroid.Find("ScreenShot").GetComponent<Image>().sprite = screenShot;
         polaroid.Find("ScreenShot").GetComponent<Button>().onClick.RemoveAllListeners();

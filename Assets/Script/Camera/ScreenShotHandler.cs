@@ -87,9 +87,12 @@ public class ScreenShotHandler : MonoBehaviour
         return screenshotSprite;
     }
 
+    IEnumerator[] LoadCoroutineList = new IEnumerator[100];
+    [HideInInspector] public Sprite[] loadSprite = new Sprite[100];
     //저장된 이미지 찾기 
-    public Sprite SystemIOFileLoad(int num)
+    public void SystemIOFileLoad(int num, System.Action callback)
     {
+        /*
         string saveGameFileName = fileName + num.ToString()+ ".png";
         string pathAndFile = Path.Combine(path, saveGameFileName);
 
@@ -101,7 +104,45 @@ public class ScreenShotHandler : MonoBehaviour
         Texture2D texture = new Texture2D(0, 0);
         if (byteTexture.Length > 0) {  texture.LoadImage(byteTexture); }
         Sprite screenshotSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-        return screenshotSprite;
+        return screenshotSprite; 
+        */
+
+        if (LoadCoroutineList[num] != null)
+        {
+            StopCoroutine(LoadCoroutineList[num]);
+        }
+        LoadCoroutineList[num] = LoadCoroutine(num, () => { callback(); });
+        StartCoroutine(LoadCoroutineList[num]);
+    }
+
+    IEnumerator LoadCoroutine(int num, System.Action callback)
+    {
+        string saveGameFileName = fileName + num.ToString() + ".png";
+        string pathAndFile = Path.Combine(path, saveGameFileName);
+
+        if (!File.Exists(pathAndFile))
+        {
+            yield break;
+        }
+        byte[] byteTexture = System.IO.File.ReadAllBytes(pathAndFile);
+        Texture2D texture = new Texture2D(0, 0);
+        if (byteTexture.Length > 0) { texture.LoadImage(byteTexture); }
+        loadSprite[num] = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+
+        yield return null;
+
+        callback();
+    }
+
+    public void AllStopLoad()
+    {
+        for (int i = 0; i < LoadCoroutineList.Length; i++)
+        {
+            if (LoadCoroutineList[i] != null)
+            {
+                StopCoroutine(LoadCoroutineList[i]);
+            }
+        }
     }
 
     public string PathForDocumentsFile(string filename)

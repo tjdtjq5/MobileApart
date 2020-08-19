@@ -111,6 +111,7 @@ public class LeftMenue : MonoBehaviour
     {
         leftPannel.Find("앨범").Find("앨범").gameObject.SetActive(false);
         leftPannel.Find("앨범").Find("휴지통").gameObject.SetActive(false);
+        leftPannel.Find("앨범").GetComponent<Album>().AlbumClose();
         LeftMenueOpen();
 
         dragPannel.SetActive(false);

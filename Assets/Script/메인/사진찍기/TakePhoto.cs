@@ -20,7 +20,9 @@ public class TakePhoto : MonoBehaviour
         ScreenShotHandler.TakeScreenshot_Static(540, 1080, index);
 
         ScreenTrans.instance.ScreenTrans05(() => {
-            OverrideCanvas.instance.PolaroidPhoto(ScreenShotHandler.instance.SystemIOFileLoad(index), 8, 17);
+            ScreenShotHandler.instance.SystemIOFileLoad(index, () => {
+                OverrideCanvas.instance.PolaroidPhoto(ScreenShotHandler.instance.loadSprite[index], 8, 17);
+            });
         });
     }
 }
