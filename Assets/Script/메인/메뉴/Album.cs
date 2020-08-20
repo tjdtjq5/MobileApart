@@ -34,6 +34,9 @@ public class Album : MonoBehaviour
             ImgPannel.GetChild(iCount).gameObject.SetActive(true);
             ImgPannel.GetChild(iCount).GetChild(0).GetComponent<Image>().sprite = ScreenShotHandler.instance.loadSprite[iCount];
             ImgPannel.GetChild(iCount).GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
+            ImgPannel.GetChild(iCount).GetChild(0).GetComponent<Button>().onClick.AddListener(() => {
+                OverrideCanvas.instance.ScreenPhoto(ImgPannel.GetChild(iCount).GetChild(0).GetComponent<Image>().sprite);
+            });
             ImgPannel.GetChild(iCount).GetChild(1).gameObject.SetActive(false);
             loadFlag = false;
         });

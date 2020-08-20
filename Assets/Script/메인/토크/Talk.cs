@@ -11,6 +11,7 @@ public class Talk : MonoBehaviour
     public CharacterInfo characterInfo;
     public Sleep sleep;
     public Cook cook;
+    public Joying joying;
 
     string[] bullonText;
     float fadeSpeed = 0.3f;
@@ -125,13 +126,12 @@ public class Talk : MonoBehaviour
                 TalkBtn(true);
                 break;
             case "씻을까?":
+                ScreenTrans.instance.Play(() => { bath.BathOpen(); });
                 TalkBtn();
-                bath.BathOpen();
                 break;
             case "놀까?":
-                tempString.Add("가위바위보");
-                TalkBullonTextChange(tempString);
-                TalkBtn(true);
+                joying.JoyingOpen();
+                TalkBtn();
                 break;
             case "잘래?":
                 ScreenTrans.instance.Play(()=> { sleep.SleepOpen(); });
@@ -139,10 +139,6 @@ public class Talk : MonoBehaviour
                 break;
             case "먹을래?":
                 ScreenTrans.instance.Play(() => { cook.CookOpen(); });
-                TalkBtn();
-                break;
-            case "가위바위보":
-                RockPaperScissors.instance.RockPaperScissorsOpen();
                 TalkBtn();
                 break;
         }

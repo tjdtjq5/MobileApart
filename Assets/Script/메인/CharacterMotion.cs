@@ -21,6 +21,7 @@ public class CharacterMotion : MonoBehaviour, IPointerClickHandler, IDragHandler
         sa = this.GetComponent<SkeletonAnimation>();
     }
  
+    // stop = true, play = false
     public void SetFlag(bool stopFlag)
     {
          this.stopFlag = stopFlag;
