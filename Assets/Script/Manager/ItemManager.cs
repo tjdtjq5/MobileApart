@@ -23,11 +23,11 @@ public class ItemManager : MonoBehaviour
         for (int i = 0; i < Length; i++)
         {
             List<string> dataList = GameManager.instance.databaseManager.Item_DB.GetRowData(i);
-            itemList[i].itemName = dataList[0];
-            itemList[i].itemCode = dataList[1];
+            itemList[i].itemName = dataList[1];
+            itemList[i].itemCode = dataList[0];
             itemList[i].inGameName = dataList[2];
             itemList[i].itemKind = (ItemKind)System.Enum.Parse(typeof(ItemKind) ,dataList[3]);
-            itemList[i].iconObj = Resources.Load<GameObject>(System.IO.Path.Combine("스킨Obj", dataList[1]));
+            itemList[i].iconObj = Resources.Load<GameObject>(System.IO.Path.Combine("스킨Obj", itemList[i].itemCode));
         }
     }
 

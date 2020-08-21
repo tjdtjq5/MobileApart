@@ -141,18 +141,13 @@ public class BackEndAuthentication : MonoBehaviour
                                 oderInfo.text = "캐릭터의 장비정보 로드 ...";
                                 // 그 캐릭터의 장비정보 로드 
                                 GameManager.instance.userInfoManager.LoadUserEqip(currentCharacter, () => {
-                                    oderInfo.text = "캐릭터의 스테이터스 로드 ...";
-                                    // 그 캐릭터의 스테이터스 로드
-                                    GameManager.instance.userInfoManager.LoadUserStatus(currentCharacter, () =>
+                                    oderInfo.text = "캐릭터의 욕구정보 로드 ...";
+                                    // 그 캐릭터의 욕구 로드 
+                                    GameManager.instance.userInfoManager.LoadUserNeed(currentCharacter, () =>
                                     {
-                                        oderInfo.text = "캐릭터의 욕구정보 로드 ...";
-                                        // 그 캐릭터의 욕구 로드 
-                                        GameManager.instance.userInfoManager.LoadUserNeed(currentCharacter, () =>
-                                        {
-                                            Debug.Log("성공");
-                                            SceneManager.LoadScene("Loding");
-                                        });
-                                    }); 
+                                        Debug.Log("성공");
+                                        SceneManager.LoadScene("Loding");
+                                    });
                                 });
                             }
                             else

@@ -79,13 +79,13 @@
     <Compile Include="Assets\Script\Camera\CameraResolution.cs" />
     <Compile Include="Assets\Script\Camera\CameraResolution2.cs" />
     <Compile Include="Assets\Script\Camera\ScreenShotHandler.cs" />
+    <Compile Include="Assets\Script\EnumSpace.cs" />
     <Compile Include="Assets\Script\Loding.cs" />
     <Compile Include="Assets\Script\Manager\DatabaseManager.cs" />
     <Compile Include="Assets\Script\Manager\FPS_Check.cs" />
     <Compile Include="Assets\Script\Manager\FrameChecker.cs" />
     <Compile Include="Assets\Script\Manager\GameManager.cs" />
     <Compile Include="Assets\Script\Manager\ItemManager.cs" />
-    <Compile Include="Assets\Script\Manager\SpineSkinInfoManager.cs" />
     <Compile Include="Assets\Script\Manager\UserInfoManager.cs" />
     <Compile Include="Assets\Script\Test.cs" />
     <Compile Include="Assets\Script\TestCharacterAni.cs" />
@@ -103,12 +103,11 @@
     <Compile Include="Assets\Script\메인\사진찍기\TakePhoto.cs" />
     <Compile Include="Assets\Script\메인\상점\Shop.cs" />
     <Compile Include="Assets\Script\메인\옷장\Cloth.cs" />
-    <Compile Include="Assets\Script\메인\옷장\SlideCustom.cs" />
     <Compile Include="Assets\Script\메인\요리\Cook.cs" />
     <Compile Include="Assets\Script\메인\잠\Sleep.cs" />
     <Compile Include="Assets\Script\메인\토크\CharacterTalk.cs" />
     <Compile Include="Assets\Script\메인\토크\Talk.cs" />
-    <Compile Include="Assets\Script\캐릭터선택씬\Caracter01.cs" />
+    <Compile Include="Assets\Script\캐릭터선택씬\Character01.cs" />
     <Compile Include="Assets\Script\화면전환\LeftMenue.cs" />
     <Compile Include="Assets\Script\화면전환\ScreenTransition.cs" />
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\MultiKeyDictionary.cs" />
@@ -136,7 +135,6 @@
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Glow.shader" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Ubershader.shader" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAB_Alpha8.shader" />
-    <None Include="Assets\Script\TxT\스킨 정보_DB.txt" />
     <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR.cginc" />
     <None Include="Assets\리소스\메인화면\목욕\callOff.shader" />
     <None Include="Assets\Script\TxT\데일리상점_DB.txt" />

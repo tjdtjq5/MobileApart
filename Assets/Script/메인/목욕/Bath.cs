@@ -58,10 +58,14 @@ public class Bath : MonoBehaviour
         currentAni = character.GetComponent<SkeletonAnimation>().AnimationName;
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0 ,"bath", true);
 
-        character.GetComponent<TransformSkin>().acc("");
-        character.GetComponent<TransformSkin>().top("");
-        character.GetComponent<TransformSkin>().set("");
-        character.GetComponent<TransformSkin>().outt("");
+        character.GetComponent<TransformSkin>().SkinChange(SkinKind.accarm, "");
+        character.GetComponent<TransformSkin>().SkinChange(SkinKind.accbody, "");
+        character.GetComponent<TransformSkin>().SkinChange(SkinKind.accface, "");
+        character.GetComponent<TransformSkin>().SkinChange(SkinKind.accleg, "");
+        character.GetComponent<TransformSkin>().SkinChange(SkinKind.accneck, "");
+        character.GetComponent<TransformSkin>().SkinChange(SkinKind.top, "");
+        character.GetComponent<TransformSkin>().SkinChange(SkinKind.set, "");
+        character.GetComponent<TransformSkin>().SkinChange(SkinKind.outt, "");
 
         for (int i = 0; i < setOff.Length; i++)
         {

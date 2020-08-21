@@ -16,7 +16,8 @@ public class Cloth : MonoBehaviour
     public GameObject colorItemPannel;
     [Header("카메라")]
     public Camera characterCamera;         public Vector3 originChracterCamera; public Vector3 moveChracterCamera;
-    public Camera uiCamera;                public Vector3 originUiCamera;      
+    public Camera uiCamera;                public Vector3 originUiCamera;
+    float uiCamMoveX = 1.7f;
     float cameraMoveSpeed = 0.3f;
   
     [Header("아틀라스")]
@@ -46,7 +47,6 @@ public class Cloth : MonoBehaviour
         clickFlag = false;
     }
 
-    float uiCamMoveX = 1.7f;
 
     private void Start()
     {
@@ -88,38 +88,22 @@ public class Cloth : MonoBehaviour
                 context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, 0);
                 context.GetComponent<VerticalLayoutGroup>().padding.top = 30;
                 context.GetComponent<VerticalLayoutGroup>().spacing = 30;
-               // 스킨 종류가 리스트에 담긴다
-               List <SkinKind> tempSkinKindList = GameManager.instance.spineSkinInfoManager.GetSkinKindList();
-                for (int i = 0; i < tempSkinKindList.Count; i++)
+                // 스킨 종류가 리스트에 담긴다
+                int skinKindLength = System.Enum.GetNames(typeof(SkinKind)).Length;
+                for (int i = 0; i < skinKindLength; i++)
                 {
                     GameObject prepab = null;
-                    if (tempSkinKindList[i] != SkinKind.body)
+                    if ((SkinKind)i != SkinKind.body)
                     {
                         prepab = Instantiate(stage_01_btn_Prepab, context.position, Quaternion.identity, context);
-                        SkinKind tempSkinkind = tempSkinKindList[i];
+                        SkinKind tempSkinkind = (SkinKind)i;
                         prepab.GetComponent<Button>().onClick.AddListener(() => { State01_Btn(tempSkinkind); });
                     }
-                    switch (tempSkinKindList[i])
+                    switch ((SkinKind)i)
                     {
-                        case SkinKind.acc:
-                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_acce");
-                            prepab.transform.Find("Text").GetComponent<Text>().text = "악세사리";
-                            break;
-                        case SkinKind.top:
-                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_top");
-                            prepab.transform.Find("Text").GetComponent<Text>().text = "상의";
-                            break;
-                        case SkinKind.pan:
-                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_skirt");
-                            prepab.transform.Find("Text").GetComponent<Text>().text = "하의";
-                            break;
-                        case SkinKind.eye:
-                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_eye");
-                            prepab.transform.Find("Text").GetComponent<Text>().text = "눈";
-                            break;
-                        case SkinKind.face:
-                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_eye");
-                            prepab.transform.Find("Text").GetComponent<Text>().text = "얼굴";
+                        case SkinKind.cap:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_cap");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "모자";
                             break;
                         case SkinKind.haF:
                             prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_hair");
@@ -129,21 +113,65 @@ public class Cloth : MonoBehaviour
                             prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_hair");
                             prepab.transform.Find("Text").GetComponent<Text>().text = "뒷머리";
                             break;
+                        case SkinKind.eye:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_eye");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "눈";
+                            break;
+                        case SkinKind.face:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_eye");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "얼굴";
+                            break;
+                        case SkinKind.set:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_set");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "세트";
+                            break;
                         case SkinKind.outt:
                             prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_set");
                             prepab.transform.Find("Text").GetComponent<Text>().text = "외투";
+                            break;
+                        case SkinKind.top:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_top");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "상의";
+                            break;
+                        case SkinKind.pan:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_skirt");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "하의";
+                            break;
+                        case SkinKind.unde:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_skirt");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "속옷";
+                            break;
+                        case SkinKind.accface:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_acce");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "얼굴 악세사리";
+                            break;
+                        case SkinKind.accneck:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_acce");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "목 악세사리";
+                            break;
+                        case SkinKind.accbody:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_acce");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "몸 악세사리";
+                            break;
+                        case SkinKind.accarm:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_acce");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "팔 악세사리";
+                            break;
+                        case SkinKind.accleg:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_acce");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "다리 악세사리";
+                            break;
+                        case SkinKind.soc:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_shoes");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "양말";
                             break;
                         case SkinKind.sho:
                             prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_shoes");
                             prepab.transform.Find("Text").GetComponent<Text>().text = "신발";
                             break;
-                        case SkinKind.cap:
-                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_cap");
-                            prepab.transform.Find("Text").GetComponent<Text>().text = "모자";
+                        case SkinKind.body:
                             break;
-                        case SkinKind.set:
-                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_set");
-                            prepab.transform.Find("Text").GetComponent<Text>().text = "세트";
+                        default:
                             break;
                     }
                     context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * 116f);
@@ -169,37 +197,21 @@ public class Cloth : MonoBehaviour
                 context.GetComponent<VerticalLayoutGroup>().padding.top = 30;
                 context.GetComponent<VerticalLayoutGroup>().spacing = 30;
                 // 스킨 종류가 리스트에 담긴다
-                List<SkinKind> tempSkinKindList = GameManager.instance.spineSkinInfoManager.GetSkinKindList();
-                for (int i = 0; i < tempSkinKindList.Count; i++)
+                int skinKindLength = System.Enum.GetNames(typeof(SkinKind)).Length;
+                for (int i = 0; i < skinKindLength; i++)
                 {
                     GameObject prepab = null;
-                    if (tempSkinKindList[i] != SkinKind.body)
+                    if ((SkinKind)i != SkinKind.body)
                     {
                         prepab = Instantiate(stage_01_btn_Prepab, context.position, Quaternion.identity, context);
-                        SkinKind tempSkinkind = tempSkinKindList[i];
+                        SkinKind tempSkinkind = (SkinKind)i;
                         prepab.GetComponent<Button>().onClick.AddListener(() => { State01_Btn(tempSkinkind); });
                     }
-                    switch (tempSkinKindList[i])
+                    switch ((SkinKind)i)
                     {
-                        case SkinKind.acc:
-                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_acce");
-                            prepab.transform.Find("Text").GetComponent<Text>().text = "악세사리";
-                            break;
-                        case SkinKind.top:
-                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_top");
-                            prepab.transform.Find("Text").GetComponent<Text>().text = "상의";
-                            break;
-                        case SkinKind.pan:
-                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_skirt");
-                            prepab.transform.Find("Text").GetComponent<Text>().text = "하의";
-                            break;
-                        case SkinKind.eye:
-                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_eye");
-                            prepab.transform.Find("Text").GetComponent<Text>().text = "눈";
-                            break;
-                        case SkinKind.face:
-                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_eye");
-                            prepab.transform.Find("Text").GetComponent<Text>().text = "얼굴";
+                        case SkinKind.cap:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_cap");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "모자";
                             break;
                         case SkinKind.haF:
                             prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_hair");
@@ -209,21 +221,65 @@ public class Cloth : MonoBehaviour
                             prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_hair");
                             prepab.transform.Find("Text").GetComponent<Text>().text = "뒷머리";
                             break;
+                        case SkinKind.eye:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_eye");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "눈";
+                            break;
+                        case SkinKind.face:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_eye");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "얼굴";
+                            break;
+                        case SkinKind.set:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_set");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "세트";
+                            break;
                         case SkinKind.outt:
                             prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_set");
                             prepab.transform.Find("Text").GetComponent<Text>().text = "외투";
+                            break;
+                        case SkinKind.top:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_top");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "상의";
+                            break;
+                        case SkinKind.pan:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_skirt");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "하의";
+                            break;
+                        case SkinKind.unde:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_skirt");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "속옷";
+                            break;
+                        case SkinKind.accface:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_acce");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "얼굴 악세사리";
+                            break;
+                        case SkinKind.accneck:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_acce");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "목 악세사리";
+                            break;
+                        case SkinKind.accbody:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_acce");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "몸 악세사리";
+                            break;
+                        case SkinKind.accarm:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_acce");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "팔 악세사리";
+                            break;
+                        case SkinKind.accleg:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_acce");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "다리 악세사리";
+                            break;
+                        case SkinKind.soc:
+                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_shoes");
+                            prepab.transform.Find("Text").GetComponent<Text>().text = "양말";
                             break;
                         case SkinKind.sho:
                             prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_shoes");
                             prepab.transform.Find("Text").GetComponent<Text>().text = "신발";
                             break;
-                        case SkinKind.cap:
-                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_cap");
-                            prepab.transform.Find("Text").GetComponent<Text>().text = "모자";
+                        case SkinKind.body:
                             break;
-                        case SkinKind.set:
-                            prepab.transform.Find("Image").GetComponent<Image>().sprite = atlas.GetSprite("icon_dress_set");
-                            prepab.transform.Find("Text").GetComponent<Text>().text = "세트";
+                        default:
                             break;
                     }
                     context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, i * 116f);
@@ -321,31 +377,35 @@ public class Cloth : MonoBehaviour
             context.GetComponent<VerticalLayoutGroup>().padding.top = 15;
             context.GetComponent<VerticalLayoutGroup>().spacing = 25;
             context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, 0);
-            List<SpineSkinInfo> tempSpineSkinInfo = GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(skinKind);
-            for (int i = 0; i < tempSpineSkinInfo.Count; i++)
-            {
-                List<UserSkin> userSkinList = GameManager.instance.userInfoManager.GetSkinItemList(tempSpineSkinInfo[i].skinName);
-                for (int j = 0; j < userSkinList.Count; j++)
-                {
-                    GameObject prepab = Instantiate(stage_02_btn_Prepab, context.transform.position, Quaternion.identity, context.transform);
-                    prepab.transform.Find("이름").GetChild(0).GetComponent<Text>().text = GameManager.instance.spineSkinInfoManager.GetSpineSkinInfo(userSkinList[j].skinName).inGameName;
-                    GameObject iconObj = Instantiate(GameManager.instance.itemManager.GetItemInfo(userSkinList[j].skinName).iconObj, prepab.transform.Find("ImgPos").position, Quaternion.identity, prepab.transform.Find("ImgPos"));
-                    for (int k = 0; k < iconObj.transform.childCount; k++)
-                    {
-                        if (iconObj.transform.GetChild(k).name == "color_01")
-                        {
-                            iconObj.transform.GetChild(k).GetComponent<Image>().color = userSkinList[j].color_01;
-                        }
-                        if (iconObj.transform.GetChild(k).name == "color_02")
-                        {
-                            iconObj.transform.GetChild(k).GetComponent<Image>().color = userSkinList[j].color_02;
-                        }
-                    }
 
-                    contextSize += 210;
-                    UserSkin tempUserSkin = userSkinList[j];
-                    prepab.GetComponent<Button>().onClick.AddListener(() => { State02_Btn(tempUserSkin, prepab.transform); });
+            for (int i = 0; i < GameManager.instance.itemManager.itemList.Length; i++)
+            {
+                if (GameManager.instance.itemManager.itemList[i].itemKind == ItemKind.스킨)
+                {
+                    List<UserSkin> userSkinList = GameManager.instance.userInfoManager.GetSkinItemList(GameManager.instance.itemManager.itemList[i].itemName);
+                    for (int j = 0; j < userSkinList.Count; j++)
+                    {
+                        GameObject prepab = Instantiate(stage_02_btn_Prepab, context.transform.position, Quaternion.identity, context.transform);
+                        prepab.transform.Find("이름").GetChild(0).GetComponent<Text>().text = GameManager.instance.itemManager.itemList[i].inGameName;
+                        GameObject iconObj = Instantiate(GameManager.instance.itemManager.GetItemInfo(userSkinList[j].skinName).iconObj, prepab.transform.Find("ImgPos").position, Quaternion.identity, prepab.transform.Find("ImgPos"));
+                        for (int k = 0; k < iconObj.transform.childCount; k++)
+                        {
+                            if (iconObj.transform.GetChild(k).name == "color_01")
+                            {
+                                iconObj.transform.GetChild(k).GetComponent<Image>().color = userSkinList[j].color_01;
+                            }
+                            if (iconObj.transform.GetChild(k).name == "color_02")
+                            {
+                                iconObj.transform.GetChild(k).GetComponent<Image>().color = userSkinList[j].color_02;
+                            }
+                        }
+
+                        contextSize += 210;
+                        UserSkin tempUserSkin = userSkinList[j];
+                        prepab.GetComponent<Button>().onClick.AddListener(() => { State02_Btn(tempUserSkin, prepab.transform); });
+                    }
                 }
+          
             }
             context.GetComponent<RectTransform>().sizeDelta = new Vector2(context.GetComponent<RectTransform>().sizeDelta.x, contextSize);
         }));

@@ -10,10 +10,24 @@ public class TransformSkin : MonoBehaviour
     SkeletonAnimation skeletonAnimation;
     List<string> skinList = new List<string>();
 
+    [ContextMenu("테스트")]
+    public void Test()
+    {
+        int skinKindLength = System.Enum.GetNames(typeof(SkinKind)).Length;
+        for (int i = 0; i < skinKindLength; i++)
+        {
+            string skinName = GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).skinName;
+            if (skinName.Length != 0)
+            {
+                Debug.Log((SkinKind)i + " : " + GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).color_01);
+                SetColor(GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).skinName, GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).color_01);
+            }
+        }
+    }
+
     private void Start()
     {
         skeletonAnimation = transform.GetComponent<SkeletonAnimation>();
-        UserEqipInfoSetting();
         UserEqipInfoSetting();
     }
 
@@ -60,77 +74,16 @@ public class TransformSkin : MonoBehaviour
     // 유저정보에 저장된 eqip 정보 세팅 
     public void UserEqipInfoSetting()
     {
-        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.acc).skinName != "")
+        int skinKindLength = System.Enum.GetNames(typeof(SkinKind)).Length;
+        for (int i = 0; i < skinKindLength; i++)
         {
-            acc(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.acc).skinName);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.acc).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.acc).color_01 , 1);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.acc).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.acc).color_02 , 2);
-        }
-        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.body).skinName != "")
-        {
-            body(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.body).skinName);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.body).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.body).color_01, 1);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.body).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.body).color_02, 2);
-        }
-        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.cap).skinName != "")
-        {
-            cap(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.cap).skinName);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.cap).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.cap).color_01, 1);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.cap).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.cap).color_02, 2);
-        }
-        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.eye).skinName != "")
-        {
-            eye(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.eye).skinName);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.eye).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.eye).color_01, 1);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.eye).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.eye).color_02, 2);
-        }
-        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.face).skinName != "")
-        {
-            face(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.face).skinName);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.face).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.face).color_01, 1);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.face).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.face).color_02, 2);
-        }
-        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB).skinName != "")
-        {
-            haB(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB).skinName);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB).color_01, 1);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB).color_02, 2);
-        }
-        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF).skinName != "")
-        {
-            haF(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF).skinName);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF).color_01, 1);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF).color_02, 2);
-        }
-        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.outt).skinName != "")
-        {
-            outt(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.outt).skinName);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.outt).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.outt).color_01, 1);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.outt).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.outt).color_02, 2);
-        }
-        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.pan).skinName != "")
-        {
-            pan(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.pan).skinName);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.pan).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.pan).color_01, 1);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.pan).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.pan).color_02, 2);
-        }
-        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.set).skinName != "")
-        {
-            set(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.set).skinName);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.set).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.set).color_01, 1);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.set).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.set).color_02, 2);
-        }
-        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.sho).skinName != "")
-        {
-            sho(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.sho).skinName);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.sho).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.sho).color_01, 1);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.sho).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.sho).color_02, 2);
-        }
-        if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.top).skinName != "")
-        {
-            top(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.top).skinName);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.top).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.top).color_01, 1);
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.top).skinName, GameManager.instance.userInfoManager.GetUserEqip(SkinKind.top).color_02, 2);
+            string skinName = GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).skinName;
+            if (skinName.Length != 0)
+            {
+                SkinChange((SkinKind)i, skinName);
+                SetColor(GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).skinName, GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).color_01, 1);
+                SetColor(GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).skinName, GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).color_02, 2);
+            }
         }
     }
 
@@ -152,11 +105,11 @@ public class TransformSkin : MonoBehaviour
 
         if (slotName.Contains("haB") && slotNum == 1)
         {
-            color = GetColor(GameManager.instance.userInfoManager.haF.skinName , 1);
+            color = GetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF).skinName , 1);
         }
         if (slotName.Contains("haB") && slotNum == 2)
         {
-            color = GetColor(GameManager.instance.userInfoManager.haF.skinName, 2);
+            color = GetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF).skinName, 2);
         }
 
         foreach (Spine.Slot slot in skeletonAnimation.skeleton.Slots)
@@ -197,11 +150,11 @@ public class TransformSkin : MonoBehaviour
 
         if (slotName.Contains("haF") && slotNum == 1)
         {
-            SetColor(GameManager.instance.userInfoManager.haB.skinName, color);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB).skinName, color);
         }
         if (slotName.Contains("haF") && slotNum == 2)
         {
-            SetColor(GameManager.instance.userInfoManager.haB.skinName, color);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB).skinName, color);
         }
 
         return flag;
@@ -279,74 +232,13 @@ public class TransformSkin : MonoBehaviour
 
     public void SkinChange(SkinKind skinKind, string skinName )
     {
-        switch (skinKind)
-        {
-            case SkinKind.acc:
-                acc(skinName);
-                break;
-            case SkinKind.top:
-                top(skinName);
-                break;
-            case SkinKind.pan:
-                pan(skinName);
-                break;
-            case SkinKind.eye:
-                eye(skinName);
-                break;
-            case SkinKind.face:
-                face(skinName);
-                break;
-            case SkinKind.haF:
-                haF(skinName);
-                break;
-            case SkinKind.haB:
-                haB(skinName);
-                break;
-            case SkinKind.outt:
-                outt(skinName);
-                break;
-            case SkinKind.sho:
-                sho(skinName);
-                break;
-            case SkinKind.cap:
-                cap(skinName);
-                break;
-            case SkinKind.set:
-                set(skinName);
-                break;
-            default:
-                break;
-        }
-
-
-
-    }
-
-    public void body(string skinName)
-    {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
         skeletonAnimation.LateUpdate();
 
         for (int i = 0; i < skinList.Count; i++)
         {
-            if (skinList[i].Contains("body"))
-            {
-                skinList.RemoveAt(i);
-            }
-        }
-        skinList.Add(skinName);
-        SetEquip(skinList);
-    }
-    public void acc(string skinName)
-    {
-        skeletonAnimation.skeleton.Skin = null;
-        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
-        skeletonAnimation.LateUpdate();
-
-        for (int i = 0; i < skinList.Count; i++)
-        {
-            if (skinList[i].Contains("acc"))
+            if (skinList[i].Contains(skinKind.ToString()))
             {
                 skinList.RemoveAt(i);
             }
@@ -355,177 +247,6 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
     }
 
-    public void top(string skinName)
-    {
-        skeletonAnimation.skeleton.Skin = null;
-        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
-        skeletonAnimation.LateUpdate();
-
-        for (int i = 0; i < skinList.Count; i++)
-        {
-            if (skinList[i].Contains("top"))
-            {
-                skinList.RemoveAt(i);
-            }
-        }
-        skinList.Add(skinName);
-        SetEquip(skinList);
-     
-    }
-
-    public void pan(string skinName)
-    {
-        skeletonAnimation.skeleton.Skin = null;
-        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
-        skeletonAnimation.LateUpdate();
-
-        for (int i = 0; i < skinList.Count; i++)
-        {
-            if (skinList[i].Contains("pan"))
-            {
-                skinList.RemoveAt(i);
-            }
-        }
-        skinList.Add(skinName);
-        SetEquip(skinList);
-    }
-
-    public void eye(string skinName)
-    {
-        skeletonAnimation.skeleton.Skin = null;
-        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
-        skeletonAnimation.LateUpdate();
-
-        for (int i = 0; i < skinList.Count; i++)
-        {
-            if (skinList[i].Contains("eye"))
-            {
-                skinList.RemoveAt(i);
-            }
-        }
-        skinList.Add(skinName);
-        SetEquip(skinList);
-      
-    }
-
-    public void face(string skinName)
-    {
-        skeletonAnimation.skeleton.Skin = null;
-        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
-        skeletonAnimation.LateUpdate();
-
-        for (int i = 0; i < skinList.Count; i++)
-        {
-            if (skinList[i].Contains("face"))
-            {
-                skinList.RemoveAt(i);
-            }
-        }
-        skinList.Add(skinName);
-        SetEquip(skinList);
-      
-    }
-    public void haF(string skinName)
-    {
-        skeletonAnimation.skeleton.Skin = null;
-        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
-        skeletonAnimation.LateUpdate();
-
-        for (int i = 0; i < skinList.Count; i++)
-        {
-            if (skinList[i].Contains("haF"))
-            {
-                skinList.RemoveAt(i);
-            }
-        }
-        skinList.Add(skinName);
-        SetEquip(skinList);
-      
-    }
-    public void haB(string skinName)
-    {
-        skeletonAnimation.skeleton.Skin = null;
-        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
-        skeletonAnimation.LateUpdate();
-
-        for (int i = 0; i < skinList.Count; i++)
-        {
-            if (skinList[i].Contains("haB"))
-            {
-                skinList.RemoveAt(i);
-            }
-        }
-        skinList.Add(skinName);
-        SetEquip(skinList);
-     
-    }
-    public void outt(string skinName)
-    {
-        skeletonAnimation.skeleton.Skin = null;
-        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
-        skeletonAnimation.LateUpdate();
-
-        for (int i = 0; i < skinList.Count; i++)
-        {
-            if (skinList[i].Contains("outt"))
-            {
-                skinList.RemoveAt(i);
-            }
-        }
-        skinList.Add(skinName);
-        SetEquip(skinList);
-      
-    }
-    public void sho(string skinName)
-    {
-        skeletonAnimation.skeleton.Skin = null;
-        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
-        skeletonAnimation.LateUpdate();
-
-        for (int i = 0; i < skinList.Count; i++)
-        {
-            if (skinList[i].Contains("sho"))
-            {
-                skinList.RemoveAt(i);
-            }
-        }
-        skinList.Add(skinName);
-        SetEquip(skinList);
-    }
-
-    public void cap(string skinName)
-    {
-        skeletonAnimation.skeleton.Skin = null;
-        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
-        skeletonAnimation.LateUpdate();
-
-        for (int i = 0; i < skinList.Count; i++)
-        {
-            if (skinList[i].Contains("cap"))
-            {
-                skinList.RemoveAt(i);
-            }
-        }
-        skinList.Add(skinName);
-        SetEquip(skinList);
-    }
-
-    public void set(string skinName)
-    {
-        skeletonAnimation.skeleton.Skin = null;
-        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
-        skeletonAnimation.LateUpdate();
-
-        for (int i = 0; i < skinList.Count; i++)
-        {
-            if (skinList[i].Contains("set"))
-            {
-                skinList.RemoveAt(i);
-            }
-        }
-        skinList.Add(skinName);
-        SetEquip(skinList);
-    }
 
     public void SetEquip(List<string> SkinList)
     {

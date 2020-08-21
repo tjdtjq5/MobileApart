@@ -16,18 +16,7 @@ public class UserInfoManager : MonoBehaviour
 
 
     //현재 유저가 장착중인 옷
-    public UserEqip acc = new UserEqip();
-    public UserEqip top = new UserEqip();
-    public UserEqip pan = new UserEqip();
-    public UserEqip eye = new UserEqip();
-    public UserEqip face = new UserEqip();
-    public UserEqip haF = new UserEqip();
-    public UserEqip haB = new UserEqip();
-    public UserEqip outt = new UserEqip();
-    public UserEqip sho = new UserEqip();
-    public UserEqip cap = new UserEqip();
-    public UserEqip set = new UserEqip();
-    public UserEqip body = new UserEqip();
+    public UserEqip userEqip = new UserEqip();
 
     private void Start()
     {
@@ -46,7 +35,6 @@ public class UserInfoManager : MonoBehaviour
     //초기 
     public void Initialized()
     {
-        skinItem.Add(new UserSkin("acc/top_ribbon", Color.white, Color.white));
         skinItem.Add(new UserSkin("top/clo_top_school", Color.white, Color.white));
         skinItem.Add(new UserSkin("pan/skirt_01", Color.white, Color.white));
         skinItem.Add(new UserSkin("eye/eye_01", Color.white, Color.white));
@@ -64,9 +52,7 @@ public class UserInfoManager : MonoBehaviour
         PushUserEqip(skinItem[5]);
         PushUserEqip(skinItem[6]);
         PushUserEqip(skinItem[7]);
-        PushUserEqip(skinItem[8]);
 
-        SetUserStatus(0, 0, 0);
         SetUserNeed(100, 100, 100, 100);
     }
 
@@ -222,84 +208,42 @@ public class UserInfoManager : MonoBehaviour
     public void PushUserEqip(UserSkin userSkin)
     {
         SkinKind skinKind = (SkinKind)System.Enum.Parse(typeof(SkinKind), userSkin.skinName.Split('/')[0]);
-        string skinName = userSkin.skinName;
-        Color color_01 = userSkin.color_01;
-        Color color_02 = userSkin.color_02;
 
-        switch (skinKind)
+        int skinkindLength = System.Enum.GetNames(typeof(SkinKind)).Length;
+
+        for (int k = 0; k < skinkindLength; k++)
         {
-            case SkinKind.acc:
-                acc = new UserEqip(skinKind, skinName, color_01, color_02);
-                break;
-            case SkinKind.top:
-                top = new UserEqip(skinKind, skinName, color_01, color_02);
-                break;
-            case SkinKind.pan:
-                pan = new UserEqip(skinKind, skinName, color_01, color_02);
-                break;
-            case SkinKind.eye:
-                eye = new UserEqip(skinKind, skinName, color_01, color_02);
-                break;
-            case SkinKind.face:
-                face = new UserEqip(skinKind, skinName, color_01, color_02);
-                break;
-            case SkinKind.haF:
-                haF = new UserEqip(skinKind, skinName, color_01, color_02);
-                break;
-            case SkinKind.haB:
-                haB = new UserEqip(skinKind, skinName, color_01, color_02);
-                break;
-            case SkinKind.outt:
-                outt = new UserEqip(skinKind, skinName, color_01, color_02);
-                break;
-            case SkinKind.sho:
-                sho = new UserEqip(skinKind, skinName, color_01, color_02);
-                break;
-            case SkinKind.cap:
-                cap = new UserEqip(skinKind, skinName, color_01, color_02);
-                break;
-            case SkinKind.set:
-                set = new UserEqip(skinKind, skinName, color_01, color_02);
-                break;
-            case SkinKind.body:
-                body = new UserEqip(skinKind, skinName, color_01, color_02);
-                break;
-            default:
-                break;
+            if ((SkinKind)k == skinKind)
+            {
+                string skinName = userSkin.skinName;
+                Color color_01 = userSkin.color_01;
+                Color color_02 = userSkin.color_02;
+
+                for (int i = 0; i < userEqip.skinKind.Length; i++)
+                {
+                    if (userEqip.skinKind[i] == skinKind)
+                    {
+                        userEqip.skinName[i] = skinName;
+                        userEqip.color_01[i] = color_01;
+                        userEqip.color_02[i] = color_02;
+                    }
+                }
+            }
         }
     }
 
-    public UserEqip GetUserEqip(SkinKind skinKind)
+    public UserSkin GetUserEqip(SkinKind skinKind)
     {
-        switch (skinKind)
+        for (int i = 0; i < userEqip.skinKind.Length; i++)
         {
-            case SkinKind.acc:
-                return acc;
-            case SkinKind.top:
-                return top;
-            case SkinKind.pan:
-                return pan;
-            case SkinKind.eye:
-                return eye;
-            case SkinKind.face:
-                return face;
-            case SkinKind.haF:
-                return haF;
-            case SkinKind.haB:
-                return haB;
-            case SkinKind.outt:
-                return outt;
-            case SkinKind.sho:
-                return sho;
-            case SkinKind.cap:
-                return cap;
-            case SkinKind.set:
-                return set;
-            case SkinKind.body:
-                return body;
-            default:
-                return null;
+            if (userEqip.skinKind[i] == skinKind)
+            {
+                UserSkin tempSkin = new UserSkin(userEqip.skinName[i], userEqip.color_01[i], userEqip.color_02[i]);
+               
+                return tempSkin;
+            }
         }
+        return null;
     }
 
     // 저장 
@@ -368,65 +312,13 @@ public class UserInfoManager : MonoBehaviour
     {
         string tempUserEqip = "";
 
-        tempUserEqip += acc.skinKind.ToString() + "-";
-        tempUserEqip += acc.skinName + "-";
-        tempUserEqip += acc.color_01.ToString() + "-";
-        tempUserEqip += acc.color_02.ToString() + "=";
-
-        tempUserEqip += top.skinKind.ToString() + "-";
-        tempUserEqip += top.skinName + "-";
-        tempUserEqip += top.color_01.ToString() + "-";
-        tempUserEqip += top.color_02.ToString() + "=";
-
-        tempUserEqip += pan.skinKind.ToString() + "-";
-        tempUserEqip += pan.skinName + "-";
-        tempUserEqip += pan.color_01.ToString() + "-";
-        tempUserEqip += pan.color_02.ToString() + "=";
-
-        tempUserEqip += eye.skinKind.ToString() + "-";
-        tempUserEqip += eye.skinName + "-";
-        tempUserEqip += eye.color_01.ToString() + "-";
-        tempUserEqip += eye.color_02.ToString() + "=";
-
-        tempUserEqip += face.skinKind.ToString() + "-";
-        tempUserEqip += face.skinName + "-";
-        tempUserEqip += face.color_01.ToString() + "-";
-        tempUserEqip += face.color_02.ToString() + "=";
-
-        tempUserEqip += haF.skinKind.ToString() + "-";
-        tempUserEqip += haF.skinName + "-";
-        tempUserEqip += haF.color_01.ToString() + "-";
-        tempUserEqip += haF.color_02.ToString() + "=";
-
-        tempUserEqip += haB.skinKind.ToString() + "-";
-        tempUserEqip += haB.skinName + "-";
-        tempUserEqip += haB.color_01.ToString() + "-";
-        tempUserEqip += haB.color_02.ToString() + "=";
-
-        tempUserEqip += outt.skinKind.ToString() + "-";
-        tempUserEqip += outt.skinName + "-";
-        tempUserEqip += outt.color_01.ToString() + "-";
-        tempUserEqip += outt.color_02.ToString() + "=";
-
-        tempUserEqip += sho.skinKind.ToString() + "-";
-        tempUserEqip += sho.skinName + "-";
-        tempUserEqip += sho.color_01.ToString() + "-";
-        tempUserEqip += sho.color_02.ToString() + "=";
-
-        tempUserEqip += cap.skinKind.ToString() + "-";
-        tempUserEqip += cap.skinName + "-";
-        tempUserEqip += cap.color_01.ToString() + "-";
-        tempUserEqip += cap.color_02.ToString() + "=";
-
-        tempUserEqip += set.skinKind.ToString() + "-";
-        tempUserEqip += set.skinName + "-";
-        tempUserEqip += set.color_01.ToString() + "-";
-        tempUserEqip += set.color_02.ToString() + "=";
-
-        tempUserEqip += body.skinKind.ToString() + "-";
-        tempUserEqip += body.skinName + "-";
-        tempUserEqip += body.color_01.ToString() + "-";
-        tempUserEqip += body.color_02.ToString() + "=";
+        for (int i = 0; i < userEqip.skinKind.Length; i++)
+        {
+            tempUserEqip += userEqip.skinKind[i].ToString() + "-";
+            tempUserEqip += userEqip.skinName[i] + "-";
+            tempUserEqip += userEqip.color_01[i].ToString() + "-";
+            tempUserEqip += userEqip.color_02[i].ToString() + "=";
+        }
 
         Param saveEqipData = new Param();
         saveEqipData.Add( currentCharacter + "Eqip", tempUserEqip);
@@ -460,23 +352,20 @@ public class UserInfoManager : MonoBehaviour
             {
                 string tempUserEqip = jsonData[currentCharacter+ "Eqip"][0].ToString();
                 string[] tempUserEqipList = tempUserEqip.Split('=');
-                acc = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[0].Split('-')[0]), tempUserEqipList[0].Split('-')[1], StringToColor(tempUserEqipList[0].Split('-')[2]), StringToColor(tempUserEqipList[0].Split('-')[3]));
-                top = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[1].Split('-')[0]), tempUserEqipList[1].Split('-')[1], StringToColor(tempUserEqipList[1].Split('-')[2]), StringToColor(tempUserEqipList[1].Split('-')[3]));
-                pan = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[2].Split('-')[0]), tempUserEqipList[2].Split('-')[1], StringToColor(tempUserEqipList[2].Split('-')[2]), StringToColor(tempUserEqipList[2].Split('-')[3]));
-                eye = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[3].Split('-')[0]), tempUserEqipList[3].Split('-')[1], StringToColor(tempUserEqipList[3].Split('-')[2]), StringToColor(tempUserEqipList[3].Split('-')[3]));
-                face = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[4].Split('-')[0]), tempUserEqipList[4].Split('-')[1], StringToColor(tempUserEqipList[4].Split('-')[2]), StringToColor(tempUserEqipList[4].Split('-')[3]));
-                haF = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[5].Split('-')[0]), tempUserEqipList[5].Split('-')[1], StringToColor(tempUserEqipList[5].Split('-')[2]), StringToColor(tempUserEqipList[5].Split('-')[3]));
-                haB = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[6].Split('-')[0]), tempUserEqipList[6].Split('-')[1], StringToColor(tempUserEqipList[6].Split('-')[2]), StringToColor(tempUserEqipList[6].Split('-')[3]));
-                outt = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[7].Split('-')[0]), tempUserEqipList[7].Split('-')[1], StringToColor(tempUserEqipList[7].Split('-')[2]), StringToColor(tempUserEqipList[7].Split('-')[3]));
-                sho = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[8].Split('-')[0]), tempUserEqipList[8].Split('-')[1], StringToColor(tempUserEqipList[8].Split('-')[2]), StringToColor(tempUserEqipList[8].Split('-')[3]));
-                cap = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[9].Split('-')[0]), tempUserEqipList[9].Split('-')[1], StringToColor(tempUserEqipList[9].Split('-')[2]), StringToColor(tempUserEqipList[9].Split('-')[3]));
-                set = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[10].Split('-')[0]), tempUserEqipList[10].Split('-')[1], StringToColor(tempUserEqipList[10].Split('-')[2]), StringToColor(tempUserEqipList[10].Split('-')[3]));
-                body = new UserEqip((SkinKind)System.Enum.Parse(typeof(SkinKind), tempUserEqipList[11].Split('-')[0]), tempUserEqipList[11].Split('-')[1], StringToColor(tempUserEqipList[11].Split('-')[2]), StringToColor(tempUserEqipList[11].Split('-')[3]));
 
                 if (action != null)
                 {
                     action();
                 }
+
+                for (int i = 0; i < tempUserEqipList.Length; i++)
+                {
+                    if (tempUserEqipList[i].Split('-')[1].Length != 0)
+                    {
+                        PushUserEqip(new UserSkin(tempUserEqipList[i].Split('-')[1], StringToColor(tempUserEqipList[i].Split('-')[2]), StringToColor(tempUserEqipList[i].Split('-')[3])));
+                    }
+                }
+               
             }
         });
     
@@ -554,63 +443,6 @@ public class UserInfoManager : MonoBehaviour
             if (action != null)
             {
                 action();
-            }
-        });
-    }
-
-    public Status userStatus = new Status();
-
-    public void SetUserStatus(int wisdom, int intelligent, int will)
-    {
-        userStatus.wisdom = wisdom;
-        userStatus.intelligent = intelligent;
-        userStatus.will = will;
-    }
-
-    public void SaveUserStatus(string currentCharacter, System.Action action = null)
-    {
-        string dataString = userStatus.wisdom + "-" + userStatus.intelligent + "-" + userStatus.will;
-        Param dataParam = new Param();
-        dataParam.Add(currentCharacter + "Status", dataString);
-
-        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
-        {
-            // 이후 처리
-            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
-            string dataIndate = jsonData["inDate"]["S"].ToString();
-
-            BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "UserInfo", dataIndate, dataParam, (callback2) =>
-            {
-                Debug.Log("성공했습니다");
-
-                // 이후 처리
-                if (action != null)
-                {
-                    action();
-                }
-            });
-        });
-    }
-
-    public void LoadUserStatus(string currentCharacter, System.Action action = null)
-    {
-        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
-        {
-            // 이후 처리
-            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
-            if (jsonData.Keys.Contains(currentCharacter + "Status"))
-            {
-                string tempUserStatus = jsonData[currentCharacter + "Status"][0].ToString();
-                string[] tempUserStatusList = tempUserStatus.Split('-');
-
-                userStatus.wisdom = int.Parse(tempUserStatusList[0]);
-                userStatus.intelligent = int.Parse(tempUserStatusList[1]);
-                userStatus.will = int.Parse(tempUserStatusList[2]);
-
-                if (action != null)
-                {
-                    action();
-                }
             }
         });
     }
@@ -807,7 +639,6 @@ public class UserInfoManager : MonoBehaviour
         currentAnimation = PlayerPrefs.GetString("CurrentAni");
     }
 
-
 }
 
 public class UserSkin
@@ -838,26 +669,40 @@ public class UserColorItem
 
 public class UserEqip
 {
-    public SkinKind skinKind;
-    public string skinName;
-    public Color color_01;
-    public Color color_02;
+    public SkinKind[] skinKind;
+    public string[] skinName;
+    public Color[] color_01;
+    public Color[] color_02;
 
     public UserEqip()
     {
-        this.skinKind = SkinKind.acc;
-        this.skinName = "";
-        this.color_01 = Color.clear;
-        this.color_02 = Color.clear;
+        int enumLength = System.Enum.GetNames(typeof(SkinKind)).Length;
+        skinKind = new SkinKind[enumLength];
+        skinName = new string[enumLength];
+        color_01 = new Color[enumLength];
+        color_02 = new Color[enumLength];
+
+        for (int i = 0; i < skinKind.Length; i++)
+        {
+            skinKind[i] = (SkinKind)i;
+        }
+
+        for (int i = 0; i < skinName.Length; i++)
+        {
+            skinName[i] = "";
+        }
+
+        for (int i = 0; i < color_01.Length; i++)
+        {
+            color_01[i] = Color.clear;
+        }
+        for (int i = 0; i < color_02.Length; i++)
+        {
+            color_02[i] = Color.clear;
+        }
     }
 
-    public UserEqip(SkinKind skinKind, string skinName, Color color_01, Color color_02)
-    {
-        this.skinKind = skinKind;
-        this.skinName = skinName;
-        this.color_01 = color_01;
-        this.color_02 = color_02;
-    }
+   
 }
 
 public class UserMoney
