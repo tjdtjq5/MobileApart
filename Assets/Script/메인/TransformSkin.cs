@@ -13,16 +13,7 @@ public class TransformSkin : MonoBehaviour
     [ContextMenu("테스트")]
     public void Test()
     {
-        int skinKindLength = System.Enum.GetNames(typeof(SkinKind)).Length;
-        for (int i = 0; i < skinKindLength; i++)
-        {
-            string skinName = GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).skinName;
-            if (skinName.Length != 0)
-            {
-                Debug.Log((SkinKind)i + " : " + GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).color_01);
-                SetColor(GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).skinName, GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).color_01);
-            }
-        }
+       
     }
 
     private void Start()
@@ -74,24 +65,27 @@ public class TransformSkin : MonoBehaviour
     // 유저정보에 저장된 eqip 정보 세팅 
     public void UserEqipInfoSetting()
     {
-        int skinKindLength = System.Enum.GetNames(typeof(SkinKind)).Length;
-        for (int i = 0; i < skinKindLength; i++)
+        skinList.Clear();
+
+        for (int i = 0; i < GameManager.instance.userInfoManager.skinItem.Count; i++)
         {
-            string skinName = GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).skinName;
-            if (skinName.Length != 0)
+            if (GameManager.instance.userInfoManager.skinItem[i].isEqip)
             {
-                SkinChange((SkinKind)i, skinName);
-                SetColor(GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).skinName, GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).color_01, 1);
-                SetColor(GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).skinName, GameManager.instance.userInfoManager.GetUserEqip((SkinKind)i).color_02, 2);
+                string skinName = GameManager.instance.userInfoManager.skinItem[i].skinName;
+                Color color_01 = GameManager.instance.userInfoManager.skinItem[i].color_01;
+                Color color_02 = GameManager.instance.userInfoManager.skinItem[i].color_02;
+                SkinChange(skinName);
+                SetColor(skinName, color_01, 1);
+                SetColor(skinName, color_02, 2);
             }
         }
     }
 
-    public bool SetColor(string slotName , Color color, int slotNum = 1)
+    public void SetColor(string slotName , Color color, int slotNum = 1)
     {
         if (color == null)
         {
-            return false;
+            return;
         }
         if (color == Color.clear)
         {
@@ -105,11 +99,11 @@ public class TransformSkin : MonoBehaviour
 
         if (slotName.Contains("haB") && slotNum == 1)
         {
-            color = GetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF).skinName , 1);
+            color = GetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF)[0].skinName , 1);
         }
         if (slotName.Contains("haB") && slotNum == 2)
         {
-            color = GetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF).skinName, 2);
+            color = GetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haF)[0].skinName, 2);
         }
 
         foreach (Spine.Slot slot in skeletonAnimation.skeleton.Slots)
@@ -150,14 +144,41 @@ public class TransformSkin : MonoBehaviour
 
         if (slotName.Contains("haF") && slotNum == 1)
         {
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB).skinName, color);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB)[0].skinName, color);
         }
         if (slotName.Contains("haF") && slotNum == 2)
         {
-            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB).skinName, color);
+            SetColor(GameManager.instance.userInfoManager.GetUserEqip(SkinKind.haB)[0].skinName, color);
         }
 
-        return flag;
+        return;
+    }
+
+    public List<int> CheckColorSlot(string skinName)
+    {
+        List<int> tempSlotIndex = new List<int>();
+
+        foreach (Spine.Slot slot in skeletonAnimation.skeleton.Slots)
+        {
+            if (slot.Attachment != null)
+            {
+                if (slot.Data.Name.Contains(skinName) && slot.Data.Name.Contains("color_02"))
+                {
+                    if (!tempSlotIndex.Contains(2))
+                    {
+                        tempSlotIndex.Add(2);
+                    }
+                }
+                if (slot.Data.Name.Contains(skinName) && slot.Data.Name.Contains("color_01"))
+                {
+                    if (!tempSlotIndex.Contains(1))
+                    {
+                        tempSlotIndex.Add(1);
+                    }
+                }
+            }
+        }
+        return tempSlotIndex;
     }
 
     public Color GetColor(string slotName, int slotNum = 1)
@@ -230,7 +251,7 @@ public class TransformSkin : MonoBehaviour
         }
     }
 
-    public void SkinChange(SkinKind skinKind, string skinName )
+    public void SkinChange(string skinName )
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -238,7 +259,7 @@ public class TransformSkin : MonoBehaviour
 
         for (int i = 0; i < skinList.Count; i++)
         {
-            if (skinList[i].Contains(skinKind.ToString()))
+            if (skinList[i].Contains(skinName))
             {
                 skinList.RemoveAt(i);
             }
@@ -247,6 +268,33 @@ public class TransformSkin : MonoBehaviour
         SetEquip(skinList);
     }
 
+    public void DressOff(SkinKind skinKind, string skinName = "")
+    {
+        skeletonAnimation.skeleton.Skin = null;
+        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
+        skeletonAnimation.LateUpdate();
+        if (skinName == "")
+        {
+            for (int i = 0; i < skinList.Count; i++)
+            {
+                if (skinList[i].Contains(skinKind.ToString()))
+                {
+                    skinList.RemoveAt(i);
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < skinList.Count; i++)
+            {
+                if (skinList[i].Contains(skinName))
+                {
+                    skinList.RemoveAt(i);
+                }
+            }
+        }
+        SetEquip(skinList);
+    }
 
     public void SetEquip(List<string> SkinList)
     {

@@ -58,14 +58,14 @@ public class Bath : MonoBehaviour
         currentAni = character.GetComponent<SkeletonAnimation>().AnimationName;
         character.GetComponent<SkeletonAnimation>().AnimationState.SetAnimation(0 ,"bath", true);
 
-        character.GetComponent<TransformSkin>().SkinChange(SkinKind.accarm, "");
-        character.GetComponent<TransformSkin>().SkinChange(SkinKind.accbody, "");
-        character.GetComponent<TransformSkin>().SkinChange(SkinKind.accface, "");
-        character.GetComponent<TransformSkin>().SkinChange(SkinKind.accleg, "");
-        character.GetComponent<TransformSkin>().SkinChange(SkinKind.accneck, "");
-        character.GetComponent<TransformSkin>().SkinChange(SkinKind.top, "");
-        character.GetComponent<TransformSkin>().SkinChange(SkinKind.set, "");
-        character.GetComponent<TransformSkin>().SkinChange(SkinKind.outt, "");
+        character.GetComponent<TransformSkin>().DressOff(SkinKind.accarm);
+        character.GetComponent<TransformSkin>().DressOff(SkinKind.accbody);
+        character.GetComponent<TransformSkin>().DressOff(SkinKind.accface);
+        character.GetComponent<TransformSkin>().DressOff(SkinKind.accleg);
+        character.GetComponent<TransformSkin>().DressOff(SkinKind.accneck);
+        character.GetComponent<TransformSkin>().DressOff(SkinKind.top);
+        character.GetComponent<TransformSkin>().DressOff(SkinKind.set);
+        character.GetComponent<TransformSkin>().DressOff(SkinKind.outt);
 
         for (int i = 0; i < setOff.Length; i++)
         {

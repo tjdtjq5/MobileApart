@@ -9,6 +9,8 @@ public class OverrideCanvas : MonoBehaviour
 {
     public static OverrideCanvas instance;
 
+    public Transform theCam; Vector2 originPos;
+
     public GameObject donTouchPannel;
     public Transform alram;
     public Transform redAlram;
@@ -21,10 +23,14 @@ public class OverrideCanvas : MonoBehaviour
     void Start()
     {
         instance = this;
+        originPos = theCam.position;
     }
 
     public void Alram(string text)
     {
+        this.transform.position = originPos;
+        this.transform.position = new Vector2(this.transform.position.x + theCam.position.x - originPos.x, this.transform.position.y + theCam.position.y - originPos.y);
+
         donTouchPannel.SetActive(true);
 
         alram.gameObject.SetActive(true);
@@ -37,6 +43,9 @@ public class OverrideCanvas : MonoBehaviour
 
     public void RedAlram(string text)
     {
+        this.transform.position = originPos;
+        this.transform.position = new Vector2(this.transform.position.x + theCam.position.x - originPos.x, this.transform.position.y + theCam.position.y - originPos.y);
+
         donTouchPannel.SetActive(true);
 
         redAlram.gameObject.SetActive(true);
@@ -49,6 +58,9 @@ public class OverrideCanvas : MonoBehaviour
 
     public void Caution(string text, System.Action function)
     {
+        this.transform.position = originPos;
+        this.transform.position = new Vector2(this.transform.position.x + theCam.position.x - originPos.x, this.transform.position.y + theCam.position.y - originPos.y);
+
         donTouchPannel.SetActive(true);
 
         caution.gameObject.SetActive(true);
@@ -61,6 +73,9 @@ public class OverrideCanvas : MonoBehaviour
 
     public void PurchaseAlram(System.Action function)
     {
+        this.transform.position = originPos;
+        this.transform.position = new Vector2(this.transform.position.x + theCam.position.x - originPos.x, this.transform.position.y + theCam.position.y - originPos.y);
+
         donTouchPannel.SetActive(true);
 
         purchaseAlram.gameObject.SetActive(true);
@@ -72,6 +87,9 @@ public class OverrideCanvas : MonoBehaviour
 
     public void PolaroidPhoto(Sprite screenShot, int month, int day)
     {
+        this.transform.position = originPos;
+        this.transform.position = new Vector2(this.transform.position.x + theCam.position.x - originPos.x, this.transform.position.y + theCam.position.y - originPos.y);
+
         if (screenShot == null)
         {
             Debug.Log("aa");
@@ -90,6 +108,9 @@ public class OverrideCanvas : MonoBehaviour
 
     public void ScreenPhoto(Sprite screenShot)
     {
+        this.transform.position = originPos;
+        this.transform.position = new Vector2(this.transform.position.x + theCam.position.x - originPos.x, this.transform.position.y + theCam.position.y - originPos.y);
+
         screenPhoto.gameObject.SetActive(true);
 
         screenPhoto.GetChild(1).GetComponent<Image>().sprite = screenShot;
@@ -99,6 +120,9 @@ public class OverrideCanvas : MonoBehaviour
 
     public void Wating(string text, bool flag)
     {
+        this.transform.position = originPos;
+        this.transform.position = new Vector2(this.transform.position.x + theCam.position.x - originPos.x, this.transform.position.y + theCam.position.y - originPos.y);
+
         wating.gameObject.SetActive(flag);
         wating.GetChild(0).GetChild(0).GetComponent<Text>().text = text;
     }

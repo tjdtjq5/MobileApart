@@ -13,7 +13,6 @@ public class Shop : MonoBehaviour
     public Sprite goldSprite;
     public Sprite crystalSprite;
     public Transform AlramSucess;
-    public Transform AlramPerchaseCheck;
 
     public DailyGoods dailyGoods;
     public RandomGoodsInfo[] randomGoodsInfo;
@@ -595,19 +594,17 @@ public class Shop : MonoBehaviour
             return;
         }
 
-        AlramPerchaseCheck.gameObject.SetActive(true);
         string itemName = randomGoods[index].itemName;
         ItemKind itemKind = randomGoods[index].itemKind;
         Color color_01 = randomGoods[index].color01;
         Color color_02 = randomGoods[index].color02;
         MoneyKind moneyKind = randomGoods[index].MoneyKind;
         int price = randomGoods[index].price;
-        AlramPerchaseCheck.Find("확인").GetComponent<Button>().onClick.AddListener(() => PerChase(itemName, itemKind, color_01, color_02, moneyKind, price));
+        OverrideCanvas.instance.PurchaseAlram(()=> PerChase(itemName, itemKind, color_01, color_02, moneyKind, price));
     }
 
     public void PerChase(string itemName, ItemKind itemKind, Color color_01, Color color_02, MoneyKind moneyKind, int price)
     {
-        AlramPerchaseCheck.gameObject.SetActive(false);
 
         AlramSucess.gameObject.SetActive(true);
         AlramSucess.GetComponent<Image>().DOFade(1, 0);
@@ -642,10 +639,6 @@ public class Shop : MonoBehaviour
         GameManager.instance.userInfoManager.SaveSkinItem();
     }
 
-    public void PerChaseExit()
-    {
-        AlramPerchaseCheck.gameObject.SetActive(false);
-    }
 }
 
 public enum MoneyKind

@@ -5,6 +5,7 @@ using LitJson;
 using System.Collections;
 using UnityEngine.Networking;
 using System.Runtime.InteropServices;
+using Spine;
 
 public class UserInfoManager : MonoBehaviour
 {
@@ -14,9 +15,16 @@ public class UserInfoManager : MonoBehaviour
     [HideInInspector] public string currentCharacter;
     [HideInInspector] public string currentAnimation;
 
+    public string[] skinTest;
 
-    //현재 유저가 장착중인 옷
-    public UserEqip userEqip = new UserEqip();
+    private void Update()
+    {
+        skinTest = new string[skinItem.Count];
+        for (int i = 0; i < skinTest.Length; i++)
+        {
+            skinTest[i] = skinItem[i].skinName + " : " + skinItem[i].isEqip;
+        }
+    }
 
     private void Start()
     {
@@ -44,14 +52,10 @@ public class UserInfoManager : MonoBehaviour
         skinItem.Add(new UserSkin("sho/shoes_01", Color.white, Color.white));
         skinItem.Add(new UserSkin("body", Color.white, Color.white));
 
-        PushUserEqip(skinItem[0]);
-        PushUserEqip(skinItem[1]);
-        PushUserEqip(skinItem[2]);
-        PushUserEqip(skinItem[3]);
-        PushUserEqip(skinItem[4]);
-        PushUserEqip(skinItem[5]);
-        PushUserEqip(skinItem[6]);
-        PushUserEqip(skinItem[7]);
+        for (int i = 0; i < skinItem.Count; i++)
+        {
+            PushUserEqip(skinItem[i]);
+        }
 
         SetUserNeed(100, 100, 100, 100);
     }
@@ -79,19 +83,6 @@ public class UserInfoManager : MonoBehaviour
             colorItem.RemoveAt(index);
         }
     }
-
-    public int GetIndexColorItem(Color color)
-    {
-        for (int i = 0; i < colorItem.Count; i++)
-        {
-            if (colorItem[i].color == color)
-            {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     public void DeleteColorItem(Color color)
     {
         for (int i = 0; i < colorItem.Count; i++)
@@ -106,6 +97,17 @@ public class UserInfoManager : MonoBehaviour
             }
         }
     }
+    public int GetIndexColorItem(Color color)
+    {
+        for (int i = 0; i < colorItem.Count; i++)
+        {
+            if (colorItem[i].color == color)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     //스킨이름, 해당 스킨의 컬러 색 리스트 
     public List<UserSkin> skinItem = new List<UserSkin>();
@@ -118,6 +120,34 @@ public class UserInfoManager : MonoBehaviour
             if (skinItem[i].skinName.Contains(skinName))
             {
                 tempUserSkin.Add(skinItem[i]);
+            }
+        }
+        return tempUserSkin;
+    }
+
+    public List<UserSkin> GetSkinItemList(SkinKind skinKind)
+    {
+        List<UserSkin> tempUserSkin = new List<UserSkin>();
+        for (int i = 0; i < skinItem.Count; i++)
+        {
+            SkinKind userEqipskinKind = (SkinKind)System.Enum.Parse(typeof(SkinKind), skinItem[i].skinName.Split('/')[0]);
+            if (userEqipskinKind == skinKind)
+            {
+                tempUserSkin.Add(skinItem[i]);
+            }
+        }
+        return tempUserSkin;
+    }
+
+    public List<int> GetSkinItemIndexList(SkinKind skinKind)
+    {
+        List<int> tempUserSkin = new List<int>();
+        for (int i = 0; i < skinItem.Count; i++)
+        {
+            SkinKind userEqipskinKind = (SkinKind)System.Enum.Parse(typeof(SkinKind), skinItem[i].skinName.Split('/')[0]);
+            if (userEqipskinKind == skinKind)
+            {
+                tempUserSkin.Add(i);
             }
         }
         return tempUserSkin;
@@ -159,37 +189,6 @@ public class UserInfoManager : MonoBehaviour
         return new Color(randR, randG, randB , 1);
     }
 
-    public void ChangeColorSkinItem(int index, Color color, int slotNum = 1)
-    {
-        if (color == Color.clear)
-        {
-            float randR = (float)Random.RandomRange(0, 255) / 255;
-            float randG = (float)Random.RandomRange(0, 255) / 255;
-            float randB = (float)Random.RandomRange(0, 255) / 255;
-            color = new Color(randR, randG, randB, 1);
-        }
-
-        if (slotNum == 1)
-        {
-            skinItem[index].color_01 = color;
-        }
-        if (slotNum == 2)
-        {
-            skinItem[index].color_02 = color;
-        }
-    }
-
-    public void ChangeUserSkin(UserSkin orignUserSkin, UserSkin nextUserSkin)
-    {
-        for (int i = 0; i < skinItem.Count; i++)
-        {
-            if (skinItem[i] == orignUserSkin)
-            {
-                skinItem[i] = nextUserSkin;
-            }
-        }
-    }
-
     Color StringToColor(string ColorString)
     {
         string tempString = ColorString;
@@ -204,46 +203,68 @@ public class UserInfoManager : MonoBehaviour
         return new Color(R, G, B, 1);
     }
 
-  
     public void PushUserEqip(UserSkin userSkin)
     {
-        SkinKind skinKind = (SkinKind)System.Enum.Parse(typeof(SkinKind), userSkin.skinName.Split('/')[0]);
-
-        int skinkindLength = System.Enum.GetNames(typeof(SkinKind)).Length;
-
-        for (int k = 0; k < skinkindLength; k++)
+        int index = GetSkinItemIndex(userSkin);
+        if (index == -1)
         {
-            if ((SkinKind)k == skinKind)
-            {
-                string skinName = userSkin.skinName;
-                Color color_01 = userSkin.color_01;
-                Color color_02 = userSkin.color_02;
+            return;
+        }
 
-                for (int i = 0; i < userEqip.skinKind.Length; i++)
+        for (int i = 0; i < skinItem.Count; i++)
+        {
+            if (skinItem[i].skinName == userSkin.skinName && skinItem[i].isEqip)
+            {
+                skinItem[i].SetEqip(false);
+            }
+        }
+
+        skinItem[index].SetEqip(true);
+    }
+
+    public void PushUserEqip(int index)
+    {
+        if (index < 0 || index >= skinItem.Count)
+        {
+            return;
+        }
+
+        for (int i = 0; i < skinItem.Count; i++)
+        {
+            if (skinItem[i].skinName == skinItem[index].skinName && skinItem[i].isEqip)
+            {
+                skinItem[i].SetEqip(false);
+            }
+        }
+
+        skinItem[index].SetEqip(true);
+    }
+
+    public List<UserSkin> GetUserEqip(SkinKind skinKind)
+    {
+        List<UserSkin> tempUserSkin = new List<UserSkin>();
+        for (int i = 0; i < skinItem.Count; i++)
+        {
+            if (skinItem[i].isEqip)
+            {
+                SkinKind userEqipskinKind = (SkinKind)System.Enum.Parse(typeof(SkinKind), skinItem[i].skinName.Split('/')[0]);
+                if (userEqipskinKind == skinKind)
                 {
-                    if (userEqip.skinKind[i] == skinKind)
-                    {
-                        userEqip.skinName[i] = skinName;
-                        userEqip.color_01[i] = color_01;
-                        userEqip.color_02[i] = color_02;
-                    }
+                    tempUserSkin.Add(skinItem[i]);
                 }
             }
         }
+        return tempUserSkin;
     }
 
-    public UserSkin GetUserEqip(SkinKind skinKind)
+    public void PullUserEqip(SkinKind skinKind)
     {
-        for (int i = 0; i < userEqip.skinKind.Length; i++)
+        List<int> list = GetSkinItemIndexList(skinKind);
+
+        for (int i = 0; i < list.Count; i++)
         {
-            if (userEqip.skinKind[i] == skinKind)
-            {
-                UserSkin tempSkin = new UserSkin(userEqip.skinName[i], userEqip.color_01[i], userEqip.color_02[i]);
-               
-                return tempSkin;
-            }
+            skinItem[list[i]].SetEqip(false);
         }
-        return null;
     }
 
     // 저장 
@@ -310,32 +331,29 @@ public class UserInfoManager : MonoBehaviour
     // 장착중인 스킨들 저장 
     public void SaveUserEqip(string currentCharacter ,System.Action action = null)
     {
-        string tempUserEqip = "";
-
-        for (int i = 0; i < userEqip.skinKind.Length; i++)
+        string tempSkinItem = "";
+        for (int i = 0; i < skinItem.Count; i++)
         {
-            tempUserEqip += userEqip.skinKind[i].ToString() + "-";
-            tempUserEqip += userEqip.skinName[i] + "-";
-            tempUserEqip += userEqip.color_01[i].ToString() + "-";
-            tempUserEqip += userEqip.color_02[i].ToString() + "=";
+            tempSkinItem += skinItem[i].isEqip + "=";
         }
 
-        Param saveEqipData = new Param();
-        saveEqipData.Add( currentCharacter + "Eqip", tempUserEqip);
+        Param saveSkinData = new Param();
+        saveSkinData.Add(currentCharacter + "Eqip", tempSkinItem);
 
         BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
         {
             // 이후 처리
             JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
-            string dataIndate  = jsonData["inDate"]["S"].ToString();
+            string dataIndate = jsonData["inDate"]["S"].ToString();
 
-            BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "UserInfo", dataIndate, saveEqipData, (callback2) =>
+            BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "UserInfo", dataIndate, saveSkinData, (callback2) =>
             {
                 Debug.Log("성공했습니다");
 
                 // 이후 처리
                 if (action != null)
                 {
+
                     action();
                 }
             });
@@ -360,10 +378,7 @@ public class UserInfoManager : MonoBehaviour
 
                 for (int i = 0; i < tempUserEqipList.Length; i++)
                 {
-                    if (tempUserEqipList[i].Split('-')[1].Length != 0)
-                    {
-                        PushUserEqip(new UserSkin(tempUserEqipList[i].Split('-')[1], StringToColor(tempUserEqipList[i].Split('-')[2]), StringToColor(tempUserEqipList[i].Split('-')[3])));
-                    }
+                    skinItem[i].isEqip = bool.Parse(tempUserEqipList[i]);
                 }
                
             }
@@ -646,12 +661,35 @@ public class UserSkin
     public string skinName;
     public Color color_01;
     public Color color_02;
+    public bool isEqip;
+
+    public UserSkin()
+    {
+        this.skinName = "";
+        this.color_01 = Color.white;
+        this.color_02 = Color.white;
+        this.isEqip = false;
+    }
 
     public UserSkin(string skinName, Color color_01, Color color_02)
     {
         this.skinName = skinName;
         this.color_01 = color_01;
         this.color_02 = color_02;
+        this.isEqip = false;
+    }
+
+    public void SetUserSkin(string skinName, Color color_01, Color color_02)
+    {
+        this.skinName = skinName;
+        this.color_01 = color_01;
+        this.color_02 = color_02;
+        this.isEqip = false;
+    }
+
+    public void SetEqip(bool flag)
+    {
+        isEqip = flag;
     }
 }
 
@@ -667,43 +705,6 @@ public class UserColorItem
     }
 }
 
-public class UserEqip
-{
-    public SkinKind[] skinKind;
-    public string[] skinName;
-    public Color[] color_01;
-    public Color[] color_02;
-
-    public UserEqip()
-    {
-        int enumLength = System.Enum.GetNames(typeof(SkinKind)).Length;
-        skinKind = new SkinKind[enumLength];
-        skinName = new string[enumLength];
-        color_01 = new Color[enumLength];
-        color_02 = new Color[enumLength];
-
-        for (int i = 0; i < skinKind.Length; i++)
-        {
-            skinKind[i] = (SkinKind)i;
-        }
-
-        for (int i = 0; i < skinName.Length; i++)
-        {
-            skinName[i] = "";
-        }
-
-        for (int i = 0; i < color_01.Length; i++)
-        {
-            color_01[i] = Color.clear;
-        }
-        for (int i = 0; i < color_02.Length; i++)
-        {
-            color_02[i] = Color.clear;
-        }
-    }
-
-   
-}
 
 public class UserMoney
 {
@@ -711,13 +712,6 @@ public class UserMoney
     public int Crystal;
 }
 
-public class Status
-{
-    // 지혜 마력 의지 
-    public int wisdom;
-    public int intelligent;
-    public int will; 
-}
 
 public class Need 
 {

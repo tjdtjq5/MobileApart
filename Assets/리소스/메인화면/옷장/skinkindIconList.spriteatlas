@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: skinkindIconList
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 001d59b9b49bb9a41a3a28ca2c49b557, type: 3}
+    - {fileID: 2800000, guid: 5cc42f5d035c6bc43ae3aef08619feb1, type: 3}
+    - {fileID: 2800000, guid: 65e1f8153258ab140b792e1554764ea9, type: 3}
+    - {fileID: 2800000, guid: ac899f3f1768cec49ba2f9c5b55ab8f5, type: 3}
+    - {fileID: 2800000, guid: bde6f2f45c4801442bc76235ba86f14f, type: 3}
+    - {fileID: 2800000, guid: e449dcbba22f02c4a8b8bbb84dc289fc, type: 3}
+    - {fileID: 2800000, guid: 99220a1ccdbef83498265f9883f0e892, type: 3}
+    - {fileID: 2800000, guid: 7588f86bdd133c1418a9b0aebb47df5a, type: 3}
+    - {fileID: 2800000, guid: af623c7e1376ccc49898eb853273c4a7, type: 3}
+    - {fileID: 2800000, guid: 2ebe07fad85f7584ba491f9db4a91c84, type: 3}
+    - {fileID: 2800000, guid: fe347d8466cd1014998325761a26bef9, type: 3}
+    - {fileID: 2800000, guid: 039f0c93cf09a1f45bd7d3f2b6bf75b2, type: 3}
+    - {fileID: 2800000, guid: 2994b3eedbf3c4e4084608a381fb99f4, type: 3}
+    - {fileID: 2800000, guid: 51a4a1e13b26c7c448d237dc115221ca, type: 3}
+    - {fileID: 2800000, guid: f7745a724a47db6478d719049ecee928, type: 3}
+    - {fileID: 2800000, guid: 62cbadb3073bdb345b5197a50ab3e94e, type: 3}
+    - {fileID: 2800000, guid: 44266b1375ddccc4bae6baef9329c92c, type: 3}
+    totalSpriteSurfaceArea: 44563
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 51a4a1e13b26c7c448d237dc115221ca, type: 3}
+  - {fileID: 21300000, guid: f7745a724a47db6478d719049ecee928, type: 3}
+  - {fileID: 21300000, guid: 44266b1375ddccc4bae6baef9329c92c, type: 3}
+  - {fileID: 21300000, guid: 039f0c93cf09a1f45bd7d3f2b6bf75b2, type: 3}
+  - {fileID: 21300000, guid: 62cbadb3073bdb345b5197a50ab3e94e, type: 3}
+  - {fileID: 21300000, guid: fe347d8466cd1014998325761a26bef9, type: 3}
+  - {fileID: 21300000, guid: bde6f2f45c4801442bc76235ba86f14f, type: 3}
+  - {fileID: 21300000, guid: 65e1f8153258ab140b792e1554764ea9, type: 3}
+  - {fileID: 21300000, guid: 001d59b9b49bb9a41a3a28ca2c49b557, type: 3}
+  - {fileID: 21300000, guid: 2ebe07fad85f7584ba491f9db4a91c84, type: 3}
+  - {fileID: 21300000, guid: 7588f86bdd133c1418a9b0aebb47df5a, type: 3}
+  - {fileID: 21300000, guid: e449dcbba22f02c4a8b8bbb84dc289fc, type: 3}
+  - {fileID: 21300000, guid: 99220a1ccdbef83498265f9883f0e892, type: 3}
+  - {fileID: 21300000, guid: 5cc42f5d035c6bc43ae3aef08619feb1, type: 3}
+  - {fileID: 21300000, guid: af623c7e1376ccc49898eb853273c4a7, type: 3}
+  - {fileID: 21300000, guid: 2994b3eedbf3c4e4084608a381fb99f4, type: 3}
+  - {fileID: 21300000, guid: ac899f3f1768cec49ba2f9c5b55ab8f5, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - accarm
+  - accbody
+  - face
+  - accneck
+  - accface
+  - cap
+  - sho
+  - soc
+  - unde
+  - eye
+  - haB
+  - pan
+  - outt
+  - top
+  - haF
+  - accleg
+  - set
+  m_Tag: skinkindIconList
+  m_IsVariant: 0

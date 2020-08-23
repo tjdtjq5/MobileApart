@@ -85,10 +85,12 @@ public class BackEndAuthentication : MonoBehaviour
         oderInfo.text = "닉네임 받아오는 중 ...";
         BackendAsyncClass.BackendAsync(Backend.BMember.GetUserInfo, (callback) =>
         {
+           
             string[] userData = callback.GetReturnValue().Split('"');
             string inDate = userData[7];
             string nickname = userData[4];
             GameManager.instance.userInfoManager.inDate = inDate;
+
 
             GameManager.instance.userInfoManager.Initialized(); // 첫 시작이든 아니든 일단 초기정보 넣기 
 

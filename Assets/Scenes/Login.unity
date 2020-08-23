@@ -1552,7 +1552,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1768284095}
   - component: {fileID: 1768284094}
-  - component: {fileID: 1768284093}
   - component: {fileID: 1768284092}
   - component: {fileID: 1768284091}
   - component: {fileID: 1768284096}
@@ -1580,6 +1579,8 @@ MonoBehaviour:
   nickname: 
   inDate: 
   currentCharacter: 
+  currentAnimation: 
+  skinTest: []
 --- !u!114 &1768284092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1592,27 +1593,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee51b3c9c61f3444a8ea58fb3be88d2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Skin_DB:
-    txt: {fileID: 4900000, guid: 724beb5e5bef3794383c4dd0069ec5fc, type: 3}
   Box_DB:
     txt: {fileID: 4900000, guid: 6577a5122dfbdd04dac050fdfe6c3aa0, type: 3}
   DailyShop_DB:
     txt: {fileID: 4900000, guid: 4508c390960b8f5498fe66a580d6b76a, type: 3}
   Item_DB:
     txt: {fileID: 4900000, guid: 75b61555eff09e04cad03234260448fb, type: 3}
---- !u!114 &1768284093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1768284090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99fe8a0ed7533124e8cd76bfecc0aac2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SpineSkinInfoList: []
 --- !u!114 &1768284094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1626,7 +1612,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userInfoManager: {fileID: 1768284091}
-  spineSkinInfoManager: {fileID: 1768284093}
   databaseManager: {fileID: 1768284092}
   itemManager: {fileID: 1768284097}
 --- !u!4 &1768284095
