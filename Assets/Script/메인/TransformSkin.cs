@@ -13,6 +13,7 @@ public class TransformSkin : MonoBehaviour
     [ContextMenu("테스트")]
     public void Test()
     {
+        StartCoroutine(TestCoroutine());
        
     }
 
@@ -66,7 +67,6 @@ public class TransformSkin : MonoBehaviour
     public void UserEqipInfoSetting()
     {
         skinList.Clear();
-
         for (int i = 0; i < GameManager.instance.userInfoManager.skinItem.Count; i++)
         {
             if (GameManager.instance.userInfoManager.skinItem[i].isEqip)
@@ -76,6 +76,26 @@ public class TransformSkin : MonoBehaviour
                 Color color_02 = GameManager.instance.userInfoManager.skinItem[i].color_02;
                 SkinChange(skinName);
                 SetColor(skinName, color_01, 1);
+                SetColor(skinName, color_02, 2);
+            }
+        }
+    }
+
+    IEnumerator TestCoroutine()
+    {
+        skinList.Clear();
+        for (int i = 0; i < GameManager.instance.userInfoManager.skinItem.Count; i++)
+        {
+            if (GameManager.instance.userInfoManager.skinItem[i].isEqip)
+            {
+                string skinName = GameManager.instance.userInfoManager.skinItem[i].skinName;
+                Color color_01 = GameManager.instance.userInfoManager.skinItem[i].color_01;
+                Color color_02 = GameManager.instance.userInfoManager.skinItem[i].color_02;
+                SkinChange(skinName);
+                yield return new WaitForSeconds(0.3f);
+                Debug.Log(skinName + "  :  " + color_01);
+                SetColor(skinName, color_01, 1);
+                yield return new WaitForSeconds(0.3f);
                 SetColor(skinName, color_02, 2);
             }
         }
@@ -94,8 +114,6 @@ public class TransformSkin : MonoBehaviour
             float randB = (float)Random.RandomRange(0, 255) / 255;
             color = new Color(randR, randG, randB, 1);
         }
-
-        bool flag = false;
 
         if (slotName.Contains("haB") && slotNum == 1)
         {
@@ -121,7 +139,6 @@ public class TransformSkin : MonoBehaviour
                         slot.Attachment = attachment;
 
                         ChangeAttachmentColor(attachment, color);
-                        flag = true;
                     }
                 }
                 else
@@ -135,7 +152,6 @@ public class TransformSkin : MonoBehaviour
                         slot.Attachment = attachment;
 
                         ChangeAttachmentColor(attachment, color);
-                        flag = true;
                     }
                 }
            

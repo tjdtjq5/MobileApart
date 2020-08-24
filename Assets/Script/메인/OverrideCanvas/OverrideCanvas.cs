@@ -11,14 +11,15 @@ public class OverrideCanvas : MonoBehaviour
 
     public Transform theCam; Vector2 originPos;
 
-    public GameObject donTouchPannel;
-    public Transform alram;
-    public Transform redAlram;
-    public Transform caution;
-    public Transform purchaseAlram;
-    public Transform polaroid;
-    public Transform screenPhoto;
-    public Transform wating;
+    [SerializeField] GameObject donTouchPannel;
+    [SerializeField] Transform alram;
+    [SerializeField] Transform redAlram;
+    [SerializeField] Transform caution;
+    [SerializeField] Transform purchaseAlram;
+    [SerializeField] Transform polaroid;
+    [SerializeField] Transform screenPhoto;
+    [SerializeField] Transform wating;
+    [SerializeField] Transform itemOpen;
 
     void Start()
     {
@@ -26,11 +27,15 @@ public class OverrideCanvas : MonoBehaviour
         originPos = theCam.position;
     }
 
-    public void Alram(string text)
+    void InitPos()
     {
         this.transform.position = originPos;
         this.transform.position = new Vector2(this.transform.position.x + theCam.position.x - originPos.x, this.transform.position.y + theCam.position.y - originPos.y);
+    }
 
+    public void Alram(string text)
+    {
+        InitPos();
         donTouchPannel.SetActive(true);
 
         alram.gameObject.SetActive(true);
@@ -43,9 +48,7 @@ public class OverrideCanvas : MonoBehaviour
 
     public void RedAlram(string text)
     {
-        this.transform.position = originPos;
-        this.transform.position = new Vector2(this.transform.position.x + theCam.position.x - originPos.x, this.transform.position.y + theCam.position.y - originPos.y);
-
+        InitPos();
         donTouchPannel.SetActive(true);
 
         redAlram.gameObject.SetActive(true);
@@ -58,9 +61,7 @@ public class OverrideCanvas : MonoBehaviour
 
     public void Caution(string text, System.Action function)
     {
-        this.transform.position = originPos;
-        this.transform.position = new Vector2(this.transform.position.x + theCam.position.x - originPos.x, this.transform.position.y + theCam.position.y - originPos.y);
-
+        InitPos();
         donTouchPannel.SetActive(true);
 
         caution.gameObject.SetActive(true);
@@ -73,9 +74,7 @@ public class OverrideCanvas : MonoBehaviour
 
     public void PurchaseAlram(System.Action function)
     {
-        this.transform.position = originPos;
-        this.transform.position = new Vector2(this.transform.position.x + theCam.position.x - originPos.x, this.transform.position.y + theCam.position.y - originPos.y);
-
+        InitPos();
         donTouchPannel.SetActive(true);
 
         purchaseAlram.gameObject.SetActive(true);
@@ -87,9 +86,7 @@ public class OverrideCanvas : MonoBehaviour
 
     public void PolaroidPhoto(Sprite screenShot, int month, int day)
     {
-        this.transform.position = originPos;
-        this.transform.position = new Vector2(this.transform.position.x + theCam.position.x - originPos.x, this.transform.position.y + theCam.position.y - originPos.y);
-
+        InitPos();
         if (screenShot == null)
         {
             Debug.Log("aa");
@@ -108,9 +105,7 @@ public class OverrideCanvas : MonoBehaviour
 
     public void ScreenPhoto(Sprite screenShot)
     {
-        this.transform.position = originPos;
-        this.transform.position = new Vector2(this.transform.position.x + theCam.position.x - originPos.x, this.transform.position.y + theCam.position.y - originPos.y);
-
+        InitPos();
         screenPhoto.gameObject.SetActive(true);
 
         screenPhoto.GetChild(1).GetComponent<Image>().sprite = screenShot;
@@ -120,10 +115,79 @@ public class OverrideCanvas : MonoBehaviour
 
     public void Wating(string text, bool flag)
     {
-        this.transform.position = originPos;
-        this.transform.position = new Vector2(this.transform.position.x + theCam.position.x - originPos.x, this.transform.position.y + theCam.position.y - originPos.y);
-
+        InitPos();
         wating.gameObject.SetActive(flag);
         wating.GetChild(0).GetChild(0).GetComponent<Text>().text = text;
     }
+
+    List<UserSkin> itemNameList;
+    List<int> numList;
+
+    public void GetItem(List<UserSkin> itemNameList, List<int> numList)
+    {
+        if (itemNameList.Count != numList.Count)
+        {
+            Debug.Log("아이템 이름과 수량이 맞지 않습니다");
+            return;
+        }
+
+        this.itemNameList = itemNameList;
+        this.numList = numList;
+
+        itemOpen.Find("touchPannel").GetComponent<Button>().onClick.RemoveAllListeners();
+        StartCoroutine(ItemOpen(itemNameList[0], numList[0], 0, itemNameList.Count));
+    }
+
+    IEnumerator ItemOpen(UserSkin item, int num, int count, int totalCount)
+    {
+        itemOpen.Find("touchPannel").GetComponent<Button>().onClick.RemoveAllListeners();
+
+        itemOpen.gameObject.SetActive(false);
+        itemOpen.gameObject.SetActive(true);
+
+        for (int i = 0; i < itemOpen.Find("배경노란줄").Find("네모박스").childCount; i++)
+        {
+            Destroy(itemOpen.Find("배경노란줄").Find("네모박스").GetChild(i).gameObject);
+        }
+
+        string numString = " " + num;
+        if (num == 1)
+        {
+            numString = "";
+        }
+
+        itemOpen.Find("배경노란줄").Find("뽑기개수").GetComponent<Text>().text = (count + 1) + " / " + totalCount;
+        itemOpen.Find("배경노란줄").Find("아이템이름").GetComponent<Text>().text = GameManager.instance.itemManager.GetItemInfo(item.skinName).inGameName + numString;
+
+        GameObject iconObj = Instantiate(GameManager.instance.itemManager.GetItemInfo(item.skinName).iconObj, Vector2.zero, Quaternion.identity, itemOpen.Find("배경노란줄").Find("네모박스"));
+        for (int i = 0; i < iconObj.transform.childCount; i++)
+        {
+            iconObj.transform.GetChild(i).transform.localScale = new Vector3(.7f, .7f, .7f);
+            if (iconObj.transform.GetChild(i).name == "color_01")
+            {
+                iconObj.transform.GetChild(i).GetComponent<Image>().color = item.color_01;
+            }
+            if (iconObj.transform.GetChild(i).name == "color_02")
+            {
+                iconObj.transform.GetChild(i).GetComponent<Image>().color = item.color_02;
+            }
+        }
+
+        int indexCount = count + 1;
+        yield return new WaitForSeconds(1.1f);
+        if (indexCount < itemNameList.Count)
+        {
+            itemOpen.Find("touchPannel").GetComponent<Button>().onClick.AddListener(() => {
+                StartCoroutine(ItemOpen(itemNameList[indexCount], numList[indexCount], indexCount, itemNameList.Count));
+            });
+        }
+        else
+        {
+            itemOpen.Find("touchPannel").GetComponent<Button>().onClick.AddListener(() => {
+                itemOpen.gameObject.SetActive(false);
+            });
+        }
+      
+    }
+ 
 }

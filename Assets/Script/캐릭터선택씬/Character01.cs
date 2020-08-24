@@ -21,7 +21,7 @@ public class Character01 : MonoBehaviour
     {
         skeletonAnimation = transform.GetChild(0).GetComponent<SkeletonAnimation>();
 
-        SkinChange(SkinKind.body, "body");
+        SkinChange(SkinKind.Body, "Body");
         SkinChange(SkinKind.eye, "eye/eye_01");
         SkinChange(SkinKind.face, "face/face_01");
         SkinChange(SkinKind.haF, "haF/hair_f_01");

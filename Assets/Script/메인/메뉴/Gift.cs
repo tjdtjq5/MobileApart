@@ -12,16 +12,11 @@ public class Gift : MonoBehaviour
 
     public Sprite glodSprite;
     public Sprite crystalSprite;
-    public GameObject alramPurchaseCheck;
-    public Transform alramBoxOpen;
     public Transform moneyUIPannel;
 
     IEnumerator[] tempCoroutine;
     IEnumerator timeCheckCoroutine;
     IEnumerator GiftOpenCoroutine;
-
-    //결과 담을 주머니
-    List<AlramBox> alramBoxList = new List<AlramBox>();
 
     void OnEnable()
     {
@@ -184,7 +179,7 @@ public class Gift : MonoBehaviour
         tempCoroutine[index] = SliderCountCoroutine(giftList[index].gfitPannel.Find("슬라이더배경"), giftList[index].touchMaxCountSecond, 0, index);
         StartCoroutine(tempCoroutine[index]);
 
-        GiftOpen(index, 1, true);
+        GiftOpen(index, 1);
 
         giftList[index].gfitPannel.Find("상자열기").Find("1회 열기").Find("재화").GetComponent<Button>().onClick.RemoveAllListeners();
         giftList[index].gfitPannel.Find("상자열기").Find("1회 열기").Find("재화").GetComponent<Button>().onClick.AddListener(() => PurchaseCheckOpen(index, 1));
@@ -196,47 +191,37 @@ public class Gift : MonoBehaviour
         // 유저가 가진 돈이 더 많거나 같다면 
         if (GameManager.instance.userInfoManager.GetUserMoney(giftList[index].moneyKind) >= giftList[index].price)
         {
-            alramPurchaseCheck.SetActive(true);
-            alramPurchaseCheck.transform.Find("확인").GetComponent<Button>().onClick.RemoveAllListeners();
-            alramPurchaseCheck.transform.Find("확인").GetComponent<Button>().onClick.AddListener(()=> GiftOpen(index, num));
+            OverrideCanvas.instance.PurchaseAlram(() => {
+                // 돈 차감 
+                GameManager.instance.userInfoManager.SetUserMoney(giftList[index].moneyKind, GameManager.instance.userInfoManager.GetUserMoney(giftList[index].moneyKind) - giftList[index].price);
+                MoneySetting();
+                GameManager.instance.userInfoManager.SaveUserMoney();
 
-            alramPurchaseCheck.transform.Find("취소").GetComponent<Button>().onClick.RemoveAllListeners();
-            alramPurchaseCheck.transform.Find("취소").GetComponent<Button>().onClick.AddListener(() => PurchaseCheckClose());
+                GiftOpen(index, num); });
         }
         else // 돈이 없다면
         {
-
+            OverrideCanvas.instance.RedAlram("돈이 부족합니다.");
         }
     }
 
-    public void PurchaseCheckClose()
+    public void GiftOpen(int index , int num)
     {
-        alramPurchaseCheck.SetActive(false);
-    }
-
-    public void GiftOpen(int index , int num, bool isFree = false)
-    {
-        GiftOpenCoroutine = TempGiftOpenCoroutine(index, num, isFree);
+        if (GiftOpenCoroutine != null)
+        {
+            StopCoroutine(GiftOpenCoroutine);
+        }
+        GiftOpenCoroutine = TempGiftOpenCoroutine(index, num);
         StartCoroutine(GiftOpenCoroutine);
     }
 
-    IEnumerator TempGiftOpenCoroutine(int index, int num, bool isFree)
+    IEnumerator TempGiftOpenCoroutine(int index, int num)
     {
-        if (!isFree)
-        {
-            // 돈 차감 
-            GameManager.instance.userInfoManager.SetUserMoney(giftList[index].moneyKind, GameManager.instance.userInfoManager.GetUserMoney(giftList[index].moneyKind) - giftList[index].price);
-            MoneySetting();
-            GameManager.instance.userInfoManager.SaveUserMoney();
-        }
-
-        alramPurchaseCheck.SetActive(false);
         giftList[index].gfitPannel.Find("상자이미지").Find("상자스파인").GetComponent<SkeletonGraphic>().AnimationState.SetAnimation(0, "open", false);
         yield return new WaitForSeconds(1);
 
-        //알람박스 초기화
-        alramBoxList.Clear();
-
+        List<UserSkin> boxItem = new List<UserSkin>();
+        List<int> boxNum = new List<int>();
 
         // 아이템 얻기 
         for (int i = 0; i < num; i++)
@@ -276,30 +261,8 @@ public class Gift : MonoBehaviour
             float randB2 = Random.RandomRange(0, 255) / (float)255;
             Color randomColor02 = new Color(randR2, randG2, randB2, 1);
 
-            ItemKind itemKind = GameManager.instance.itemManager.GetItemInfo(GameManager.instance.databaseManager.Box_DB.GetRowData(count)[1]).itemKind;
-
-            switch (itemKind)
-            {
-                case ItemKind.골드:
-                    break;
-                case ItemKind.크리스탈:
-                    break;
-                case ItemKind.랜덤염색약:
-                    GameManager.instance.userInfoManager.PushColorItem(Color.clear);
-                    break;
-                case ItemKind.염색약:
-                    GameManager.instance.userInfoManager.PushColorItem(randomColor01);
-                    break;
-                case ItemKind.스킨:
-                    GameManager.instance.userInfoManager.PushSkinItem(new UserSkin(GameManager.instance.databaseManager.Box_DB.GetRowData(count)[1], randomColor01, randomColor02));
-                    break;
-                default:
-                    break;
-            }
-
-            alramBoxList.Add(new AlramBox(GameManager.instance.databaseManager.Box_DB.GetRowData(count)[1], GameManager.instance.databaseManager.Box_DB.GetRowData(count)[0], randomColor01, randomColor02));
-
-
+            boxItem.Add(new UserSkin(GameManager.instance.databaseManager.Box_DB.GetRowData(count)[1], randomColor01, randomColor02));
+            boxNum.Add(1);
         }
 
         // 골드와 크리스탈 시행 
@@ -317,8 +280,8 @@ public class Gift : MonoBehaviour
         }
         if (goldCount > 0)
         {
-            alramBoxList.Add(new AlramBox("Gold", "Gold", Color.clear, Color.clear));
-            GameManager.instance.userInfoManager.SetUserMoney(MoneyKind.Gold, GameManager.instance.userInfoManager.GetUserMoney(MoneyKind.Gold) + totalGold);
+            boxItem.Add(new UserSkin("Gold", Color.white, Color.white));
+            boxNum.Add(totalGold);
         }
 
 
@@ -336,104 +299,12 @@ public class Gift : MonoBehaviour
         }
         if (crystalCount > 0)
         {
-            alramBoxList.Add(new AlramBox("Crystal", "Crystal", Color.clear, Color.clear));
-            GameManager.instance.userInfoManager.SetUserMoney(MoneyKind.Crystal, GameManager.instance.userInfoManager.GetUserMoney(MoneyKind.Crystal) + totalCrystal);
+            boxItem.Add(new UserSkin("Crystal", Color.white, Color.white));
+            boxNum.Add(totalCrystal);
         }
 
-        //옷 저장, 돈저장
-        GameManager.instance.userInfoManager.SaveSkinItem();
-        GameManager.instance.userInfoManager.SaveUserMoney();
-
-        alramBoxOpen.gameObject.SetActive(false);
-        alramBoxOpen.gameObject.SetActive(true);
-        alramBoxOpen.Find("배경노란줄").Find("뽑기개수").GetComponent<Text>().text = 1 + " / " + alramBoxList.Count;
-        alramBoxOpen.Find("배경노란줄").Find("아이템이름").GetComponent<Text>().text = GameManager.instance.itemManager.GetItemInfo(alramBoxList[0].itemName).inGameName;
-        for (int i = 0; i < alramBoxOpen.Find("배경노란줄").Find("네모박스").childCount; i++)
-        {
-            Destroy(alramBoxOpen.Find("배경노란줄").Find("네모박스").GetChild(i).gameObject);
-        }
-        GameObject iconObj = Instantiate(GameManager.instance.itemManager.GetItemInfo(alramBoxList[0].itemName).iconObj, alramBoxOpen.Find("배경노란줄").Find("네모박스").position, Quaternion.identity, alramBoxOpen.Find("배경노란줄").Find("네모박스"));
-        for (int i = 0; i < iconObj.transform.childCount; i++)
-        {
-            iconObj.transform.GetChild(i).transform.localScale = new Vector3(.7f, .7f, .7f);
-            if (iconObj.transform.GetChild(i).name == "color_01")
-            {
-                iconObj.transform.GetChild(i).GetComponent<Image>().color = alramBoxList[0].color01;
-            }
-            if (iconObj.transform.GetChild(i).name == "color_02")
-            {
-                iconObj.transform.GetChild(i).GetComponent<Image>().color = alramBoxList[0].color02;
-            }
-        }
-
-        alramBoxCount = 1;
-        alramBoxOpen.Find("touchPannel").GetComponent<Button>().onClick.RemoveAllListeners();
-        alramBoxOpen.Find("touchPannel").GetComponent<Button>().onClick.AddListener(() => AlramBoxOpen(totalGold, totalCrystal));
-
-        StartCoroutine(DontClick(1f));
+        OverrideCanvas.instance.GetItem(boxItem, boxNum);
     }
-
-    int alramBoxCount;
-    void AlramBoxOpen(int gold, int crystal)
-    {
-        if (dontClick)
-        {
-            return;
-        }
-
-        StartCoroutine(DontClick(1f));
-        alramBoxOpen.gameObject.SetActive(false);
-        alramBoxOpen.gameObject.SetActive(true);
-
-        if (alramBoxCount == alramBoxList.Count)
-        {
-            alramBoxOpen.gameObject.SetActive(false);
-            return;
-        }
-
-        alramBoxOpen.Find("배경노란줄").Find("뽑기개수").GetComponent<Text>().text = (alramBoxCount+1) + " / " + alramBoxList.Count;
-        switch (GameManager.instance.itemManager.GetItemInfo(alramBoxList[alramBoxCount].itemName).itemKind)
-        {
-            case ItemKind.골드:
-                alramBoxOpen.Find("배경노란줄").Find("아이템이름").GetComponent<Text>().text = GameManager.instance.itemManager.GetItemInfo(alramBoxList[alramBoxCount].itemName).inGameName +" " +gold;
-                break;
-            case ItemKind.크리스탈:
-                alramBoxOpen.Find("배경노란줄").Find("아이템이름").GetComponent<Text>().text = GameManager.instance.itemManager.GetItemInfo(alramBoxList[alramBoxCount].itemName).inGameName + " " + crystal;
-                break;
-            default:
-                alramBoxOpen.Find("배경노란줄").Find("아이템이름").GetComponent<Text>().text = GameManager.instance.itemManager.GetItemInfo(alramBoxList[alramBoxCount].itemName).inGameName;
-                break;
-        }
-        for (int i = 0; i < alramBoxOpen.Find("배경노란줄").Find("네모박스").childCount; i++)
-        {
-            Destroy(alramBoxOpen.Find("배경노란줄").Find("네모박스").GetChild(i).gameObject);
-        }
-
-        GameObject iconObj = Instantiate(GameManager.instance.itemManager.GetItemInfo(alramBoxList[alramBoxCount].itemName).iconObj, alramBoxOpen.Find("배경노란줄").Find("네모박스").position, Quaternion.identity, alramBoxOpen.Find("배경노란줄").Find("네모박스"));
-        for (int i = 0; i < iconObj.transform.childCount; i++)
-        {
-            iconObj.transform.GetChild(i).transform.localScale = new Vector3(.7f, .7f, .7f);
-            if (iconObj.transform.GetChild(i).name == "color_01")
-            {
-                iconObj.transform.GetChild(i).GetComponent<Image>().color = alramBoxList[alramBoxCount].color01;
-            }
-            if (iconObj.transform.GetChild(i).name == "color_02")
-            {
-                iconObj.transform.GetChild(i).GetComponent<Image>().color = alramBoxList[alramBoxCount].color02;
-            }
-        }
-        alramBoxCount++;
-    }
-
-    bool dontClick = false;
-    IEnumerator DontClick(float time)
-    {
-        dontClick = true;
-        yield return new WaitForSeconds(time);
-        dontClick = false;
-    }
-
-    
 
     WaitForSeconds secondTime = new WaitForSeconds(1f);
     IEnumerator TimeCheckSave(int totalSeconds)
@@ -448,7 +319,7 @@ public class Gift : MonoBehaviour
         }
     }
 
-
+    System.TimeSpan timestamp;
 
     public void Load()
     {
@@ -485,10 +356,6 @@ public class Gift : MonoBehaviour
         }));
     }
 
-
-
-    System.TimeSpan timestamp;
-
     IEnumerator WebChk(System.Action callback)
     {
         UnityWebRequest request = new UnityWebRequest();
@@ -511,22 +378,6 @@ public class Gift : MonoBehaviour
                 callback();
             }
         }
-    }
-}
-
-class AlramBox
-{
-    public string itemName;
-    public string itemCode;
-    public Color color01;
-    public Color color02;
-
-    public AlramBox(string itemName, string itemCode, Color color01, Color color02)
-    {
-        this.itemName = itemName;
-        this.itemCode = itemCode;
-        this.color01 = color01;
-        this.color02 = color02;
     }
 }
 

@@ -21,5 +21,5 @@ public enum SkinKind
     accleg,
     soc,
     sho,
-    body
+    Body
 }

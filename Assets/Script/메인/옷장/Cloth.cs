@@ -219,7 +219,7 @@ public class Cloth : MonoBehaviour
 
     void SkinKindIconBtn(SkinKind skinKind)
     {
-        uiCamera.transform.DOMove(originUiCamera, cameraMoveSpeed).OnComplete(()=> {
+        uiCamera.transform.DOMoveX(originUiCamera.x, cameraMoveSpeed).OnComplete(()=> {
 
             uiCamera.transform.DOMoveX(uiCamMoveX, cameraMoveSpeed);
 

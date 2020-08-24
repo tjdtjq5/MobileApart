@@ -43,14 +43,14 @@ public class UserInfoManager : MonoBehaviour
     //초기 
     public void Initialized()
     {
-        skinItem.Add(new UserSkin("top/clo_top_school", Color.white, Color.white));
+        skinItem.Add(new UserSkin("Body", Color.white, Color.white));
         skinItem.Add(new UserSkin("pan/skirt_01", Color.white, Color.white));
+        skinItem.Add(new UserSkin("top/clo_top_school", Color.white, Color.white));
         skinItem.Add(new UserSkin("eye/eye_01", Color.white, Color.white));
         skinItem.Add(new UserSkin("face/face_01", Color.white, Color.white));
         skinItem.Add(new UserSkin("haF/hair_f_01", Color.white, Color.white));
         skinItem.Add(new UserSkin("haB/hair_b_01", Color.white, Color.white));
         skinItem.Add(new UserSkin("sho/shoes_01", Color.white, Color.white));
-        skinItem.Add(new UserSkin("body", Color.white, Color.white));
 
         for (int i = 0; i < skinItem.Count; i++)
         {
