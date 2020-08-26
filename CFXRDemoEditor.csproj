@@ -63,9 +63,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\Demo Assets\Kino Bloom\Editor\BloomEditor.cs" />
-    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\Demo Assets\Kino Bloom\Editor\BloomGraphDrawer.cs" />
-    <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\Demo Assets\Kino Bloom\Editor\CFXR Demo Editor.asmdef" />
+    <Compile Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX Remaster\Demo Assets\Kino Bloom\Editor\BloomEditor.cs" />
+    <Compile Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX Remaster\Demo Assets\Kino Bloom\Editor\BloomGraphDrawer.cs" />
+    <None Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX Remaster\Demo Assets\Kino Bloom\Editor\CFXR Demo Editor.asmdef" />
     <Reference Include="UnityEditor.UI">
       <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>

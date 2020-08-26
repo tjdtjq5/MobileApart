@@ -123,7 +123,7 @@ public class OverrideCanvas : MonoBehaviour
     List<UserSkin> itemNameList;
     List<int> numList;
 
-    public void GetItem(List<UserSkin> itemNameList, List<int> numList)
+    public void GetItem(List<UserSkin> itemNameList, List<int> numList, System.Action callback = null)
     {
         if (itemNameList.Count != numList.Count)
         {
@@ -134,11 +134,34 @@ public class OverrideCanvas : MonoBehaviour
         this.itemNameList = itemNameList;
         this.numList = numList;
 
+        for (int i = 0; i < itemNameList.Count; i++)
+        {
+            switch (GameManager.instance.itemManager.GetItemInfo(itemNameList[i].skinName).itemKind)
+            {
+                case ItemKind.골드:
+                    GameManager.instance.userInfoManager.SetUserMoney(MoneyKind.Gold, GameManager.instance.userInfoManager.GetUserMoney(MoneyKind.Gold) + numList[i]);
+                    break;
+                case ItemKind.크리스탈:
+                    GameManager.instance.userInfoManager.SetUserMoney(MoneyKind.Crystal, GameManager.instance.userInfoManager.GetUserMoney(MoneyKind.Crystal) + numList[i]);
+                    break;
+                case ItemKind.랜덤염색약:
+                    break;
+                case ItemKind.염색약:
+                    break;
+                case ItemKind.스킨:
+                    GameManager.instance.userInfoManager.PushSkinItem(itemNameList[i]);
+                    break;
+            }
+        }
+
+        GameManager.instance.userInfoManager.SaveSkinItem();
+        GameManager.instance.userInfoManager.SaveUserMoney();
+
         itemOpen.Find("touchPannel").GetComponent<Button>().onClick.RemoveAllListeners();
-        StartCoroutine(ItemOpen(itemNameList[0], numList[0], 0, itemNameList.Count));
+        StartCoroutine(ItemOpen(itemNameList[0], numList[0], 0, itemNameList.Count, callback));
     }
 
-    IEnumerator ItemOpen(UserSkin item, int num, int count, int totalCount)
+    IEnumerator ItemOpen(UserSkin item, int num, int count, int totalCount, System.Action callback = null)
     {
         itemOpen.Find("touchPannel").GetComponent<Button>().onClick.RemoveAllListeners();
 
@@ -178,6 +201,7 @@ public class OverrideCanvas : MonoBehaviour
         if (indexCount < itemNameList.Count)
         {
             itemOpen.Find("touchPannel").GetComponent<Button>().onClick.AddListener(() => {
+       
                 StartCoroutine(ItemOpen(itemNameList[indexCount], numList[indexCount], indexCount, itemNameList.Count));
             });
         }
@@ -185,9 +209,11 @@ public class OverrideCanvas : MonoBehaviour
         {
             itemOpen.Find("touchPannel").GetComponent<Button>().onClick.AddListener(() => {
                 itemOpen.gameObject.SetActive(false);
+                if (callback != null)
+                {
+                    callback();
+                }
             });
         }
-      
     }
- 
 }

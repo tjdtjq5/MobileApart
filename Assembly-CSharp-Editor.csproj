@@ -64,9 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Editor\ReporterEditor.cs" />
-    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Editor\CFX_InspectorHelpEditor.cs" />
-    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX (legacy)\Editor\CFX_SpawnSystemEditor.cs" />
-    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX Easy Editor\Editor\CFXEasyEditor.cs" />
+    <Compile Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX (legacy)\Editor\CFX_InspectorHelpEditor.cs" />
+    <Compile Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX (legacy)\Editor\CFX_SpawnSystemEditor.cs" />
+    <Compile Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX Easy Editor\Editor\CFXEasyEditor.cs" />
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>
@@ -736,6 +736,14 @@
       <Project>{1FB99EEE-B883-80F6-C02A-7A6D946ED826}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="spine-unity.csproj">
+      <Project>{AE495163-5226-83D5-9283-24DEBDEFA99D}</Project>
+      <Name>spine-unity</Name>
+    </ProjectReference>
+    <ProjectReference Include="spine-unity-editor.csproj">
+      <Project>{007215B7-A2B9-B071-D18C-74F165DDEB91}</Project>
+      <Name>spine-unity-editor</Name>
+    </ProjectReference>
     <ProjectReference Include="CFXRRuntime.csproj">
       <Project>{04D8942E-9E5F-A8CA-724C-187BA157BEEE}</Project>
       <Name>CFXRRuntime</Name>
@@ -744,17 +752,9 @@
       <Project>{EF87E9CF-D73C-A76C-8577-E55BB2BA8DF1}</Project>
       <Name>CFXREditor</Name>
     </ProjectReference>
-    <ProjectReference Include="spine-unity.csproj">
-      <Project>{AE495163-5226-83D5-9283-24DEBDEFA99D}</Project>
-      <Name>spine-unity</Name>
-    </ProjectReference>
     <ProjectReference Include="CFXRDemo.csproj">
       <Project>{AD0E4991-802F-4C9F-9069-67BF0D32D4C4}</Project>
       <Name>CFXRDemo</Name>
-    </ProjectReference>
-    <ProjectReference Include="spine-unity-editor.csproj">
-      <Project>{007215B7-A2B9-B071-D18C-74F165DDEB91}</Project>
-      <Name>spine-unity-editor</Name>
     </ProjectReference>
     <ProjectReference Include="CFXRDemoEditor.csproj">
       <Project>{03B2DFAC-B2A2-2D85-0C5A-D7AD7C5BB7A0}</Project>

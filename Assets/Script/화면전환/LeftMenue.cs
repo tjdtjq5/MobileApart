@@ -116,4 +116,9 @@ public class LeftMenue : MonoBehaviour
 
         dragPannel.SetActive(false);
     }
+
+    public void MailOpen()
+    {
+        leftPannel.Find("메일").GetComponent<Mail>().MailOpen();
+    }
 }

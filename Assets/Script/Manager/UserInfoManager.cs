@@ -4,8 +4,6 @@ using BackEnd;
 using LitJson;
 using System.Collections;
 using UnityEngine.Networking;
-using System.Runtime.InteropServices;
-using Spine;
 
 public class UserInfoManager : MonoBehaviour
 {
@@ -15,16 +13,13 @@ public class UserInfoManager : MonoBehaviour
     [HideInInspector] public string currentCharacter;
     [HideInInspector] public string currentAnimation;
 
-    public string[] skinTest;
-
-    private void Update()
+    [ContextMenu("테스트")]
+    public void Test()
     {
-        skinTest = new string[skinItem.Count];
-        for (int i = 0; i < skinTest.Length; i++)
-        {
-            skinTest[i] = skinItem[i].skinName + " : " + skinItem[i].isEqip;
-        }
+    
     }
+
+
 
     private void Start()
     {

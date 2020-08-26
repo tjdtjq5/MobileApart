@@ -63,10 +63,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ExpressionParser.cs" />
-    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_MaterialInspector.cs" />
-    <Compile Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_Styles.cs" />
-    <None Include="Assets\리소스\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR Editor.asmdef" />
+    <Compile Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ExpressionParser.cs" />
+    <Compile Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_MaterialInspector.cs" />
+    <Compile Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_Styles.cs" />
+    <None Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR Editor.asmdef" />
     <Reference Include="UnityEditor.UI">
       <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>

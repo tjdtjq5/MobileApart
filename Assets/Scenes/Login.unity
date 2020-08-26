@@ -1580,7 +1580,6 @@ MonoBehaviour:
   inDate: 
   currentCharacter: 
   currentAnimation: 
-  skinTest: []
 --- !u!114 &1768284092
 MonoBehaviour:
   m_ObjectHideFlags: 0
