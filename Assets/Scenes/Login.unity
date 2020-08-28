@@ -1557,6 +1557,8 @@ GameObject:
   - component: {fileID: 1768284096}
   - component: {fileID: 1768284097}
   - component: {fileID: 1768284098}
+  - component: {fileID: 1768284093}
+  - component: {fileID: 1768284099}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1598,6 +1600,23 @@ MonoBehaviour:
     txt: {fileID: 4900000, guid: 4508c390960b8f5498fe66a580d6b76a, type: 3}
   Item_DB:
     txt: {fileID: 4900000, guid: 75b61555eff09e04cad03234260448fb, type: 3}
+  monster_DB:
+    txt: {fileID: 4900000, guid: 89234e8adc60f4d45b187a775af96f68, type: 3}
+  Weapone_DB:
+    txt: {fileID: 4900000, guid: 8ff9dae427f4329469a26fffc9e0db1e, type: 3}
+--- !u!114 &1768284093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768284090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31412ce6981440a4fac46b2bc2351888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterInfoList: []
 --- !u!114 &1768284094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1613,6 +1632,8 @@ MonoBehaviour:
   userInfoManager: {fileID: 1768284091}
   databaseManager: {fileID: 1768284092}
   itemManager: {fileID: 1768284097}
+  monsterManager: {fileID: 1768284093}
+  weaponeManager: {fileID: 1768284099}
 --- !u!4 &1768284095
 Transform:
   m_ObjectHideFlags: 0
@@ -1634,7 +1655,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1768284090}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2105453930b56ce4980978b7349a40ad, type: 3}
   m_Name: 
@@ -1664,6 +1685,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c10bb1e342783f6429c1fc59a93b5e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1768284099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768284090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dde1e2c2ebd58a4cabb21122dc76a82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponeInfoList: []
 --- !u!1 &1801361945
 GameObject:
   m_ObjectHideFlags: 0

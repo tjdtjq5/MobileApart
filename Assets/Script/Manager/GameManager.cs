@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     public UserInfoManager userInfoManager;
     public DatabaseManager databaseManager;
     public ItemManager itemManager;
+    public MonsterManager monsterManager;
+    public WeaponeManager weaponeManager;
+
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);

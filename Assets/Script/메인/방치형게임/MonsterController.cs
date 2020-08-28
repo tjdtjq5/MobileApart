@@ -9,6 +9,8 @@ public class MonsterController : MonoBehaviour
 
     public Hit hit;
 
+    public Transform info;
+
     private void Start()
     {
         originPos = monster.transform.localPosition;
@@ -36,5 +38,13 @@ public class MonsterController : MonoBehaviour
         });
     }
 
+    void MonsterDead()
+    {
 
+    }
+
+    void MonsterSet(string monsterName)
+    {
+
+    }
 }

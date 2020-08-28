@@ -23,3 +23,13 @@ public enum SkinKind
     sho,
     Body
 }
+
+public enum Properties
+{
+    빛,
+    어둠,
+    물,
+    불,
+    땅,
+    바람
+}

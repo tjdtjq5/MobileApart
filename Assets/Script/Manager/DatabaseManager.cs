@@ -8,6 +8,8 @@ public class DatabaseManager : MonoBehaviour
     public DataBase Box_DB;
     public DataBase DailyShop_DB;
     public DataBase Item_DB;
+    public DataBase monster_DB;
+    public DataBase Weapone_DB;
 }
 
 [Serializable]
@@ -75,7 +77,6 @@ public class DataBase
         string currentTxt = txt.text.Substring(0, txt.text.Length);
         string[] line = currentTxt.Split('\n');
         lineSize = line.Length;
-
         return lineSize;
     }
 }

@@ -4,9 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CharacterMotion : MonoBehaviour, IPointerClickHandler, IDragHandler
+public class CharacterMotion : MonoBehaviour, IPointerClickHandler, IDragHandler,IBeginDragHandler, IEndDragHandler
 {
     public Camera characterCam;
+    public Camera hitCam;
+
+    [Header("파티클")]
+    public GameObject clickParticle;
+    public GameObject trailParticle;
 
     [HideInInspector]
     public bool stopFlag = false;
@@ -45,10 +50,16 @@ public class CharacterMotion : MonoBehaviour, IPointerClickHandler, IDragHandler
             switch (hit.transform.name)
             {
                 case "머리":
+                    clickPos = hitCam.ScreenToWorldPoint(Input.mousePosition);
+                    clickParticle.transform.position = clickPos;
+                    clickParticle.GetComponent<ParticleSystem>().Play();
                     aniCoroutine = AniCoroutine("touch_head", 1f);
                     StartCoroutine(aniCoroutine);
                     break;
                 case "가슴":
+                    clickPos = hitCam.ScreenToWorldPoint(Input.mousePosition);
+                    clickParticle.transform.position = clickPos;
+                    clickParticle.GetComponent<ParticleSystem>().Play();
                     aniCoroutine = AniCoroutine("touch_br", 1f);
                     StartCoroutine(aniCoroutine);
                     break;
@@ -70,6 +81,11 @@ public class CharacterMotion : MonoBehaviour, IPointerClickHandler, IDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+       
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
         if (stopFlag || flag)
             return;
 
@@ -82,8 +98,27 @@ public class CharacterMotion : MonoBehaviour, IPointerClickHandler, IDragHandler
                 case "머리":
                     aniCoroutine = AniCoroutine("stroke_hair1", 1f);
                     StartCoroutine(aniCoroutine);
+
+                    dragFlag = true;
+                    trailParticle.GetComponent<ParticleSystem>().Play();
                     break;
             }
+        }
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        dragFlag = false;
+        trailParticle.GetComponent<ParticleSystem>().Stop();
+    }
+
+    bool dragFlag;
+    void Update()
+    {
+        if (dragFlag)
+        {
+            Vector2 clickPos = hitCam.ScreenToWorldPoint(Input.mousePosition);
+            trailParticle.transform.position = clickPos;
         }
     }
 }
