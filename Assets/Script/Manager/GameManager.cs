@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public UserInfoManager userInfoManager;
     public DatabaseManager databaseManager;
     public ItemManager itemManager;
+    public StageManager stageManager;
     public MonsterManager monsterManager;
     public WeaponeManager weaponeManager;
 

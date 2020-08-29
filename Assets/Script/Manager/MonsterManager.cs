@@ -1,53 +1,40 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterManager : MonoBehaviour
 {
-    public MonsterStage[] monsterInfoList;
+    public Monster[] MonsterInfoList;
 
     private void Start()
     {
-        int dataLength = GameManager.instance.databaseManager.monster_DB.GetLineSize();
-        monsterInfoList = new MonsterStage[dataLength];
-        for (int i = 0; i < dataLength; i++)
+        int length = GameManager.instance.databaseManager.monster_DB.GetLineSize();
+        MonsterInfoList = new Monster[length];
+        for (int i = 0; i < length; i++)
         {
             List<string> dataList = GameManager.instance.databaseManager.monster_DB.GetRowData(i);
-            monsterInfoList[i].stage = int.Parse(dataList[0]);
-            monsterInfoList[i].monsterName = dataList[1];
-            monsterInfoList[i].properties = (Properties)System.Enum.Parse(typeof(Properties), dataList[2]);
-            monsterInfoList[i].hp = int.Parse(dataList[3]);
-            monsterInfoList[i].defence = int.Parse(dataList[4]);
-            monsterInfoList[i].colorItemDropPercent = float.Parse(dataList[5]);
-            monsterInfoList[i].nomalClothChip = float.Parse(dataList[6]);
-            monsterInfoList[i].middleClothChip = float.Parse(dataList[7]);
-            monsterInfoList[i].legendClothChip = float.Parse(dataList[8]);
+            MonsterInfoList[i].monsterName = dataList[0];
+            MonsterInfoList[i].properties = (Properties)System.Enum.Parse(typeof(Properties), dataList[1]);
         }
     }
 
-    public MonsterStage GetMonsterInfo(int stage)
+    public Monster GetMonsterInfo(string monsterName)
     {
-        for (int i = 0; i < monsterInfoList.Length; i++)
+        for (int i = 0; i < MonsterInfoList.Length; i++)
         {
-            if (monsterInfoList[i].stage == stage)
+            if (MonsterInfoList[i].monsterName == monsterName)
             {
-                return monsterInfoList[i];
+                return MonsterInfoList[i];
             }
         }
-        return new MonsterStage();
+        return new Monster();
     }
 }
 
 [System.Serializable]
-public struct MonsterStage
+public struct Monster
 {
-    public int stage;
     public string monsterName;
     public Properties properties;
-    public int hp;
-    public int defence;
-    public float colorItemDropPercent;
-    public float nomalClothChip;
-    public float middleClothChip;
-    public float legendClothChip;
 }

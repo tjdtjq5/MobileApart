@@ -87,6 +87,7 @@
     <Compile Include="Assets\Script\Manager\GameManager.cs" />
     <Compile Include="Assets\Script\Manager\ItemManager.cs" />
     <Compile Include="Assets\Script\Manager\MonsterManager.cs" />
+    <Compile Include="Assets\Script\Manager\StageManager.cs" />
     <Compile Include="Assets\Script\Manager\UserInfoManager.cs" />
     <Compile Include="Assets\Script\Manager\WeaponeManager.cs" />
     <Compile Include="Assets\Script\Test.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Assets\Script\메인\방치형게임\Hit.cs" />
     <Compile Include="Assets\Script\메인\방치형게임\MonsterController.cs" />
     <Compile Include="Assets\Script\메인\방치형게임\Neglect.cs" />
+    <Compile Include="Assets\Script\메인\방치형게임\StageController.cs" />
     <Compile Include="Assets\Script\메인\비밀상점\SecretShop.cs" />
     <Compile Include="Assets\Script\메인\사진찍기\TakePhoto.cs" />
     <Compile Include="Assets\Script\메인\상점\Shop.cs" />
@@ -154,6 +156,7 @@
     <None Include="Assets\Character\bodya.atlas.txt" />
     <None Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX (legacy)\CartoonFX Readme.txt" />
     <None Include="Assets\리소스\선물상자\timebox.atlas.txt" />
+    <None Include="Assets\Script\TxT\스테이지_DB.txt" />
     <None Include="Assets\Script\TxT\몬스터_DB.txt" />
     <None Include="Assets\Material\additive.shader" />
     <None Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX Remaster\CFXR Prefabs\Texts\_Make your own text effect.txt" />

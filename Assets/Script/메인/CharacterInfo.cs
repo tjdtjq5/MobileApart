@@ -67,7 +67,21 @@ public class CharacterInfo : MonoBehaviour
             return bad_icon;
         }
     }
-    public void PointDownNeedIcon()
+    
+    public void NeedOnClick()
+    {
+        GameObject needUI = this.transform.GetChild(0).Find("욕구UI").gameObject;
+        if (needUI.activeSelf)
+        {
+            NeedClose();
+        }
+        else
+        {
+            NeedOpen();
+        }
+    }
+
+    public void NeedOpen()
     {
         GameObject needUI = this.transform.GetChild(0).Find("욕구UI").gameObject;
         needUI.SetActive(true);
@@ -81,12 +95,25 @@ public class CharacterInfo : MonoBehaviour
         needUI.transform.Find("활력").Find("흑").Find("수치").GetComponent<Text>().text = GameManager.instance.userInfoManager.GetUserNeed(NeedKind.활력).ToString();
         needUI.transform.Find("활력").Find("흑").Find("이미지").GetComponent<Image>().sprite = GetNeedIcon(GameManager.instance.userInfoManager.GetUserNeed(NeedKind.활력));
     }
-    public void PointUpNeedIcon()
+
+    public void NeedClose()
     {
         GameObject needUI = this.transform.GetChild(0).Find("욕구UI").gameObject;
         needUI.SetActive(false);
     }
 
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameObject needUI = this.transform.GetChild(0).Find("욕구UI").gameObject;
+            if (needUI.activeSelf)
+            {
+                NeedClose();
+            }
+        }
+    }
 }
 
 public enum NeedKind
