@@ -107,6 +107,7 @@
     <Compile Include="Assets\Script\메인\방치형게임\MonsterController.cs" />
     <Compile Include="Assets\Script\메인\방치형게임\Neglect.cs" />
     <Compile Include="Assets\Script\메인\방치형게임\StageController.cs" />
+    <Compile Include="Assets\Script\메인\방치형게임\WeaponController.cs" />
     <Compile Include="Assets\Script\메인\비밀상점\SecretShop.cs" />
     <Compile Include="Assets\Script\메인\사진찍기\TakePhoto.cs" />
     <Compile Include="Assets\Script\메인\상점\Shop.cs" />

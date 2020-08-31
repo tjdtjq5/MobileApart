@@ -13,6 +13,7 @@ public class ItemManager : MonoBehaviour
         public string itemCode;
         public string inGameName;
         public ItemKind itemKind;
+        public string characterName;
         public GameObject iconObj;
     }
 
@@ -27,6 +28,7 @@ public class ItemManager : MonoBehaviour
             itemList[i].itemCode = dataList[0];
             itemList[i].inGameName = dataList[2];
             itemList[i].itemKind = (ItemKind)System.Enum.Parse(typeof(ItemKind) ,dataList[3]);
+            itemList[i].characterName = dataList[4];
             itemList[i].iconObj = Resources.Load<GameObject>(System.IO.Path.Combine("스킨Obj", itemList[i].itemCode));
         }
     }

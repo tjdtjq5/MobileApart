@@ -22,25 +22,26 @@ public class MonsterController : MonoBehaviour
     IEnumerator HitCoroutine;
     int monsterCount = 0;
 
+    [Header("코인")]
+    public GameObject coinParticle;
+    [Header("무기")]
+    public WeaponController weaponController;
+
     private void Start()
     {
-        Initialize(GameManager.instance.stageManager.GetStageInfo("스테이지1").monsterName, GameManager.instance.stageManager.GetStageInfo("스테이지1").hp, GameManager.instance.stageManager.GetStageInfo("스테이지1").defence);
-          
+        originPos = monster.transform.localPosition;
+        //이동
+        MoveUp();
     }
 
-
     //초기 셋팅 
-    private void Initialize(string[] monsterList, int hp, int def)
+    public void Initialize(string[] monsterList, int hp, int def)
     {
         //정보 저장 
         this.monsterList = monsterList;
         originHp = hp;
         currentHp = originHp;
         defence = def;
-
-        //이동
-        originPos = monster.transform.localPosition;
-        MoveUp();
 
         //정보
         HpSetting(currentHp);
@@ -97,9 +98,18 @@ public class MonsterController : MonoBehaviour
     {
         hit.SlashBlue01();
         monster.DOScale(.75f,0.05f).OnComplete(()=> {
-            currentHp -= Atk();
-            HpSetting(currentHp);
+            coinParticle.transform.localPosition = monsterImg.transform.localPosition;
+            coinParticle.GetComponent<ParticleSystem>().Play();
+            //coinParticle.GetComponent<ParticleSystem>().emission.burstCount = Atk();
 
+            int atk = Atk();
+            if (currentHp - atk <= 0)
+            {
+                atk = currentHp;
+            }
+            currentHp -= atk;
+            HpSetting(currentHp);
+            weaponController.GetWeaponCoin(atk);
             if (currentHp <= 0)
             {
                 MonsterDead();
@@ -110,7 +120,15 @@ public class MonsterController : MonoBehaviour
 
     int Atk()
     {
-        int atk = 10;
+        string weaponName = GameManager.instance.userInfoManager.userWeapon.weaponName;
+        int weaponAtk = GameManager.instance.weaponeManager.GetWeaponInfo(weaponName).atk;
+        int enhance = GameManager.instance.userInfoManager.userWeapon.enhance;
+        int enhanceAtk = GameManager.instance.weaponeManager.GetWeaponInfo(weaponName).enhanceAtk;
+        int num = GameManager.instance.userInfoManager.userWeapon.num;
+        int numAtk = GameManager.instance.weaponeManager.GetWeaponInfo(weaponName).getForAtk;
+
+        int atk = weaponAtk + (enhance * enhanceAtk) + (num * numAtk);
+
         atk -= defence;
         if (atk < 0)
         {

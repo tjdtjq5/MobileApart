@@ -19,11 +19,14 @@ public class UserInfoManager : MonoBehaviour
     
     }
 
-
-
     private void Start()
     {
-        PullCurrentAni();
+        PublicInitialized();
+    }
+
+    public void PublicInitialized()
+    {
+        currentAnimation = "idle_01";
 
         PushColorItem(Color.clear);
         PushColorItem(Color.clear);
@@ -33,10 +36,14 @@ public class UserInfoManager : MonoBehaviour
         PushColorItem(Color.black);
         PushColorItem(Color.yellow);
         PushColorItem(Color.grey);
+
+        PushWeapon("단검");
+
+        ChangeStage("스테이지01");
     }
 
     //초기 
-    public void Initialized()
+    public void Character01Initialized()
     {
         skinItem.Add(new UserSkin("Body", Color.white, Color.white));
         skinItem.Add(new UserSkin("pan/skirt_01", Color.white, Color.white));
@@ -47,10 +54,15 @@ public class UserInfoManager : MonoBehaviour
         skinItem.Add(new UserSkin("haB/hair_b_01", Color.white, Color.white));
         skinItem.Add(new UserSkin("sho/shoes_01", Color.white, Color.white));
 
-        for (int i = 0; i < skinItem.Count; i++)
-        {
-            PushUserEqip(skinItem[i]);
-        }
+        PushUserEqip(new UserSkin("Body", Color.white, Color.white));
+        PushUserEqip(new UserSkin("pan/skirt_01", Color.white, Color.white));
+        PushUserEqip(new UserSkin("top/clo_top_school", Color.white, Color.white));
+        PushUserEqip(new UserSkin("eye/eye_01", Color.white, Color.white));
+        PushUserEqip(new UserSkin("face/face_01", Color.white, Color.white));
+        PushUserEqip(new UserSkin("haF/hair_f_01", Color.white, Color.white));
+        PushUserEqip(new UserSkin("haB/hair_b_01", Color.white, Color.white));
+        PushUserEqip(new UserSkin("sho/shoes_01", Color.white, Color.white));
+
 
         SetUserNeed(100, 100, 100, 100);
     }
@@ -134,7 +146,7 @@ public class UserInfoManager : MonoBehaviour
         return tempUserSkin;
     }
 
-    public List<int> GetSkinItemIndexList(SkinKind skinKind)
+    public List<int> GetSkinItemIndexList(SkinKind skinKind, string characterName)
     {
         List<int> tempUserSkin = new List<int>();
         for (int i = 0; i < skinItem.Count; i++)
@@ -142,7 +154,10 @@ public class UserInfoManager : MonoBehaviour
             SkinKind userEqipskinKind = (SkinKind)System.Enum.Parse(typeof(SkinKind), skinItem[i].skinName.Split('/')[0]);
             if (userEqipskinKind == skinKind)
             {
-                tempUserSkin.Add(i);
+                if (GameManager.instance.itemManager.GetItemInfo(skinItem[i].skinName).characterName == characterName)
+                {
+                    tempUserSkin.Add(i);
+                }
             }
         }
         return tempUserSkin;
@@ -252,9 +267,9 @@ public class UserInfoManager : MonoBehaviour
         return tempUserSkin;
     }
 
-    public void PullUserEqip(SkinKind skinKind)
+    public void PullUserEqip(SkinKind skinKind, string characterName)
     {
-        List<int> list = GetSkinItemIndexList(skinKind);
+        List<int> list = GetSkinItemIndexList(skinKind, characterName);
 
         for (int i = 0; i < list.Count; i++)
         {
@@ -638,17 +653,144 @@ public class UserInfoManager : MonoBehaviour
         }
     }
 
-    public void PullCurrentAni()
+    // 무기 코인 
+    int weaponCoin;
+    public void SetWeaponCoin(int weaponCoin)
     {
-        if (!PlayerPrefs.HasKey("CurrentAni"))
+        this.weaponCoin = weaponCoin;
+    }
+    public int GetWeaponCoin()
+    {
+        return weaponCoin;
+    }
+    public void SaveWeaponCoin(System.Action action = null)
+    {
+        Param weaponCoinParam = new Param();
+        weaponCoinParam.Add("WeaponCoin", GetWeaponCoin());
+
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
         {
-            PlayerPrefs.SetString("CurrentAni", "idle_01");
-            currentAnimation = "idle_01";
-            return;
-        }
-        currentAnimation = PlayerPrefs.GetString("CurrentAni");
+            // 이후 처리
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
+            string dataIndate = jsonData["inDate"]["S"].ToString();
+
+            BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "UserInfo", dataIndate, weaponCoinParam, (callback2) =>
+            {
+                // 이후 처리
+                if (action != null)
+                {
+                    action();
+                }
+            });
+        });
+    }
+    public void LoadWeaponCoin(System.Action action = null)
+    {
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
+        {
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
+            if (jsonData.Keys.Contains("WeaponCoin"))
+            {
+                int weaponCoin = int.Parse(jsonData["WeaponCoin"][0].ToString());
+                SetWeaponCoin(weaponCoin);
+            }
+
+            if (action != null)
+            {
+                action();
+            }
+        });
     }
 
+    //무기 정보 
+    public UserWeapon userWeapon = new UserWeapon();
+    void SetUserWeapon(string weaponName, int enhance, int num)
+    {
+        userWeapon.weaponName = weaponName;
+        userWeapon.enhance = enhance;
+        userWeapon.num = num;
+    }
+    public void WeaponEnhance()
+    {
+        userWeapon.enhance++;
+    }
+    public void PushWeapon(string weaponName)
+    {
+        if (userWeapon.weaponName == weaponName)
+        {
+            userWeapon.num++;
+        }
+        else
+        {
+            SetUserWeapon(weaponName, 0, 1);
+        }
+    }
+    public void SaveWeapon(System.Action action = null)
+    {
+        Param weaponParam = new Param();
+        weaponParam.Add("WeaponName", userWeapon.weaponName);
+        weaponParam.Add("WeaponEnhance", userWeapon.enhance);
+        weaponParam.Add("WeaponNum", userWeapon.num);
+
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
+        {
+            // 이후 처리
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
+            string dataIndate = jsonData["inDate"]["S"].ToString();
+
+            BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "UserInfo", dataIndate, weaponParam, (callback2) =>
+            {
+                Debug.Log("성공했습니다");
+
+                // 이후 처리
+                if (action != null)
+                {
+                    action();
+                }
+            });
+        });
+    }
+    public void LoadWeapon(System.Action action = null)
+    {
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
+        {
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
+            if (jsonData.Keys.Contains("WeaponName"))
+            {
+                string weaponName = jsonData["WeaponName"][0].ToString();
+                userWeapon.weaponName = weaponName;
+            }
+            if (jsonData.Keys.Contains("WeaponEnhance"))
+            {
+                int enhance = int.Parse(jsonData["WeaponEnhance"][0].ToString());
+                userWeapon.enhance = enhance;
+            }
+            if (jsonData.Keys.Contains("WeaponNum"))
+            {
+                int num = int.Parse(jsonData["WeaponNum"][0].ToString());
+                userWeapon.num = num;
+            }
+
+            if (action != null)
+            {
+                action();
+            }
+        });
+    }
+
+    // 스테이지 정보 
+    public UserStage userStage = new UserStage();
+
+    void SetUserStage(string stageName , int hp)
+    {
+        userStage.stageName = stageName;
+        userStage.hp = hp;
+    }
+
+    public void ChangeStage(string stageName)
+    {
+        SetUserStage(stageName, GameManager.instance.stageManager.GetStageInfo(stageName).hp);
+    }
 }
 
 public class UserSkin
@@ -716,3 +858,16 @@ public class Need
     public int cleanliness;
     public int vitality;
 } 
+
+public class UserWeapon
+{
+    public string weaponName;
+    public int enhance;
+    public int num;
+}
+
+public class UserStage
+{
+    public string stageName;
+    public int hp;
+}

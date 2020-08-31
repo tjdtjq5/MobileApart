@@ -52,7 +52,7 @@ public class Character01 : MonoBehaviour
                     JsonData jsonData2 = callback3.GetReturnValuetoJSON()["rows"][0];
                     if (jsonData2.Keys.Contains("Caracter01" + "Eqip"))
                     {
-                        GameManager.instance.userInfoManager.LoadUserEqip("Caracter01", ()=> {
+                        GameManager.instance.userInfoManager.LoadUserEqip("Caracter01", () => {
                             GameManager.instance.userInfoManager.LoadUserNeed("Caracter01", () => {
                                 SceneManager.LoadScene("Loding");
                             });
@@ -61,9 +61,13 @@ public class Character01 : MonoBehaviour
                     else
                     {
                         // 정보 로드 : 캐릭터 셀렉을 선택하지 않고 나갔던 사람 + 처음 
-                        GameManager.instance.userInfoManager.SaveUserEqip("Caracter01", () => {
-                            GameManager.instance.userInfoManager.SaveUserNeed("Caracter01", () => {
-                                SceneManager.LoadScene("Loding");
+                        GameManager.instance.userInfoManager.Character01Initialized();
+
+                        GameManager.instance.userInfoManager.SaveSkinItem(() => {
+                            GameManager.instance.userInfoManager.SaveUserEqip("Caracter01", () => {
+                                GameManager.instance.userInfoManager.SaveUserNeed("Caracter01", () => {
+                                    SceneManager.LoadScene("Loding");
+                                });
                             });
                         });
                     }
