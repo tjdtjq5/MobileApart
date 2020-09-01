@@ -116,40 +116,34 @@ public class BackEndAuthentication : MonoBehaviour
                 {
                     oderInfo.text = "기존 유저의 스킨 정보 받아오는 중 ...";
                     GameManager.instance.userInfoManager.LoadSkinItem(() => {
-                        oderInfo.text = "방치형 정보 (코인) 받아오는중 ...";
-                        GameManager.instance.userInfoManager.LoadWeaponCoin(() => {
-                            oderInfo.text = "방치형 정보 (무기) 받아오는중 ...";
-                            GameManager.instance.userInfoManager.LoadWeapon(() => {
-                                oderInfo.text = "현재 캐릭터 정보 받아오는중 ...";
-                                BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback2) =>
-                                {
-                                    // 이후 처리
-                                    JsonData jsonData = callback2.GetReturnValuetoJSON()["rows"][0];
-                                    if (jsonData.Keys.Contains("CurrentCharacter")) // CurrentCharacter 정보가 존재 한다면 
-                                    {
-                                        //현재 캐릭터 불러오기
-                                        string temp = jsonData["inDate"]["S"].ToString();
-                                        string currentCharacter = jsonData["CurrentCharacter"][0].ToString();
-                                        GameManager.instance.userInfoManager.currentCharacter = currentCharacter;
+                        oderInfo.text = "현재 캐릭터 정보 받아오는중 ...";
+                        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback2) =>
+                        {
+                            // 이후 처리
+                            JsonData jsonData = callback2.GetReturnValuetoJSON()["rows"][0];
+                            if (jsonData.Keys.Contains("CurrentCharacter")) // CurrentCharacter 정보가 존재 한다면 
+                            {
+                                //현재 캐릭터 불러오기
+                                string temp = jsonData["inDate"]["S"].ToString();
+                                string currentCharacter = jsonData["CurrentCharacter"][0].ToString();
+                                GameManager.instance.userInfoManager.currentCharacter = currentCharacter;
 
-                                        oderInfo.text = "캐릭터의 장비정보 로드 ...";
-                                        // 그 캐릭터의 장비정보 로드 
-                                        GameManager.instance.userInfoManager.LoadUserEqip(currentCharacter, () => {
-                                            oderInfo.text = "캐릭터의 욕구정보 로드 ...";
-                                            // 그 캐릭터의 욕구 로드 
-                                            GameManager.instance.userInfoManager.LoadUserNeed(currentCharacter, () =>
-                                            {
-                                                Debug.Log("성공");
-                                                SceneManager.LoadScene("Loding");
-                                            });
-                                        });
-                                    }
-                                    else
+                                oderInfo.text = "캐릭터의 장비정보 로드 ...";
+                                // 그 캐릭터의 장비정보 로드 
+                                GameManager.instance.userInfoManager.LoadUserEqip(currentCharacter, () => {
+                                    oderInfo.text = "캐릭터의 욕구정보 로드 ...";
+                                    // 그 캐릭터의 욕구 로드 
+                                    GameManager.instance.userInfoManager.LoadUserNeed(currentCharacter, () =>
                                     {
-                                        SceneManager.LoadScene("CaracterSelect");// CurrentCharacter 정보가 없다면 
-                                    }
+                                        Debug.Log("성공");
+                                        SceneManager.LoadScene("Loding");
+                                    });
                                 });
-                            });
+                            }
+                            else
+                            {
+                                SceneManager.LoadScene("CaracterSelect");// CurrentCharacter 정보가 없다면 
+                            }
                         });
                     });
                 });

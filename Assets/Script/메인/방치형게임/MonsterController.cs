@@ -22,8 +22,9 @@ public class MonsterController : MonoBehaviour
     IEnumerator HitCoroutine;
     int monsterCount = 0;
 
-    [Header("코인")]
+    [Header("파티클")]
     public GameObject coinParticle;
+    public GameObject explosionParticle;
     [Header("무기")]
     public WeaponController weaponController;
 
@@ -35,17 +36,26 @@ public class MonsterController : MonoBehaviour
     }
 
     //초기 셋팅 
-    public void Initialize(string[] monsterList, int hp, int def)
+    public void Initialize(string tempStageName)
     {
+        string stageName = GameManager.instance.userInfoManager.userStage.stageName;
+        int currentHp = GameManager.instance.userInfoManager.userStage.hp;
+
+        if (tempStageName != stageName)
+        {
+            stageName = tempStageName;
+            currentHp = GameManager.instance.stageManager.GetStageInfo(stageName).hp;
+        }
+
         //정보 저장 
-        this.monsterList = monsterList;
-        originHp = hp;
-        currentHp = originHp;
-        defence = def;
+        this.monsterList = GameManager.instance.stageManager.GetStageInfo(stageName).monsterName;
+        originHp = GameManager.instance.stageManager.GetStageInfo(stageName).hp;
+        this.currentHp = currentHp;
+        defence = GameManager.instance.stageManager.GetStageInfo(stageName).defence;
 
         //정보
         HpSetting(currentHp);
-        info.Find("몬스터 방어력").GetComponent<Text>().text = "몬스터 방어력 " + def;
+        info.Find("몬스터 방어력").GetComponent<Text>().text = "몬스터 방어력 " + defence;
 
         MonsterSetting(0);
         monsterCount = 0;
@@ -67,7 +77,6 @@ public class MonsterController : MonoBehaviour
         monsterImg.SetNativeSize();
 
         // 정보 셋팅 
-        currentHp = originHp;
         HpSetting(currentHp);
         info.Find("몬스터속성").GetComponent<Text>().text = "[" + GameManager.instance.monsterManager.GetMonsterInfo(monsterName).properties.ToString() + "]";
         info.Find("몬스터이름").GetComponent<Text>().text = "[" + monsterName + "]";
@@ -85,6 +94,8 @@ public class MonsterController : MonoBehaviour
     {
         info.Find("몬스터체력").GetComponent<Text>().text = currentHp + "HP";
         info.Find("피통 이미지").Find("fore").GetComponent<Image>().fillAmount = currentHp / (float)originHp;
+
+        GameManager.instance.userInfoManager.userStage.hp = currentHp;
     }
     IEnumerator TempHitCoroutine()
     {
@@ -110,8 +121,12 @@ public class MonsterController : MonoBehaviour
             currentHp -= atk;
             HpSetting(currentHp);
             weaponController.GetWeaponCoin(atk);
+
+            GameManager.instance.userInfoManager.SaveStage();
+
             if (currentHp <= 0)
             {
+                StopCoroutine(HitCoroutine);
                 MonsterDead();
             }
 
@@ -153,8 +168,14 @@ public class MonsterController : MonoBehaviour
 
     void MonsterDead()
     {
-        monsterCount++;
-        MonsterSetting(monsterCount);
-    }
+        explosionParticle.transform.localPosition = monsterImg.transform.localPosition;
+        explosionParticle.GetComponent<ParticleSystem>().Play();
 
+        monster.GetComponent<Image>().DOFade(0, 0.2f).OnComplete(() => {
+            monsterCount++;
+            currentHp = originHp;
+            MonsterSetting(monsterCount);
+            monster.GetComponent<Image>().DOFade(1, 0.2f);
+        });
+    }
 }

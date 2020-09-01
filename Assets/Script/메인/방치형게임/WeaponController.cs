@@ -14,8 +14,7 @@ public class WeaponController : MonoBehaviour
 
     private void Start()
     {
-        WeaponCoinUI();
-        WeaponUI();
+        GameManager.instance.userInfoManager.LoadWeapon(()=> { WeaponUI(); GameManager.instance.userInfoManager.LoadWeaponCoin(() => {  WeaponCoinUI(); }); });
     }
     void WeaponCoinUI()
     {

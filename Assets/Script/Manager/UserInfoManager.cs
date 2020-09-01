@@ -39,7 +39,7 @@ public class UserInfoManager : MonoBehaviour
 
         PushWeapon("단검");
 
-        ChangeStage("스테이지01");
+        ChangeStage("스테이지1");
     }
 
     //초기 
@@ -546,7 +546,6 @@ public class UserInfoManager : MonoBehaviour
         }
     }
 
-
     public int GetUserNeed(NeedKind needKind)
     {
         switch (needKind)
@@ -694,9 +693,10 @@ public class UserInfoManager : MonoBehaviour
                 int weaponCoin = int.Parse(jsonData["WeaponCoin"][0].ToString());
                 SetWeaponCoin(weaponCoin);
             }
-
+            Debug.Log("fdfdfdfdf");
             if (action != null)
             {
+                Debug.Log("fdfdfdfdf2");
                 action();
             }
         });
@@ -780,16 +780,58 @@ public class UserInfoManager : MonoBehaviour
 
     // 스테이지 정보 
     public UserStage userStage = new UserStage();
-
     void SetUserStage(string stageName , int hp)
     {
         userStage.stageName = stageName;
         userStage.hp = hp;
     }
-
     public void ChangeStage(string stageName)
     {
         SetUserStage(stageName, GameManager.instance.stageManager.GetStageInfo(stageName).hp);
+    }
+    public void SaveStage(System.Action action = null)
+    {
+        Param stageParam = new Param();
+        stageParam.Add("StageName", userStage.stageName);
+        stageParam.Add("StageHp", userStage.hp);
+
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
+        {
+            // 이후 처리
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
+            string dataIndate = jsonData["inDate"]["S"].ToString();
+
+            BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "UserInfo", dataIndate, stageParam, (callback2) =>
+            {
+                // 이후 처리
+                if (action != null)
+                {
+                    action();
+                }
+            });
+        });
+    }
+    public void LoadStage(System.Action action = null)
+    {
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
+        {
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
+            if (jsonData.Keys.Contains("StageName"))
+            {
+                string stageName = jsonData["StageName"][0].ToString();
+                userStage.stageName = stageName;
+            }
+            if (jsonData.Keys.Contains("StageHp"))
+            {
+                int stageHp = int.Parse(jsonData["StageHp"][0].ToString());
+                userStage.hp = stageHp;
+            }
+
+            if (action != null)
+            {
+                action();
+            }
+        });
     }
 }
 

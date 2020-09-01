@@ -20,13 +20,13 @@ public class StageController : MonoBehaviour
     //시작함수  
     void StartFunction()
     {
-        string firstStageName = GameManager.instance.stageManager.stageInfoList[0].stageName;
-        StageSet(firstStageName);
+        GameManager.instance.userInfoManager.LoadStage(()=> { StageSet(GameManager.instance.userInfoManager.userStage.stageName); });
     }
 
     void StageSet(string stageName)
     {
-        monsterController.Initialize(GameManager.instance.stageManager.GetStageInfo(stageName).monsterName, GameManager.instance.stageManager.GetStageInfo(stageName).hp, GameManager.instance.stageManager.GetStageInfo(stageName).defence);
+        monsterController.Initialize(stageName);
+        GameManager.instance.userInfoManager.SaveStage();
     }
 
     public void StageSelectOpen()
