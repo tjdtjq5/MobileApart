@@ -45,6 +45,11 @@ public class Cook : MonoBehaviour
     [Header("다이아")]
     public Image[] dia;
 
+    [Header("파티클")]
+    public ParticleSystem bad;
+    public ParticleSystem good;
+    public ParticleSystem best;
+
     int gameIndex;
     int score;
 
@@ -277,16 +282,19 @@ public class Cook : MonoBehaviour
         int tempScore = 0;
         if (slider.Find("foreground").GetComponent<Image>().fillAmount != 0)
         {
-            if (slider.Find("foreground").GetComponent<Image>().fillAmount <= 0.8) // 베스트
+            if (slider.Find("foreground").GetComponent<Image>().fillAmount <= 0.8 && slider.Find("foreground").GetComponent<Image>().fillAmount > 0.7) // 베스트
             {
+                best.Play();
                 tempScore = 7;
             }
-            if (slider.Find("foreground").GetComponent<Image>().fillAmount <= 0.7) // 노멀
+            if (slider.Find("foreground").GetComponent<Image>().fillAmount <= 0.7 && slider.Find("foreground").GetComponent<Image>().fillAmount > 0.3) // 노멀
             {
+                good.Play();
                 tempScore = 5;
             }
-            if (slider.Find("foreground").GetComponent<Image>().fillAmount <= 0.3) // 워스트
+            if (slider.Find("foreground").GetComponent<Image>().fillAmount <= 0.3 || slider.Find("foreground").GetComponent<Image>().fillAmount > 0.8) // 워스트
             {
+                bad.Play();
                 tempScore = 3;
             }
             score += tempScore;

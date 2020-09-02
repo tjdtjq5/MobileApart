@@ -40,6 +40,10 @@ public class Bath : MonoBehaviour
     [Header("꽃잎구매패널")]
     public GameObject purchasePannel;
 
+    [Header("꽃잎")]
+    public GameObject lavender;
+    public GameObject rose;
+
     float bath02Time;
 
     public void BathOpen()
@@ -86,6 +90,10 @@ public class Bath : MonoBehaviour
 
         gage.GetChild(0).GetComponent<Image>().fillAmount = 0;
         gagePercent = 0;
+
+        int needC = GameManager.instance.userInfoManager.GetUserNeed(NeedKind.청결함);
+        cleanliness.GetChild(1).GetChild(2).GetComponent<Image>().sprite = GetNeedIcon(needC);
+        cleanliness.GetChild(1).GetChild(0).GetComponent<Text>().text = needC.ToString();
 
         gameEndFlag = false;
     }
@@ -154,7 +162,7 @@ public class Bath : MonoBehaviour
             Vector2 touchPos = characterCam.GetComponent<Camera>().ScreenToWorldPoint(mousePos);
             touchParticleWater.transform.position = new Vector3(touchPos.x, touchPos.y, touchParticleWater.transform.position.z);
 
-            if (Mathf.Abs(character.position.x + 4  - touchPos.x) < 1.3f)
+            if (Mathf.Abs(character.position.x  - touchPos.x) < 1.3f)
             {
                 if (aniName != "bath2")
                 {
@@ -179,7 +187,7 @@ public class Bath : MonoBehaviour
             }
         }
       
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonUp(0))
         {
             Vector2 mousePos = Input.mousePosition;
             Vector2 touchPos = characterCam.GetComponent<Camera>().ScreenToWorldPoint(mousePos);
@@ -340,6 +348,9 @@ public class Bath : MonoBehaviour
     {
         purchasePannel.SetActive(false);
         characterCam.GetComponent<MobileBlur>().enabled = false;
+
+        lavender.SetActive(false);
+        rose.SetActive(false);
     }
 
     void High()
@@ -357,6 +368,9 @@ public class Bath : MonoBehaviour
         GameManager.instance.userInfoManager.SaveUserMoney();
 
         StartCoroutine(CleanlinessUp(GameManager.instance.userInfoManager.GetUserNeed(NeedKind.청결함) + 20));
+
+        lavender.SetActive(true);
+        rose.SetActive(false);
     }
 
     void Rare()
@@ -375,5 +389,8 @@ public class Bath : MonoBehaviour
 
         StartCoroutine(CleanlinessUp(100));
         GameEnd();
+
+        lavender.SetActive(false);
+        rose.SetActive(true);
     }
 }

@@ -693,10 +693,9 @@ public class UserInfoManager : MonoBehaviour
                 int weaponCoin = int.Parse(jsonData["WeaponCoin"][0].ToString());
                 SetWeaponCoin(weaponCoin);
             }
-            Debug.Log("fdfdfdfdf");
             if (action != null)
             {
-                Debug.Log("fdfdfdfdf2");
+
                 action();
             }
         });

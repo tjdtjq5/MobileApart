@@ -21,7 +21,7 @@ public class Neglect : MonoBehaviour
 
     public void NeglectClose()
     {
-        NeglectTransform.localPosition = new Vector2(2000, 2000);
+        NeglectTransform.localPosition = new Vector2(-305, 1303);
 
         for (int i = 0; i < setOff.Length; i++)
         {

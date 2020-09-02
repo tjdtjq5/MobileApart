@@ -67,6 +67,7 @@ public class MonsterController : MonoBehaviour
         {
             Debug.Log("몬스터 길이 초과 디버그");
             index = 0;
+            monsterCount = 0;
         }
 
         //몬스터 이름 
