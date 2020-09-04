@@ -246,7 +246,6 @@ public class UserInfoManager : MonoBehaviour
                 skinItem[i].SetEqip(false);
             }
         }
-
         skinItem[index].SetEqip(true);
     }
 
@@ -285,8 +284,25 @@ public class UserInfoManager : MonoBehaviour
         return tempUserSkin;
     }
 
-    public void PullUserEqip(SkinKind skinKind, string characterName)
+    public void PullUserEqip(SkinKind skinKind)
     {
+        if (skinKind == SkinKind.unde)
+        {
+            if (GetUserEqip(SkinKind.set).Count == 0)
+            {
+                OverrideCanvas.instance.RedAlram("세트 스킨을 장착해야 합니다.");
+                return;
+            }
+        }
+        if (skinKind == SkinKind.set)
+        {
+            if (GetUserEqip(SkinKind.unde).Count == 0)
+            {
+                OverrideCanvas.instance.RedAlram("속옷 스킨을 장착해야 합니다.");
+                return;
+            }
+        }
+
         List<int> list = GetSkinItemIndexList(skinKind);
 
         for (int i = 0; i < list.Count; i++)

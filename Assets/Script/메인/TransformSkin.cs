@@ -74,6 +74,25 @@ public class TransformSkin : MonoBehaviour
                 string skinName = GameManager.instance.userInfoManager.skinItem[i].skinName;
                 Color color_01 = GameManager.instance.userInfoManager.skinItem[i].color_01;
                 Color color_02 = GameManager.instance.userInfoManager.skinItem[i].color_02;
+
+                /*
+                bool notEqipFlag = false;
+                SkinKind tempSkinkind = (SkinKind)System.Enum.Parse(typeof(SkinKind), skinName.Split('/')[0]);
+                if (tempSkinkind == SkinKind.unde)
+                {
+                    if (GameManager.instance.userInfoManager.GetUserEqip(SkinKind.set).Count != 0)
+                    {
+                        notEqipFlag = true;
+                    }
+                }
+
+                if (!notEqipFlag)
+                {
+                    SkinChange(skinName);
+                    SetColor(skinName, color_01, 1);
+                    SetColor(skinName, color_02, 2);
+                } */
+
                 SkinChange(skinName);
                 SetColor(skinName, color_01, 1);
                 SetColor(skinName, color_02, 2);
@@ -267,7 +286,7 @@ public class TransformSkin : MonoBehaviour
         }
     }
 
-    public void SkinChange(string skinName )
+    public void SkinChange(string skinName)
     {
         skeletonAnimation.skeleton.Skin = null;
         skeletonAnimation.Skeleton.SetSlotsToSetupPose();
@@ -280,6 +299,7 @@ public class TransformSkin : MonoBehaviour
                 skinList.RemoveAt(i);
             }
         }
+
         skinList.Add(skinName);
         SetEquip(skinList);
     }

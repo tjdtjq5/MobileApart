@@ -241,11 +241,11 @@ public class Cloth : MonoBehaviour
         float contextHeight = 160f;
 
         // 모두벗기 버튼 
-        if (skinKind == SkinKind.cap || skinKind == SkinKind.set || skinKind == SkinKind.outt || skinKind == SkinKind.top || skinKind == SkinKind.pan || skinKind == SkinKind.accarm || skinKind == SkinKind.accbody || skinKind == SkinKind.accface || skinKind == SkinKind.accleg || skinKind == SkinKind.accneck || skinKind == SkinKind.soc || skinKind == SkinKind.sho)
+        if (skinKind == SkinKind.cap || skinKind == SkinKind.set || skinKind == SkinKind.outt || skinKind == SkinKind.top || skinKind == SkinKind.pan || skinKind == SkinKind.accarm || skinKind == SkinKind.accbody || skinKind == SkinKind.accface || skinKind == SkinKind.accleg || skinKind == SkinKind.accneck || skinKind == SkinKind.soc || skinKind == SkinKind.sho || skinKind == SkinKind.unde)
         {
             GameObject noneSkinkindBtn = Instantiate(clothKindIcon, Vector2.zero, Quaternion.identity, context);
             noneSkinkindBtn.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = "모두 벗기";
-            noneSkinkindBtn.GetComponent<Button>().onClick.AddListener(() => { GameManager.instance.userInfoManager.PullUserEqip(skinKind, GameManager.instance.userInfoManager.currentCharacter); transformSkin.UserEqipInfoSetting(); GameManager.instance.userInfoManager.SaveUserEqip(GameManager.instance.userInfoManager.currentCharacter); SkinKindReload(skinKind); });
+            noneSkinkindBtn.GetComponent<Button>().onClick.AddListener(() => { GameManager.instance.userInfoManager.PullUserEqip(skinKind); transformSkin.UserEqipInfoSetting(); GameManager.instance.userInfoManager.SaveUserEqip(GameManager.instance.userInfoManager.currentCharacter); SkinKindReload(skinKind); });
 
             contextHeight += 185f;
         }
@@ -278,7 +278,7 @@ public class Cloth : MonoBehaviour
                 }
                 else
                 {
-                    nomalSkinkindBtn.GetComponent<Button>().onClick.AddListener(() => { GameManager.instance.userInfoManager.PullUserEqip(skinKind, GameManager.instance.userInfoManager.currentCharacter); GameManager.instance.userInfoManager.PushUserEqip(itemIndex); transformSkin.UserEqipInfoSetting(); GameManager.instance.userInfoManager.SaveUserEqip(GameManager.instance.userInfoManager.currentCharacter); SkinKindReload(skinKind); });
+                    nomalSkinkindBtn.GetComponent<Button>().onClick.AddListener(() => { GameManager.instance.userInfoManager.PullUserEqip(skinKind); GameManager.instance.userInfoManager.PushUserEqip(itemIndex); transformSkin.UserEqipInfoSetting(); GameManager.instance.userInfoManager.SaveUserEqip(GameManager.instance.userInfoManager.currentCharacter); SkinKindReload(skinKind); });
                 }
             }
 
