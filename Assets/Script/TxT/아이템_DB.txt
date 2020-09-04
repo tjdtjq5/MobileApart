@@ -1,7 +1,7 @@
 randomColorItem	randomColorItem	염색약	랜덤염색약	공용
 colorItem	colorItem	지정염색약	염색약	공용
-Gold	Gold	골드	골드	Character01
-Crystal	Crystal	크리스탈	크리스탈	Character01
+Gold	Gold	골드	골드	공용
+Crystal	Crystal	크리스탈	크리스탈	공용
 cap_race_animal_01	cap/race_animal_01	더미1	스킨	Character01
 cap_race_demon_horn_02	cap/race_demon_horn_02	더미2	스킨	Character01
 haF_hair_f_01	haF/hair_f_01	더미3	스킨	Character01
@@ -17,18 +17,25 @@ face_face_01	face/face_01	더미12	스킨	Character01
 face_face_02	face/face_02	더미13	스킨	Character01
 face_face_03	face/face_03	더미14	스킨	Character01
 face_face_04	face/face_04	더미15	스킨	Character01
+set_mu	set/mu	요정 무녀 옷	스킨	Character01
 outt_apron_01	outt/apron_01	더미16	스킨	Character01
 outt_jacket_01	outt/jacket_01	더미17	스킨	Character01
 outt_jacket_02	outt/jacket_02	더미18	스킨	Character01
+outt_mu	outt/mu	요정 무녀 소매	스킨	Character01
 top_clo_top_01	top/clo_top_01	더미19	스킨	Character01
 top_clo_top_02	top/clo_top_02	더미20	스킨	Character01
 top_clo_top_school	top/clo_top_school	더미21	스킨	Character01
 pan_clo_under_01	pan/clo_under_01	더미22	스킨	Character01
 pan_skirt_01	pan/skirt_01	더미23	스킨	Character01
+unde_undedefault	unde/undedefault	기본 속옷	스킨	Character01
+accface_race_elf_01	accface/race_elf_01	엘프 귀 	스킨	Character01
 accface_race_demon_ear	accface/race_demon_ear	더미24	스킨	Character01
 accface_race_demon_tail	accface/race_demon_tail	더미25	스킨	Character01
 accface_race_elf_01	accface/race_elf_01	더미26	스킨	Character01
 accface_top_ribbon	accface/top_ribbon	더미27	스킨	Character01
 accneck_top_tie	accneck/top_tie	더미28	스킨	Character01
 accbody_belt	accbody/belt	더미29	스킨	Character01
+accbody_flowerribbon	accbody/flowerribbon	요정 무녀 꽃	스킨	Character01
+soc_heart	soc/heart	하트	스킨	Character01
 sho_shoes_01	sho/shoes_01	더미30	스킨	Character01
+sho_shoes_02	sho/shoes_02	요정 구두	스킨	Character01

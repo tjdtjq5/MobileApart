@@ -251,7 +251,7 @@ public class Cloth : MonoBehaviour
         }
 
         // 일반 skinKindBtn 세팅 
-        List<int> userSkinIndexList = GameManager.instance.userInfoManager.GetSkinItemIndexList(skinKind, GameManager.instance.userInfoManager.currentCharacter);
+        List<int> userSkinIndexList = GameManager.instance.userInfoManager.GetSkinItemIndexList(skinKind);
         for (int i = 0; i < userSkinIndexList.Count; i++)
         {
             int itemIndex = userSkinIndexList[i];

@@ -31,10 +31,10 @@ public class Character01 : MonoBehaviour
         SkinChange(SkinKind.top, "top/clo_top_01");
     }
 
-    public void SelectCaracter01()
+    public void SelectCharacter01()
     {
         Param currentCharacterData = new Param();
-        currentCharacterData.Add("CurrentCharacter", "Caracter01");
+        currentCharacterData.Add("CurrentCharacter", "Character01");
 
         BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
         {
@@ -50,10 +50,10 @@ public class Character01 : MonoBehaviour
                 {
                     // 정보 로드 : 캐릭터 셀렉을 선택했던 사람
                     JsonData jsonData2 = callback3.GetReturnValuetoJSON()["rows"][0];
-                    if (jsonData2.Keys.Contains("Caracter01" + "Eqip"))
+                    if (jsonData2.Keys.Contains("Character01" + "Eqip"))
                     {
-                        GameManager.instance.userInfoManager.LoadUserEqip("Caracter01", () => {
-                            GameManager.instance.userInfoManager.LoadUserNeed("Caracter01", () => {
+                        GameManager.instance.userInfoManager.LoadUserEqip("Character01", () => {
+                            GameManager.instance.userInfoManager.LoadUserNeed("Character01", () => {
                                 SceneManager.LoadScene("Loding");
                             });
                         });
@@ -64,8 +64,8 @@ public class Character01 : MonoBehaviour
                         GameManager.instance.userInfoManager.Character01Initialized();
 
                         GameManager.instance.userInfoManager.SaveSkinItem(() => {
-                            GameManager.instance.userInfoManager.SaveUserEqip("Caracter01", () => {
-                                GameManager.instance.userInfoManager.SaveUserNeed("Caracter01", () => {
+                            GameManager.instance.userInfoManager.SaveUserEqip("Character01", () => {
+                                GameManager.instance.userInfoManager.SaveUserNeed("Character01", () => {
                                     SceneManager.LoadScene("Loding");
                                 });
                             });

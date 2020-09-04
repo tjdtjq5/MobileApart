@@ -16,6 +16,7 @@ public class UserInfoManager : MonoBehaviour
     [ContextMenu("테스트")]
     public void Test()
     {
+        Debug.Log(currentCharacter);
     
     }
 
@@ -28,14 +29,14 @@ public class UserInfoManager : MonoBehaviour
     {
         currentAnimation = "idle_01";
 
-        PushColorItem(Color.clear);
-        PushColorItem(Color.clear);
-        PushColorItem(Color.clear);
-        PushColorItem(Color.clear);
-        PushColorItem(Color.white);
-        PushColorItem(Color.black);
-        PushColorItem(Color.yellow);
-        PushColorItem(Color.grey);
+        for (int i = 0; i < 99; i++)
+        {
+            PushColorItem(Color.clear);
+            PushColorItem(Color.white);
+            PushColorItem(Color.yellow);
+            PushColorItem(Color.black);
+            PushColorItem(Color.grey);
+        }
 
         PushWeapon("단검");
 
@@ -46,22 +47,38 @@ public class UserInfoManager : MonoBehaviour
     public void Character01Initialized()
     {
         skinItem.Add(new UserSkin("Body", Color.white, Color.white));
-        skinItem.Add(new UserSkin("pan/skirt_01", Color.white, Color.white));
-        skinItem.Add(new UserSkin("top/clo_top_school", Color.white, Color.white));
-        skinItem.Add(new UserSkin("eye/eye_01", Color.white, Color.white));
-        skinItem.Add(new UserSkin("face/face_01", Color.white, Color.white));
-        skinItem.Add(new UserSkin("haF/hair_f_01", Color.white, Color.white));
-        skinItem.Add(new UserSkin("haB/hair_b_01", Color.white, Color.white));
-        skinItem.Add(new UserSkin("sho/shoes_01", Color.white, Color.white));
 
+        for (int i = 0; i < GameManager.instance.itemManager.itemList.Length; i++)
+        {
+            if (GameManager.instance.itemManager.itemList[i].itemKind == ItemKind.스킨)
+            {
+                string skinName = GameManager.instance.itemManager.itemList[i].itemName;
+                Color color_01 = RandColor();
+                Color color_02 = RandColor();
+                PushSkinItem(new UserSkin(skinName, color_01, color_02));
+                if (skinName == "unde/undedefault")
+                {
+                    PushUserEqip(new UserSkin(skinName, color_01, color_02));
+                }
+                if (skinName == "haF/hair_f_01")
+                {
+                    PushUserEqip(new UserSkin(skinName, color_01, color_02));
+                }
+                if (skinName == "haB/hair_b_01")
+                {
+                    PushUserEqip(new UserSkin(skinName, color_01, color_02));
+                }
+                if (skinName == "eye/eye_01")
+                {
+                    PushUserEqip(new UserSkin(skinName, color_01, color_02));
+                }
+                if (skinName == "face/face_01")
+                {
+                    PushUserEqip(new UserSkin(skinName, color_01, color_02));
+                }
+            }
+        }
         PushUserEqip(new UserSkin("Body", Color.white, Color.white));
-        PushUserEqip(new UserSkin("pan/skirt_01", Color.white, Color.white));
-        PushUserEqip(new UserSkin("top/clo_top_school", Color.white, Color.white));
-        PushUserEqip(new UserSkin("eye/eye_01", Color.white, Color.white));
-        PushUserEqip(new UserSkin("face/face_01", Color.white, Color.white));
-        PushUserEqip(new UserSkin("haF/hair_f_01", Color.white, Color.white));
-        PushUserEqip(new UserSkin("haB/hair_b_01", Color.white, Color.white));
-        PushUserEqip(new UserSkin("sho/shoes_01", Color.white, Color.white));
 
 
         SetUserNeed(100, 100, 100, 100);
@@ -146,7 +163,7 @@ public class UserInfoManager : MonoBehaviour
         return tempUserSkin;
     }
 
-    public List<int> GetSkinItemIndexList(SkinKind skinKind, string characterName)
+    public List<int> GetSkinItemIndexList(SkinKind skinKind)
     {
         List<int> tempUserSkin = new List<int>();
         for (int i = 0; i < skinItem.Count; i++)
@@ -154,7 +171,8 @@ public class UserInfoManager : MonoBehaviour
             SkinKind userEqipskinKind = (SkinKind)System.Enum.Parse(typeof(SkinKind), skinItem[i].skinName.Split('/')[0]);
             if (userEqipskinKind == skinKind)
             {
-                if (GameManager.instance.itemManager.GetItemInfo(skinItem[i].skinName).characterName == characterName)
+               
+                if (GameManager.instance.itemManager.GetItemInfo(skinItem[i].skinName).characterName.Contains(currentCharacter))
                 {
                     tempUserSkin.Add(i);
                 }
@@ -269,7 +287,7 @@ public class UserInfoManager : MonoBehaviour
 
     public void PullUserEqip(SkinKind skinKind, string characterName)
     {
-        List<int> list = GetSkinItemIndexList(skinKind, characterName);
+        List<int> list = GetSkinItemIndexList(skinKind);
 
         for (int i = 0; i < list.Count; i++)
         {

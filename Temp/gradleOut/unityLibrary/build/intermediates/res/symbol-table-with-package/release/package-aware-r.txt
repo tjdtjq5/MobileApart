@@ -1,0 +1,23 @@
+com.unity3d.player
+color background_color
+color black
+color button_color
+color button_text_color
+color content_color
+color indate_color
+color indate_text_color
+color list_dividing_line_color
+color list_row_color
+color none
+color pre_indate_color
+color title_color
+color top_color
+color top_text_color
+color white
+drawable app_icon
+drawable notification
+string app_name
+string facebook_app_id
+style BaseUnityTheme
+style UnityThemeSelector
+style UnityThemeSelector_Translucent
