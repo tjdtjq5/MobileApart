@@ -2,40 +2,41 @@ randomColorItem	randomColorItem	염색약	랜덤염색약	공용
 colorItem	colorItem	지정염색약	염색약	공용
 Gold	Gold	골드	골드	공용
 Crystal	Crystal	크리스탈	크리스탈	공용
-cap_race_animal_01	cap/race_animal_01	더미1	스킨	Character01
-cap_race_demon_horn_02	cap/race_demon_horn_02	더미2	스킨	Character01
+cap_race_animal_01	cap_race_animal_01	쫑긋쫑긋	스킨	Character01
+cap_race_demon_horn_02	cap/race_demon_horn_02	악마 뿔	스킨	Character01
 haF_hair_f_01	haF/hair_f_01	더미3	스킨	Character01
 haF_hair_f_02	haF/hair_f_02	더미4	스킨	Character01
 haF_hair_f_03	haF/hair_f_03	더미5	스킨	Character01
 haB_hair_b_01	haB/hair_b_01	더미6	스킨	Character01
 haB_hair_b_02	haB/hair_b_02	더미7	스킨	Character01
-haB_hair_b_03	haB/hair_b_03	더미8	스킨	Character01
-eye_eye_01	eye/eye_01	더미9	스킨	Character01
-eye_eye_02	eye/eye_02	더미10	스킨	Character01
-eye_eye_demon	eye/eye_demon	더미11	스킨	Character01
-face_face_01	face/face_01	더미12	스킨	Character01
-face_face_02	face/face_02	더미13	스킨	Character01
-face_face_03	face/face_03	더미14	스킨	Character01
-face_face_04	face/face_04	더미15	스킨	Character01
-set_mu	set/mu	요정 무녀 옷	스킨	Character01
-outt_apron_01	outt/apron_01	더미16	스킨	Character01
-outt_jacket_01	outt/jacket_01	더미17	스킨	Character01
-outt_jacket_02	outt/jacket_02	더미18	스킨	Character01
-outt_mu	outt/mu	요정 무녀 소매	스킨	Character01
-top_clo_top_01	top/clo_top_01	더미19	스킨	Character01
-top_clo_top_02	top/clo_top_02	더미20	스킨	Character01
-top_clo_top_school	top/clo_top_school	더미21	스킨	Character01
-pan_clo_under_01	pan/clo_under_01	더미22	스킨	Character01
-pan_skirt_01	pan/skirt_01	더미23	스킨	Character01
-unde_undedefault	unde/undedefault	기본 속옷	스킨	Character01
+haB_hair_b_03	haB/hair_b_03	목장소녀	스킨	Character01
+eye_eye_01	eye/eye_01	토파즈	스킨	Character01
+eye_eye_02	eye/eye_02	딥 프리즘	스킨	Character01
+eye_eye_demon	eye/eye_demon	악마 눈	스킨	Character01
+face_face_01	face/face_01	여운	스킨	Character01
+face_face_02	face/face_02	호기심	스킨	Character01
+face_face_03	face/face_03	주시	스킨	Character01
+face_face_04	face/face_04	나른	스킨	Character01
+set_mu	set/mu	초봄	스킨	Character01
+outt_apron_01	outt/apron_01	에이프론	스킨	Character01
+outt_jacket_01	outt/jacket_01	언더타운	스킨	Character01
+outt_jacket_02	outt/jacket_02	행인제킷	스킨	Character01
+outt_mu	outt/mu	초봄 소메	스킨	Character01
+top_clo_top_01	top/clo_top_01	크로스	스킨	Character01
+top_clo_top_02	top/clo_top_02	도발	스킨	Character01
+top_clo_top_school	top/clo_top_school	교복 와이셔츠	스킨	Character01
+pan_clo_under_01	pan/clo_under_01	활발	스킨	Character01
+pan_skirt_01	pan/skirt_01	교복치마	스킨	Character01
+unde_undedefault	unde/undedefault	소녀	스킨	Character01
 accface_race_elf_01	accface/race_elf_01	엘프 귀 	스킨	Character01
-accface_race_demon_ear	accface/race_demon_ear	더미24	스킨	Character01
-accface_race_demon_tail	accface/race_demon_tail	더미25	스킨	Character01
-accface_race_elf_01	accface/race_elf_01	더미26	스킨	Character01
-accface_top_ribbon	accface/top_ribbon	더미27	스킨	Character01
-accneck_top_tie	accneck/top_tie	더미28	스킨	Character01
-accbody_belt	accbody/belt	더미29	스킨	Character01
-accbody_flowerribbon	accbody/flowerribbon	요정 무녀 꽃	스킨	Character01
-soc_heart	soc/heart	하트	스킨	Character01
-sho_shoes_01	sho/shoes_01	더미30	스킨	Character01
-sho_shoes_02	sho/shoes_02	요정 구두	스킨	Character01
+accface_race_demon_ear	accface/race_demon_ear	악마 귀	스킨	Character01
+accneck_top_tie	accneck/top_tie	교복 넥타이	스킨	Character01
+accneck_top_ribbon	accneck/top_ribbon	교복 리본	스킨	Character02
+accneck_flowerribbon	accneck/flowerribbon	초봄 작은꽃	스킨	Character03
+accbody_belt	accbody/belt	엔틱 벨트	스킨	Character04
+accbody_flowerribbon	accbody/flowerribbon	초봄 꽃	스킨	Character05
+accbody_race_animal_01	accbody/race_animal_01	복실복실	스킨	Character06
+accbody_race_demon_tail	accbody/race_demon_tail	악마 꼬리	스킨	Character07
+soc_heart	soc/heart	펑크 하트	스킨	Character08
+sho_shoes_01	sho/shoes_01	히치하이커	스킨	Character09
+sho_shoes_02	sho/shoes_02	초봄 구두	스킨	Character10

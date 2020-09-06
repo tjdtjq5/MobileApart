@@ -13,8 +13,7 @@ public class TransformSkin : MonoBehaviour
     [ContextMenu("테스트")]
     public void Test()
     {
-        StartCoroutine(TestCoroutine());
-       
+        SetColor("haF", Color.white);
     }
 
     private void Start()

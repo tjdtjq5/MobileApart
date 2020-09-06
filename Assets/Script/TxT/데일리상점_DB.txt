@@ -1,32 +1,40 @@
-randomColorItem	염색약	랜덤염색약	Gold	450	#확인
-colorItem	지정염색약	염색약	Crystal	482	엉덩이
-cap/race_animal_01	더미1	스킨	Gold	1859	줄#바꿈
-cap/race_demon_horn_02	더미2	스킨	Crystal	1238	궁댕이
-haF/hair_f_01	더미3	스킨	Gold	1898	빵댕이
-haF/hair_f_02	더미4	스킨	Crystal	1478	더미4
-haF/hair_f_03	더미5	스킨	Gold	32227	더미5
-haB/hair_b_01	더미6	스킨	Crystal	22668	더미6
-haB/hair_b_02	더미7	스킨	Gold	15972	더미7
-haB/hair_b_03	더미8	스킨	Crystal	123987	더미8
-eye/eye_01	더미9	스킨	Gold	1596987	더미9
-eye/eye_02	더미10	스킨	Crystal	15684	더미10
-eye/eye_demon	더미11	스킨	Gold	32485	더미11
-face/face_01	더미12	스킨	Crystal	12684	더미12
-face/face_02	더미13	스킨	Gold	12035	더미13
-face/face_03	더미14	스킨	Crystal	48595	더미14
-face/face_04	더미15	스킨	Gold	123854	더미15
-outt/apron_01	더미16	스킨	Crystal	8956	더미16
-outt/jacket_01	더미17	스킨	Gold	2189	더미17
-outt/jacket_02	더미18	스킨	Crystal	1268	더미18
-top/clo_top_01	더미19	스킨	Gold	217	더미19
-top/clo_top_02	더미20	스킨	Crystal	12689	함정이다 이새끼야
-top/clo_top_school	더미22	스킨	Crystal	62185	함정이다#이새끼야
-pan/clo_under_01	더미23	스킨	Gold	1568	함정이다 #이새끼야
-pan/skirt_01	더미24	스킨	Crystal	63188	더미24
-accface/race_demon_ear	더미25	스킨	Gold	65488	더미25
-accface/race_demon_tail	더미26	스킨	Crystal	7981	더미26
-accface/race_elf_01	더미27	스킨	Gold	1269	더미27
-accface/top_ribbon	더미28	스킨	Crystal	15859	더미28
-accneck/top_tie	더미29	스킨	Gold	15689	더미29
-accbody/belt	더미30	스킨	Crystal	1595	더미30
-sho/shoes_01	더미31	스킨	Gold	4859	더미31
+randomColorItem	염색약	랜덤염색약	Gold	450	어떤색이 나올까?
+colorItem	지정염색약	염색약	Crystal	482	패션의 길
+cap/race_animal_01	쫑긋쫑긋	스킨	Gold	1859	쫑긋쫑긋 귀여운# 여우귀
+cap/race_demon_horn_02	악마 뿔	스킨	Crystal	1238	악마의 뿔
+haF/hair_f_01	더미3	스킨	Gold	1898	머리스타일1
+haF/hair_f_02	더미4	스킨	Crystal	1478	머리스타일2
+haF/hair_f_03	더미5	스킨	Gold	32227	머리스타일3
+haB/hair_b_01	더미6	스킨	Crystal	22668	머리스타일4
+haB/hair_b_02	더미7	스킨	Gold	15972	머리스타일5
+haB/hair_b_03	목장소녀	스킨	Crystal	123987	활기찬 목장의#소녀
+eye/eye_01	토파즈	스킨	Gold	1596987	반짝반짝 빛나는#눈동자
+eye/eye_02	딥 프리즘	스킨	Crystal	15684	깊은 눈동자
+eye/eye_demon	악마 눈	스킨	Gold	32485	악마의 눈
+face/face_01	여운	스킨	Crystal	12684	사색에 잠긴 소녀
+face/face_02	호기심	스킨	Gold	12035	호기심 많은 소녀
+face/face_03	주시	스킨	Crystal	48595	주시하는 소녀
+face/face_04	나른	스킨	Gold	123854	나른한 소녀
+set/mu	초봄	스킨	Crystal	8956	엘프 소녀들의# 드레스
+outt/apron_01	에이프론	스킨	Gold	2189	요리를 하자!
+outt/jacket_01	언더타운	스킨	Crystal	1268	쎈 누나들의 제킷
+outt/jacket_02	행인제킷	스킨	Gold	217	더 쎈 눈나들의 제킷
+outt/mu	초봄 소메	스킨	Crystal	12689	엘프 소녀들의#드레스
+top/clo_top_01	크로스	스킨	Crystal	62185	활발한 소녀를 위한 선택
+top/clo_top_02	도발	스킨	Gold	1568	도발적인 오픈숄더!
+top/clo_top_school	교복 와이셔츠	스킨	Crystal	63188	추억의 상의
+pan/clo_under_01	활발	스킨	Gold	65488	활발한 소녀를 위한 선택
+pan/skirt_01	교복치마	스킨	Crystal	7981	추억의 치마
+unde/undedefault	소녀	스킨	Gold	1269	
+accface/race_elf_01	엘프 귀 	스킨	Crystal	15859	엘프 귀
+accface/race_demon_ear	악마 귀	스킨	Gold	15689	악마 귀
+accneck/top_tie	교복 넥타이	스킨	Crystal	1595	추억의 넥타이
+accneck/top_ribbon	교복 리본	스킨	Gold	4859	추억의 리본
+accneck/flowerribbon	초봄 작은꽃	스킨	Crystal	8123	초봄에 피는 작은 꽃
+accbody/belt	엔틱 벨트	스킨	Gold	11387	엔틱 벨트
+accbody/flowerribbon	초봄 꽃	스킨	Crystal	14651	초봄의 아름다운 꽃
+accbody/race_animal_01	복실복실	스킨	Gold	17915	복실복실 여우 꼬리
+accbody/race_demon_tail	악마 꼬리	스킨	Crystal	21179	악마의 꼬리
+soc/heart	펑크 하트	스킨	Gold	24443	펑키한 하트 스타킹
+sho/shoes_01	히치하이커	스킨	Crystal	27707	여행을 떠나고 싶어지는 신발
+sho/shoes_02	초봄 구두	스킨	Crystal	27707	초봄 소녀의 여행을 위한 신발
