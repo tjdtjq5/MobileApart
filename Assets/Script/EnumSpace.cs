@@ -33,3 +33,4 @@ public enum Properties
     땅,
     바람
 }
+

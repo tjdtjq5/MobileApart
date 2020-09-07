@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public StageManager stageManager;
     public MonsterManager monsterManager;
     public WeaponeManager weaponeManager;
+    public ScriptManager scriptManager;
 
     void Awake()
     {

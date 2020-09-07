@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using BackEnd;
-
+using LitJson;
 
 public class Loding : MonoBehaviour
 {
@@ -22,7 +22,9 @@ public class Loding : MonoBehaviour
         progressbar.gameObject.SetActive(true);
         progressbar.value = 0;
         loadtext.gameObject.SetActive(true);
+
         StartCoroutine(LoadSceneCoroutine());
+
     }
 
     IEnumerator LoadSceneCoroutine()

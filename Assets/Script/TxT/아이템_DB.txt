@@ -2,7 +2,7 @@ randomColorItem	randomColorItem	염색약	랜덤염색약	공용
 colorItem	colorItem	지정염색약	염색약	공용
 Gold	Gold	골드	골드	공용
 Crystal	Crystal	크리스탈	크리스탈	공용
-cap_race_animal_01	cap_race_animal_01	쫑긋쫑긋	스킨	Character01
+cap_race_animal_01	cap/race_animal_01	쫑긋쫑긋	스킨	Character01
 cap_race_demon_horn_02	cap/race_demon_horn_02	악마 뿔	스킨	Character01
 haF_hair_f_01	haF/hair_f_01	더미3	스킨	Character01
 haF_hair_f_02	haF/hair_f_02	더미4	스킨	Character01

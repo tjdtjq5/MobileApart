@@ -47,6 +47,7 @@ public class UserInfoManager : MonoBehaviour
     public void Character01Initialized()
     {
         skinItem.Add(new UserSkin("Body", Color.white, Color.white));
+        PushUserEqip(new UserSkin("Body", Color.white, Color.white));
 
         for (int i = 0; i < GameManager.instance.itemManager.itemList.Length; i++)
         {
@@ -78,8 +79,11 @@ public class UserInfoManager : MonoBehaviour
                 }
             }
         }
-        PushUserEqip(new UserSkin("Body", Color.white, Color.white));
 
+        PushSkinItem(new UserSkin("accneck/flowerribbon", new Color(117 / 255f, 197 / 255f, 69 / 255f, 1), new Color(244 / 255f, 53 / 255f, 53 / 255f, 1)));
+        PushSkinItem(new UserSkin("set/mu", new Color(237 / 255f, 107 / 255f, 95 / 255f, 1), new Color(81 / 255f, 139 / 255f, 28 / 255f, 1)));
+        PushSkinItem(new UserSkin("accbody/flowerribbon", new Color(70 / 255f, 129 / 255f, 73 / 255f, 1), Color.white));
+        PushSkinItem(new UserSkin("sho/shoes_02", new Color(92 / 255f, 14 / 255f, 14 / 255f, 1), Color.clear));
 
         SetUserNeed(100, 100, 100, 100);
     }
@@ -298,8 +302,8 @@ public class UserInfoManager : MonoBehaviour
         {
             if (GetUserEqip(SkinKind.unde).Count == 0)
             {
-                OverrideCanvas.instance.RedAlram("속옷 스킨을 장착해야 합니다.");
-                return;
+                int defalultUnde = GetSkinItemIndexList(SkinKind.unde)[0];
+                PushUserEqip(defalultUnde);
             }
         }
 

@@ -11,6 +11,7 @@ public class DatabaseManager : MonoBehaviour
     public DataBase stage_DB;
     public DataBase monster_DB;
     public DataBase Weapone_DB;
+    public DataBase Script_DB;
 }
 
 [Serializable]

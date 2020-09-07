@@ -1560,6 +1560,7 @@ GameObject:
   - component: {fileID: 1768284093}
   - component: {fileID: 1768284099}
   - component: {fileID: 1768284100}
+  - component: {fileID: 1768284101}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1607,6 +1608,8 @@ MonoBehaviour:
     txt: {fileID: 4900000, guid: 896cfa2f64c2c3c4ca62d92baa78b7b6, type: 3}
   Weapone_DB:
     txt: {fileID: 4900000, guid: 8ff9dae427f4329469a26fffc9e0db1e, type: 3}
+  Script_DB:
+    txt: {fileID: 4900000, guid: 8e8efccdac7221340973eeed92ac9cee, type: 3}
 --- !u!114 &1768284093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1638,6 +1641,7 @@ MonoBehaviour:
   stageManager: {fileID: 1768284093}
   monsterManager: {fileID: 1768284100}
   weaponeManager: {fileID: 1768284099}
+  scriptManager: {fileID: 1768284101}
 --- !u!4 &1768284095
 Transform:
   m_ObjectHideFlags: 0
@@ -1659,7 +1663,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1768284090}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2105453930b56ce4980978b7349a40ad, type: 3}
   m_Name: 
@@ -1715,6 +1719,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MonsterInfoList: []
+--- !u!114 &1768284101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768284090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7687aed5838fc14495463f06f720acd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptList: []
 --- !u!1 &1801361945
 GameObject:
   m_ObjectHideFlags: 0

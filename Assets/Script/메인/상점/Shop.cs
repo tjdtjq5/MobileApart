@@ -122,7 +122,6 @@ public class Shop : MonoBehaviour
             if (randomGoodsInfo[tempRandom].itemKind == ItemKind.스킨 && !randomList.Contains(tempRandom))
             {
                 randomList.Add(tempRandom);
-                Debug.Log(randomGoodsInfo[tempRandom].itemName);
             }
         }
         randomGoods = new RandomGoods[9];
