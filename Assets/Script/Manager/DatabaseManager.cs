@@ -8,9 +8,6 @@ public class DatabaseManager : MonoBehaviour
     public DataBase Box_DB;
     public DataBase DailyShop_DB;
     public DataBase Item_DB;
-    public DataBase stage_DB;
-    public DataBase monster_DB;
-    public DataBase Weapone_DB;
     public DataBase Script_DB;
     public DataBase Set_DB;
 }

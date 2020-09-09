@@ -1557,9 +1557,6 @@ GameObject:
   - component: {fileID: 1768284096}
   - component: {fileID: 1768284097}
   - component: {fileID: 1768284098}
-  - component: {fileID: 1768284093}
-  - component: {fileID: 1768284099}
-  - component: {fileID: 1768284100}
   - component: {fileID: 1768284101}
   - component: {fileID: 1768284102}
   m_Layer: 0
@@ -1613,19 +1610,6 @@ MonoBehaviour:
     txt: {fileID: 4900000, guid: 8e8efccdac7221340973eeed92ac9cee, type: 3}
   Set_DB:
     txt: {fileID: 4900000, guid: bcd9c3e14e742844a9a380b2ed3c1201, type: 3}
---- !u!114 &1768284093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1768284090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31412ce6981440a4fac46b2bc2351888, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stageInfoList: []
 --- !u!114 &1768284094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1641,9 +1625,6 @@ MonoBehaviour:
   userInfoManager: {fileID: 1768284091}
   databaseManager: {fileID: 1768284092}
   itemManager: {fileID: 1768284097}
-  stageManager: {fileID: 1768284093}
-  monsterManager: {fileID: 1768284100}
-  weaponeManager: {fileID: 1768284099}
   scriptManager: {fileID: 1768284101}
   setManager: {fileID: 1768284102}
 --- !u!4 &1768284095
@@ -1697,32 +1678,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c10bb1e342783f6429c1fc59a93b5e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1768284099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1768284090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dde1e2c2ebd58a4cabb21122dc76a82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponeInfoList: []
---- !u!114 &1768284100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1768284090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ea1f41104c53bb48a61afc5807c90e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MonsterInfoList: []
 --- !u!114 &1768284101
 MonoBehaviour:
   m_ObjectHideFlags: 0

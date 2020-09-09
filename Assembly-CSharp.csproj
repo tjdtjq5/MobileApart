@@ -73,6 +73,7 @@
     <Compile Include="Assets\Material\MobileBlur\MobileBlur.cs" />
     <Compile Include="Assets\Material\MobileBlur\Move.cs" />
     <Compile Include="Assets\Script\BackEnd\BackEndAuthentication.cs" />
+    <Compile Include="Assets\Script\BackEnd\BackEndChat.cs" />
     <Compile Include="Assets\Script\BackEnd\BackEndGameInfo.cs" />
     <Compile Include="Assets\Script\BackEnd\BackEndManager.cs" />
     <Compile Include="Assets\Script\Camera\Acceleration.cs" />
@@ -86,12 +87,9 @@
     <Compile Include="Assets\Script\Manager\FrameChecker.cs" />
     <Compile Include="Assets\Script\Manager\GameManager.cs" />
     <Compile Include="Assets\Script\Manager\ItemManager.cs" />
-    <Compile Include="Assets\Script\Manager\MonsterManager.cs" />
     <Compile Include="Assets\Script\Manager\ScriptManager.cs" />
     <Compile Include="Assets\Script\Manager\SetManager.cs" />
-    <Compile Include="Assets\Script\Manager\StageManager.cs" />
     <Compile Include="Assets\Script\Manager\UserInfoManager.cs" />
-    <Compile Include="Assets\Script\Manager\WeaponeManager.cs" />
     <Compile Include="Assets\Script\Test.cs" />
     <Compile Include="Assets\Script\TestCharacterAni.cs" />
     <Compile Include="Assets\Script\메인\CharacterInfo.cs" />
@@ -102,6 +100,7 @@
     <Compile Include="Assets\Script\메인\TransformSkin.cs" />
     <Compile Include="Assets\Script\메인\대화\ScriptController.cs" />
     <Compile Include="Assets\Script\메인\메뉴\Album.cs" />
+    <Compile Include="Assets\Script\메인\메뉴\Coopon.cs" />
     <Compile Include="Assets\Script\메인\메뉴\Gift.cs" />
     <Compile Include="Assets\Script\메인\메뉴\Mail.cs" />
     <Compile Include="Assets\Script\메인\메인화면\놀기\Joying.cs" />
@@ -110,11 +109,6 @@
     <Compile Include="Assets\Script\메인\메인화면\사진찍기\TakePhoto.cs" />
     <Compile Include="Assets\Script\메인\메인화면\옷장\Cloth.cs" />
     <Compile Include="Assets\Script\메인\메인화면\요리\Cook.cs" />
-    <Compile Include="Assets\Script\메인\방치형게임\Hit.cs" />
-    <Compile Include="Assets\Script\메인\방치형게임\MonsterController.cs" />
-    <Compile Include="Assets\Script\메인\방치형게임\Neglect.cs" />
-    <Compile Include="Assets\Script\메인\방치형게임\StageController.cs" />
-    <Compile Include="Assets\Script\메인\방치형게임\WeaponController.cs" />
     <Compile Include="Assets\Script\메인\비밀상점\SecretShop.cs" />
     <Compile Include="Assets\Script\메인\상점\Shop.cs" />
     <Compile Include="Assets\Script\메인\잠\Sleep.cs" />
@@ -161,8 +155,6 @@
     <None Include="Assets\Character\bodya.atlas.txt" />
     <None Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX (legacy)\CartoonFX Readme.txt" />
     <None Include="Assets\리소스\선물상자\timebox.atlas.txt" />
-    <None Include="Assets\Script\TxT\스테이지_DB.txt" />
-    <None Include="Assets\Script\TxT\몬스터_DB.txt" />
     <None Include="Assets\Material\additive.shader" />
     <None Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX Remaster\CFXR Prefabs\Texts\_Make your own text effect.txt" />
     <None Include="Assets\Material\Blur.shader" />
@@ -176,7 +168,6 @@
     <None Include="Assets\Script\TxT\대화_DB.txt" />
     <None Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_WaterWiggle.shader" />
     <None Include="Assets\Material\GlassStainedBumpDistort.shader" />
-    <None Include="Assets\Script\TxT\무기_DB.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/tjdtj/OneDrive/Documents/GitHub/MobileApart/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
