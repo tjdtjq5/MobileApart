@@ -29,15 +29,16 @@ public class ScriptManager : MonoBehaviour
             scriptList[i].code = int.Parse(data[0]);
             scriptList[i].name = data[1];
             scriptList[i].script = data[2];
+            scriptList[i].nextCode = int.Parse(data[3]);
 
             int count = 0;
-            if (data[3] != "Null")
+            if (data[4] != "Null")
                 count++;
-            if (data[5] != "Null")
+            if (data[6] != "Null")
                 count++;
-            if (data[7] != "Null")
+            if (data[8] != "Null")
                 count++;
-            if (data[9] != "Null")
+            if (data[10] != "Null")
                 count++;
 
             scriptList[i].selectScript = new string[count];
@@ -45,12 +46,12 @@ public class ScriptManager : MonoBehaviour
 
             for (int j = 0; j < count; j++)
             {
-                scriptList[i].selectScript[j] = data[3 + (j * 2)];
-                scriptList[i].selectCode[j] = int.Parse(data[4 + (j * 2)]);
+                scriptList[i].selectScript[j] = data[4 + (j * 2)];
+                scriptList[i].selectCode[j] = int.Parse(data[5 + (j * 2)]);
             }
+           
+            scriptList[i].aniName = data[12].Remove(data[12].Length - 1);
         }
-
-
     }
 }
 
@@ -60,6 +61,8 @@ public struct Script
     public int code;
     public string name;
     public string script;
+    public int nextCode;
     public string[] selectScript;
     public int[] selectCode;
+    public string aniName;
 }

@@ -12,13 +12,19 @@ public class GameManager : MonoBehaviour
     public MonsterManager monsterManager;
     public WeaponeManager weaponeManager;
     public ScriptManager scriptManager;
+    public SetManager setManager;
 
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
 
         instance = this;
+
+        PlayerPrefs.DeleteAll();
     }
+
+    
+    
 }
 
    

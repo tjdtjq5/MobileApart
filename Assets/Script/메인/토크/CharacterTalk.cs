@@ -7,8 +7,6 @@ using UnityEngine.UI;
 public class CharacterTalk : MonoBehaviour
 {
     public static CharacterTalk instance;
-
-
     public GameObject ThinkingBubble;
     public GameObject TalkBubble;
 
@@ -19,6 +17,7 @@ public class CharacterTalk : MonoBehaviour
         instance = this;
         tempThinkTalkCoroutine = ThinkingTalkCoroutine("", 0);
     }
+
 
     public void ThinkingTalk(string text, float time)
     {
@@ -95,6 +94,4 @@ public class CharacterTalk : MonoBehaviour
 
         TalkBubble.SetActive(false);
     }
-
-
 }

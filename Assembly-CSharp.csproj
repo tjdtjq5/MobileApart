@@ -88,6 +88,7 @@
     <Compile Include="Assets\Script\Manager\ItemManager.cs" />
     <Compile Include="Assets\Script\Manager\MonsterManager.cs" />
     <Compile Include="Assets\Script\Manager\ScriptManager.cs" />
+    <Compile Include="Assets\Script\Manager\SetManager.cs" />
     <Compile Include="Assets\Script\Manager\StageManager.cs" />
     <Compile Include="Assets\Script\Manager\UserInfoManager.cs" />
     <Compile Include="Assets\Script\Manager\WeaponeManager.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Assets\Script\TestCharacterAni.cs" />
     <Compile Include="Assets\Script\메인\CharacterInfo.cs" />
     <Compile Include="Assets\Script\메인\CharacterMotion.cs" />
+    <Compile Include="Assets\Script\메인\Interaction.cs" />
     <Compile Include="Assets\Script\메인\OverrideCanvas\OverrideCanvas.cs" />
     <Compile Include="Assets\Script\메인\ScreenTrans.cs" />
     <Compile Include="Assets\Script\메인\TransformSkin.cs" />
@@ -167,6 +169,7 @@
     <None Include="Assets\Material\MobileBlur\MobileBlur.shader" />
     <None Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX Remaster\Readme Cartoon FX Remaster.txt" />
     <None Include="Assets\리소스\에셋파티클\Particle VFX\Materials\VFX_Mobile-Particle-Add-Revised.shader" />
+    <None Include="Assets\Script\TxT\세트_DB.txt" />
     <None Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX (legacy)\Shaders\CFXM_MobileParticleAdd_Alpha8.shader" />
     <None Include="Assets\Demigiant\DOTween\readme.txt" />
     <None Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Procedural Ring.shader" />

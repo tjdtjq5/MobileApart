@@ -1561,6 +1561,7 @@ GameObject:
   - component: {fileID: 1768284099}
   - component: {fileID: 1768284100}
   - component: {fileID: 1768284101}
+  - component: {fileID: 1768284102}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1610,6 +1611,8 @@ MonoBehaviour:
     txt: {fileID: 4900000, guid: 8ff9dae427f4329469a26fffc9e0db1e, type: 3}
   Script_DB:
     txt: {fileID: 4900000, guid: 8e8efccdac7221340973eeed92ac9cee, type: 3}
+  Set_DB:
+    txt: {fileID: 4900000, guid: bcd9c3e14e742844a9a380b2ed3c1201, type: 3}
 --- !u!114 &1768284093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1642,6 +1645,7 @@ MonoBehaviour:
   monsterManager: {fileID: 1768284100}
   weaponeManager: {fileID: 1768284099}
   scriptManager: {fileID: 1768284101}
+  setManager: {fileID: 1768284102}
 --- !u!4 &1768284095
 Transform:
   m_ObjectHideFlags: 0
@@ -1732,6 +1736,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptList: []
+--- !u!114 &1768284102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768284090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f8d0d18d2a35c448b83dc38e0cec385, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  setList: []
 --- !u!1 &1801361945
 GameObject:
   m_ObjectHideFlags: 0

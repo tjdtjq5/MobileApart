@@ -28,15 +28,15 @@ top_clo_top_school	top/clo_top_school	교복 와이셔츠	스킨	Character01
 pan_clo_under_01	pan/clo_under_01	활발	스킨	Character01
 pan_skirt_01	pan/skirt_01	교복치마	스킨	Character01
 unde_undedefault	unde/undedefault	소녀	스킨	Character01
-accface_race_elf_01	accface/race_elf_01	엘프 귀 	스킨	Character01
+accface_race_elf_01	accface/race_elf_01	엘프 귀	스킨	Character01
 accface_race_demon_ear	accface/race_demon_ear	악마 귀	스킨	Character01
 accneck_top_tie	accneck/top_tie	교복 넥타이	스킨	Character01
-accneck_top_ribbon	accneck/top_ribbon	교복 리본	스킨	Character02
-accneck_flowerribbon	accneck/flowerribbon	초봄 작은꽃	스킨	Character03
-accbody_belt	accbody/belt	엔틱 벨트	스킨	Character04
-accbody_flowerribbon	accbody/flowerribbon	초봄 꽃	스킨	Character05
-accbody_race_animal_01	accbody/race_animal_01	복실복실	스킨	Character06
-accbody_race_demon_tail	accbody/race_demon_tail	악마 꼬리	스킨	Character07
-soc_heart	soc/heart	펑크 하트	스킨	Character08
-sho_shoes_01	sho/shoes_01	히치하이커	스킨	Character09
-sho_shoes_02	sho/shoes_02	초봄 구두	스킨	Character10
+accneck_top_ribbon	accneck/top_ribbon	교복 리본	스킨	Character01
+accneck_flowerribbon	accneck/flowerribbon	초봄 작은꽃	스킨	Character01
+accbody_belt	accbody/belt	엔틱 벨트	스킨	Character01
+accbody_flowerribbon	accbody/flowerribbon	초봄 꽃	스킨	Character01
+accbody_race_animal_01	accbody/race_animal_01	복실복실	스킨	Character01
+accbody_race_demon_tail	accbody/race_demon_tail	악마 꼬리	스킨	Character01
+soc_heart	soc/heart	펑크 하트	스킨	Character01
+sho_shoes_01	sho/shoes_01	히치하이커	스킨	Character01
+sho_shoes_02	sho/shoes_02	초봄 구두	스킨	Character01

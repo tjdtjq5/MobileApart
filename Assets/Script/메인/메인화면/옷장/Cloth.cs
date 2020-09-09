@@ -198,15 +198,26 @@ public class Cloth : MonoBehaviour
 
         characterCamera.transform.DOMove(originChracterCamera, cameraMoveSpeed);
         characterCamera.DOOrthoSize(5, cameraMoveSpeed);
-        uiCamera.transform.DOMoveX(originUiCamera.x, cameraMoveSpeed);
+        uiCamera.transform.DOMoveX(originUiCamera.x, cameraMoveSpeed).OnComplete(() => {
 
-        for (int i = 0; i < setOff.Length; i++)
-        {
-            setOff[i].SetActive(true);
-        }
+            for (int i = 0; i < setOff.Length; i++)
+            {
+                setOff[i].SetActive(true);
+            }
 
-        backBtn.SetActive(false);
+            backBtn.SetActive(false);
+
+            if (GameManager.instance.userInfoManager.CheckSetEqip("무녀 옷"))
+            {
+                if (!PlayerPrefs.HasKey("무녀 옷") || PlayerPrefs.GetInt("무녀 옷") == 1)
+                {
+                    CharacterTalk.instance.Talk("너 이 옷 어디서 난 거야?", 3f);
+                    PlayerPrefs.SetInt("무녀 옷", 1);
+                }
+            }
+        });
     }
+
 
     void ContextInit(int top, int spacing)
     {

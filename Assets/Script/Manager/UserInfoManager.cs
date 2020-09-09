@@ -16,7 +16,11 @@ public class UserInfoManager : MonoBehaviour
     [ContextMenu("테스트")]
     public void Test()
     {
-        Debug.Log(currentCharacter);
+        for (int i = 0; i < skinItem.Count; i++)
+        {
+            Debug.Log(skinItem[i].skinName + " : " + skinItem[i].isEqip);
+        }
+       
     
     }
 
@@ -207,6 +211,8 @@ public class UserInfoManager : MonoBehaviour
         return -1;
     }
 
+
+
     public void PushSkinItem(UserSkin userSkin)
     {
         skinItem.Add(userSkin);
@@ -288,6 +294,21 @@ public class UserInfoManager : MonoBehaviour
         return tempUserSkin;
     }
 
+    public List<UserSkin> GetUserEqip()
+    {
+        List<UserSkin> tempUserSkin = new List<UserSkin>();
+
+        for (int i = 0; i < skinItem.Count; i++)
+        {
+            if (skinItem[i].isEqip)
+            {
+                tempUserSkin.Add(skinItem[i]);
+            }
+        }
+
+        return tempUserSkin;
+    }
+
     public void PullUserEqip(SkinKind skinKind)
     {
         if (skinKind == SkinKind.unde)
@@ -312,6 +333,35 @@ public class UserInfoManager : MonoBehaviour
         for (int i = 0; i < list.Count; i++)
         {
             skinItem[list[i]].SetEqip(false);
+        }
+    }
+
+    public bool CheckSetEqip(string setName)
+    {
+        string[] setSkinList = GameManager.instance.setManager.GetSetInfo(setName).skinNameList;
+        int count = 0;
+
+        List<UserSkin> eqipSkinList = GetUserEqip();
+
+        for (int i = 0; i < eqipSkinList.Count; i++)
+        {
+            for (int j = 0; j < setSkinList.Length; j++)
+            {
+                if (eqipSkinList[i].skinName == setSkinList[j])
+                {
+                    count++;
+                    break;
+                }
+            }
+        }
+
+        if (count == setSkinList.Length)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

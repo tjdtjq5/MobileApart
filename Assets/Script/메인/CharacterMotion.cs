@@ -102,6 +102,16 @@ public class CharacterMotion : MonoBehaviour, IPointerClickHandler, IDragHandler
                     dragFlag = true;
                     trailParticle.GetComponent<ParticleSystem>().Play();
                     break;
+
+                case "왼쪽다리":
+                    if (GameManager.instance.userInfoManager.CheckSetEqip("무녀 옷"))
+                    {
+                        aniCoroutine = AniCoroutine("dress_set_mu", 2.5f);
+                        StartCoroutine(aniCoroutine);
+                        dragFlag = true;
+                        trailParticle.GetComponent<ParticleSystem>().Play();
+                    }
+                    break;
             }
         }
     }

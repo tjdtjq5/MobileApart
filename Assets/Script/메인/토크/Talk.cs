@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class Talk : MonoBehaviour
 {
+
+    public static Talk instance;
+
     [Header("토크 풍선 오브젝트")]
     public GameObject[] talkBullon;
     [Header("기타 스크립트")]
@@ -22,10 +25,12 @@ public class Talk : MonoBehaviour
 
     private void Start()
     {
+        instance = this;
+
         Init();
     }
 
-    void Init()
+    public void Init()
     {
         if (GameManager.instance.userInfoManager.GetUserNeed(characterInfo.theWorstNeed()) < 20)
         {
@@ -54,12 +59,32 @@ public class Talk : MonoBehaviour
             bullonText[0] = "잡담";
             bullonText[1] = "상태어때?";
         }
-
-       
-
+        EventTalk();
     }
 
-    
+    void EventTalk()
+    {
+        string[] tempBullonText = new string[bullonText.Length + 1];
+        for (int i = 0; i < bullonText.Length; i++)
+        {
+            tempBullonText[i] = bullonText[i];
+        }
+
+        if (PlayerPrefs.GetInt("무녀 옷") == 1)
+        {
+            tempBullonText[bullonText.Length] = "응? 왜 그래?";
+            bullonText = tempBullonText;
+            return;
+        }
+
+        if (Interaction.instance.time7Flag)
+        {
+            tempBullonText[bullonText.Length] = "응 조금이라도 네 얼굴을 많이 보려고";
+            bullonText = tempBullonText;
+            return;
+        }
+    }
+
     public void TalkBtn(bool re = false)
     {
         if (!flag)
@@ -141,6 +166,17 @@ public class Talk : MonoBehaviour
                 ScreenTrans.instance.Play(() => { cook.CookOpen(); });
                 TalkBtn();
                 break;
+            case "응 조금이라도 네 얼굴을 많이 보려고":
+                Interaction.instance.time7Flag = false;
+                ScriptController.instace.TextScriptPlay(1);
+                TalkBtn();
+                break;
+            case "응? 왜 그래?":
+                ScriptController.instace.TextScriptPlay(3);
+                PlayerPrefs.SetInt("무녀 옷", 0);
+                TalkBtn();
+                break;
+
         }
     }
 
