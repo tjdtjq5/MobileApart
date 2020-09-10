@@ -3,7 +3,6 @@ using BackEnd.Tcp;
 using LitJson;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Contexts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +10,7 @@ public class Chat : MonoBehaviour
 {
     public GameObject chatObj;
     public Transform chatContext;
+    public InputField input;
 
     [Header("말풍선프리팹")]
     public GameObject onChatPrepab;
@@ -41,6 +41,18 @@ public class Chat : MonoBehaviour
         StopCoroutine(PollCoroutine);
 
         ChannelLeave();
+        Backend.Chat.Poll();
+    }
+
+    public void ChatEnter()
+    {
+        if (input.text == "")
+        {
+            return;
+        }
+        string message = input.text;
+        input.text = "";
+        MyChatMessage(message);
     }
 
     IEnumerator Poll()
@@ -148,9 +160,13 @@ public class Chat : MonoBehaviour
     }
 
     //채팅 메세지 전송
-    public void OnChatMessage()
+    public void OnChatMessage(string nickName,string message)
     {
+        GameObject prepab = Instantiate(onChatPrepab, Vector3.zero, Quaternion.identity, chatContext);
+        prepab.transform.Find("말풍선").Find("닉네임").GetComponent<Text>().text = "[" + nickName + "]";
+        prepab.transform.Find("말풍선").Find("메세지").GetComponent<Text>().text = message;
 
+        CheckMessageNumber();
     }
     public void MyChatMessage(string message)
     {
@@ -164,7 +180,10 @@ public class Chat : MonoBehaviour
     }
     public void SystemChatMessage(string message)
     {
+        GameObject prepab = Instantiate(systemMessage, Vector3.zero, Quaternion.identity, chatContext);
+        prepab.transform.Find("말풍선").GetChild(0).GetComponent<Text>().text = message;
 
+        CheckMessageNumber();
     }
     // 말풍선 수 체크 
     void CheckMessageNumber()
@@ -219,7 +238,11 @@ public class Chat : MonoBehaviour
     {
         Backend.Chat.OnJoinChannel = (args) =>
         {
-            participants.Add(args.Session);
+            if (!participants.Contains(args.Session))
+            {
+                participants.Add(args.Session);
+            }
+            SystemChatMessage(args.Session.NickName + "님이 입장 하셨습니다.");
         };
     }
 
@@ -228,7 +251,11 @@ public class Chat : MonoBehaviour
     {
         Backend.Chat.OnLeaveChannel = (args) =>
         {
-            participants.Remove(args.Session);
+            if (participants.Contains(args.Session))
+            {
+                participants.Remove(args.Session);
+            }
+            SystemChatMessage(args.Session.NickName + "님이 퇴장 하셨습니다.");
         };
     }
 
@@ -237,7 +264,11 @@ public class Chat : MonoBehaviour
     {
         Backend.Chat.OnSessionOfflineChannel = (args) =>
         {
-            participants.Remove(args.Session);
+            if (participants.Contains(args.Session))
+            {
+                participants.Remove(args.Session);
+            }
+            SystemChatMessage(args.Session.NickName + "님이 퇴장 하셨습니다.");
         };
     }
     // 다른게이머가 채팅 채널에 재접속 한 경우
@@ -245,7 +276,11 @@ public class Chat : MonoBehaviour
     {
         Backend.Chat.OnSessionOnlineChannel = (args) =>
         {
-            participants.Add(args.Session);
+            if (!participants.Contains(args.Session))
+            {
+                participants.Add(args.Session);
+            }
+            SystemChatMessage(args.Session.NickName + "님이 입장 하셨습니다.");
         };
     }
     //같은 채널의 게이머들이 전송한 메시지가 도착한 경우
@@ -253,7 +288,11 @@ public class Chat : MonoBehaviour
     {
         Backend.Chat.OnChat = (args) =>
         {
-
+            if (args.From.NickName == GameManager.instance.userInfoManager.nickname)
+            {
+                return;
+            }
+            OnChatMessage(args.From.NickName, args.Message);
         };
     }
     // 채팅 관련 내부 기능에 예외가 발생한 경우
