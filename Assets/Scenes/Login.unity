@@ -1600,12 +1600,6 @@ MonoBehaviour:
     txt: {fileID: 4900000, guid: 4508c390960b8f5498fe66a580d6b76a, type: 3}
   Item_DB:
     txt: {fileID: 4900000, guid: 75b61555eff09e04cad03234260448fb, type: 3}
-  stage_DB:
-    txt: {fileID: 4900000, guid: 89234e8adc60f4d45b187a775af96f68, type: 3}
-  monster_DB:
-    txt: {fileID: 4900000, guid: 896cfa2f64c2c3c4ca62d92baa78b7b6, type: 3}
-  Weapone_DB:
-    txt: {fileID: 4900000, guid: 8ff9dae427f4329469a26fffc9e0db1e, type: 3}
   Script_DB:
     txt: {fileID: 4900000, guid: 8e8efccdac7221340973eeed92ac9cee, type: 3}
   Set_DB:
@@ -1648,7 +1642,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1768284090}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2105453930b56ce4980978b7349a40ad, type: 3}
   m_Name: 

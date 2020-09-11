@@ -18,7 +18,6 @@ public class ScreenShotHandler : MonoBehaviour
         instance = this;
         myCamera = GetComponent<Camera>();
         path = Path.Combine(PathForDocumentsFile(""), fileName);
-
     }
 
     // 사진 찍고 저장

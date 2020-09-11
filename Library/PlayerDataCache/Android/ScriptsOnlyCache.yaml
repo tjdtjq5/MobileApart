@@ -13,6 +13,7 @@ ScriptsOnlyBuild:
     - CharacterMotion
     - CharacterTalk
     - Chat
+    - ChatColor
     - Cloth
     - Cook
     - DatabaseManager
@@ -79,6 +80,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.GridLayoutGroup
+    - UnityEngine.UI.HorizontalLayoutGroup
     - UnityEngine.UI.Image
     - UnityEngine.UI.InputField
     - UnityEngine.UI.Mask
@@ -392,6 +394,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13654}
     - Class: 114
+      Script: {instanceID: 13690}
+    - Class: 114
       Script: {instanceID: 13720}
     - Class: 114
       Script: {instanceID: 13724}
@@ -431,6 +435,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 14904}
     - Class: 114
       Script: {instanceID: 14928}
+    - Class: 114
+      Script: {instanceID: 118930}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -872,7 +878,7 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: af982b4fa2bf488c3bbffaff3de289cd
+      Hash: c10b975111dd8082a717eb1d1aa47fc6
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Chat
@@ -1560,6 +1566,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 0a1b4b978d49ae6e4909fcb03d6d8df1
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ChatColor
   platform: 13
   scenePathNames:
   - Assets/Scenes/Login.unity

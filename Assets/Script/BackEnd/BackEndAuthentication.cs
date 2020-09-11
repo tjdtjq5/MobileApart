@@ -135,7 +135,6 @@ public class BackEndAuthentication : MonoBehaviour
                                     // 그 캐릭터의 욕구 로드 
                                     GameManager.instance.userInfoManager.LoadUserNeed(currentCharacter, () =>
                                     {
-                                        Debug.Log("성공");
                                         SceneManager.LoadScene("Loding");
                                     });
                                 });

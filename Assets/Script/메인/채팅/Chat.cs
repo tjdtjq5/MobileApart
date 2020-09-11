@@ -11,6 +11,7 @@ public class Chat : MonoBehaviour
     public GameObject chatObj;
     public Transform chatContext;
     public InputField input;
+    public Image textColorImg;
 
     [Header("말풍선프리팹")]
     public GameObject onChatPrepab;
@@ -44,6 +45,7 @@ public class Chat : MonoBehaviour
         Backend.Chat.Poll();
     }
 
+    //채팅입력버튼
     public void ChatEnter()
     {
         if (input.text == "")
@@ -170,6 +172,19 @@ public class Chat : MonoBehaviour
     }
     public void MyChatMessage(string message)
     {
+        if (message.Contains("/"))
+        {
+            switch (message.Split('/')[0])
+            {
+                case "운영자":
+                    message = message.Split('/')[1];
+                    Backend.Chat.ChatToGlobal(message);
+                    return;
+            }
+        }
+        Color color = textColorImg.color;
+        message = Change_String_Color(message, color);
+
         Backend.Chat.ChatToChannel(ChannelType.Public, message);
 
         GameObject prepab = Instantiate(myChatPrepab, Vector3.zero, Quaternion.identity, chatContext);
@@ -212,6 +227,9 @@ public class Chat : MonoBehaviour
         OnSessionOnlineChannel();
         OnChat();
         OnException();
+
+        OnNotification();
+        OnGlobalChat();
     }
 
     // 채널에 입장 시 최초 한번, 해당 채널에 접속하고 있는 모든 게이머들의 정보 콜백
@@ -225,11 +243,6 @@ public class Chat : MonoBehaviour
             {
                 participants.Add(session);
             }
-            // 참여자 목록 출력
-            for (int i = 0; i < participants.Count; i++)
-            {
-                Debug.Log("닉네임 : " + participants[i].NickName);
-            }
         };
     }
 
@@ -242,7 +255,6 @@ public class Chat : MonoBehaviour
             {
                 participants.Add(args.Session);
             }
-            SystemChatMessage(args.Session.NickName + "님이 입장 하셨습니다.");
         };
     }
 
@@ -255,7 +267,6 @@ public class Chat : MonoBehaviour
             {
                 participants.Remove(args.Session);
             }
-            SystemChatMessage(args.Session.NickName + "님이 퇴장 하셨습니다.");
         };
     }
 
@@ -268,7 +279,6 @@ public class Chat : MonoBehaviour
             {
                 participants.Remove(args.Session);
             }
-            SystemChatMessage(args.Session.NickName + "님이 퇴장 하셨습니다.");
         };
     }
     // 다른게이머가 채팅 채널에 재접속 한 경우
@@ -280,7 +290,6 @@ public class Chat : MonoBehaviour
             {
                 participants.Add(args.Session);
             }
-            SystemChatMessage(args.Session.NickName + "님이 입장 하셨습니다.");
         };
     }
     //같은 채널의 게이머들이 전송한 메시지가 도착한 경우
@@ -303,4 +312,39 @@ public class Chat : MonoBehaviour
 
         };
     }
+
+    // 공지사항 받기
+    void OnNotification()
+    {
+        Backend.Chat.OnNotification = (NotificationEventArgs args) =>
+        {
+            string subject = args.Subject;
+            string messge = args.Message;
+
+            this.transform.Find("채팅창").Find("공지사항").GetChild(0).GetChild(0).GetComponent<Text>().text = "[" + subject + "] " + messge;
+        };
+    }
+
+    //운영자 공지 받기
+    void OnGlobalChat()
+    {
+        Backend.Chat.OnGlobalChat = (GlobalChatEventArgs args) =>
+        {
+            SessionInfo from = args.From; // 보낸 사람의 정보
+            string message = args.Message; // 공지 메세지 정보
+            SystemChatMessage("[" + from.NickName + "] " + message);
+        };
+    }
+
+    /// 기타 작업 
+    /// 
+
+    public string Change_String_Color(string ThisString, Color ThisColor)
+    {
+        string TextToReturn = "<color=#[Color_Code]>[Insert_HERE]</color>";
+        TextToReturn = TextToReturn.Replace("[Color_Code]", UnityEngine.ColorUtility.ToHtmlStringRGBA(ThisColor));
+        TextToReturn = TextToReturn.Replace("[Insert_HERE]", ThisString);
+        return TextToReturn;
+    }
+
 }
