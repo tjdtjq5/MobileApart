@@ -1,6 +1,7 @@
 ﻿using BackEnd;
 using BackEnd.Tcp;
 using LitJson;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,9 @@ public class Chat : MonoBehaviour
     public InputField input;
     public Image textColorImg;
 
+    public GameObject textBtn;
+    public GameObject characterBtn;
+
     [Header("말풍선프리팹")]
     public GameObject onChatPrepab;
     public GameObject myChatPrepab;
@@ -20,6 +24,8 @@ public class Chat : MonoBehaviour
 
     List<SessionInfo> participants = new List<SessionInfo>();
     IEnumerator PollCoroutine;
+
+    bool chatOpenFlag = false;
 
     private void Start()
     {
@@ -34,6 +40,8 @@ public class Chat : MonoBehaviour
         StartCoroutine(PollCoroutine);
 
         ChannelJoin();
+
+        chatOpenFlag = true;
     }
 
     public void ChatClose()
@@ -43,6 +51,8 @@ public class Chat : MonoBehaviour
 
         ChannelLeave();
         Backend.Chat.Poll();
+
+        chatOpenFlag = false;
     }
 
     //채팅입력버튼
@@ -55,6 +65,14 @@ public class Chat : MonoBehaviour
         string message = input.text;
         input.text = "";
         MyChatMessage(message);
+    }
+    // 캐릭터 입력 버튼
+    public void CharacterEnter()
+    {
+        if (input.text != "")
+        {
+            return;
+        }
     }
 
     IEnumerator Poll()
@@ -164,6 +182,15 @@ public class Chat : MonoBehaviour
     //채팅 메세지 전송
     public void OnChatMessage(string nickName,string message)
     {
+        if (message.Split('/').Length == 2)
+        {
+            string commend = message.Split('/')[0];
+            switch (commend)
+            {
+              
+            }
+        }
+
         GameObject prepab = Instantiate(onChatPrepab, Vector3.zero, Quaternion.identity, chatContext);
         prepab.transform.Find("말풍선").Find("닉네임").GetComponent<Text>().text = "[" + nickName + "]";
         prepab.transform.Find("말풍선").Find("메세지").GetComponent<Text>().text = message;
@@ -172,7 +199,7 @@ public class Chat : MonoBehaviour
     }
     public void MyChatMessage(string message)
     {
-        if (message.Contains("/"))
+        if (message.Split('/').Length == 2)
         {
             switch (message.Split('/')[0])
             {
@@ -182,6 +209,7 @@ public class Chat : MonoBehaviour
                     return;
             }
         }
+
         Color color = textColorImg.color;
         message = Change_String_Color(message, color);
 
@@ -200,6 +228,7 @@ public class Chat : MonoBehaviour
 
         CheckMessageNumber();
     }
+
     // 말풍선 수 체크 
     void CheckMessageNumber()
     {
@@ -214,6 +243,8 @@ public class Chat : MonoBehaviour
             }
         }
     }
+ 
+
 
     ///
     //핸들러
@@ -347,4 +378,21 @@ public class Chat : MonoBehaviour
         return TextToReturn;
     }
 
+
+    private void Update()
+    {
+        if (chatOpenFlag)
+        {
+            if (input.text == "")
+            {
+                textBtn.SetActive(false);
+                characterBtn.SetActive(true);
+            }
+            else
+            {
+                textBtn.SetActive(true);
+                characterBtn.SetActive(false);
+            }
+        }
+    }
 }

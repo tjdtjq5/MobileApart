@@ -92,12 +92,8 @@
     <Compile Include="Assets\Script\Manager\UserInfoManager.cs" />
     <Compile Include="Assets\Script\Test.cs" />
     <Compile Include="Assets\Script\TestCharacterAni.cs" />
-    <Compile Include="Assets\Script\메인\CharacterInfo.cs" />
-    <Compile Include="Assets\Script\메인\CharacterMotion.cs" />
-    <Compile Include="Assets\Script\메인\Interaction.cs" />
     <Compile Include="Assets\Script\메인\OverrideCanvas\OverrideCanvas.cs" />
     <Compile Include="Assets\Script\메인\ScreenTrans.cs" />
-    <Compile Include="Assets\Script\메인\TransformSkin.cs" />
     <Compile Include="Assets\Script\메인\대화\ScriptController.cs" />
     <Compile Include="Assets\Script\메인\메뉴\Album.cs" />
     <Compile Include="Assets\Script\메인\메뉴\Coopon.cs" />
@@ -114,11 +110,14 @@
     <Compile Include="Assets\Script\메인\잠\Sleep.cs" />
     <Compile Include="Assets\Script\메인\채팅\Chat.cs" />
     <Compile Include="Assets\Script\메인\채팅\ChatColor.cs" />
+    <Compile Include="Assets\Script\메인\캐릭터\CharacterInfo.cs" />
+    <Compile Include="Assets\Script\메인\캐릭터\CharacterMotion.cs" />
+    <Compile Include="Assets\Script\메인\캐릭터\Interaction.cs" />
+    <Compile Include="Assets\Script\메인\캐릭터\TempCharacter.cs" />
+    <Compile Include="Assets\Script\메인\캐릭터\TransformSkin.cs" />
     <Compile Include="Assets\Script\메인\토크\CharacterTalk.cs" />
     <Compile Include="Assets\Script\메인\토크\Talk.cs" />
     <Compile Include="Assets\Script\메인\프로필\Profile.cs" />
-    <Compile Include="Assets\Script\메인\프로필\ProfilePhoto.cs" />
-    <Compile Include="Assets\Script\캐릭터선택씬\Character01.cs" />
     <Compile Include="Assets\Script\화면전환\LeftMenue.cs" />
     <Compile Include="Assets\Script\화면전환\ScreenTransition.cs" />
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\MultiKeyDictionary.cs" />
@@ -160,6 +159,7 @@
     <None Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX (legacy)\CartoonFX Readme.txt" />
     <None Include="Assets\리소스\선물상자\timebox.atlas.txt" />
     <None Include="Assets\Material\additive.shader" />
+    <None Include="Assets\Material\BackfaceShader.shader" />
     <None Include="Assets\리소스\에셋파티클\JMO Assets\Cartoon FX Remaster\CFXR Prefabs\Texts\_Make your own text effect.txt" />
     <None Include="Assets\Material\Blur.shader" />
     <None Include="Assets\Material\MobileBlur\MobileBlur.shader" />

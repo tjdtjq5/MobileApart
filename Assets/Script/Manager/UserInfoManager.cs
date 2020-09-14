@@ -20,16 +20,9 @@ public class UserInfoManager : MonoBehaviour
         {
             Debug.Log(skinItem[i].skinName + " : " + skinItem[i].isEqip);
         }
-       
-    
     }
 
     private void Start()
-    {
-        PublicInitialized();
-    }
-
-    public void PublicInitialized()
     {
         currentAnimation = "idle_01";
 
@@ -43,8 +36,7 @@ public class UserInfoManager : MonoBehaviour
         }
     }
 
-    //초기 
-    public void Character01Initialized()
+    public void PublicInitialized(string characterName, System.Action action)
     {
         skinItem.Add(new UserSkin("Body", Color.white, Color.white));
         PushUserEqip(new UserSkin("Body", Color.white, Color.white));
@@ -86,7 +78,20 @@ public class UserInfoManager : MonoBehaviour
         PushSkinItem(new UserSkin("sho/shoes_02", new Color(92 / 255f, 14 / 255f, 14 / 255f, 1), Color.clear));
 
         SetUserNeed(100, 100, 100, 100);
+
+        SetUserMoney(MoneyKind.Crystal, 1000000);
+        SetUserMoney(MoneyKind.Gold, 1000000);
+
+        currentCharacter = characterName;
+
+        SaveSkinItem(()=> { SaveUserMoney(()=> { SaveUserNeed(characterName, ()=> { SaveCurrentCharacter(()=> { action(); }); }); }); });
     }
+
+    public void AllLoad(System.Action action)
+    {
+        LoadCurrentCharacter(() => { LoadUserMoney(() => {  LoadSkinItem(()=> { LoadUserNeed(currentCharacter, () => { action(); }) ; }) ; }); });
+    }
+
 
     //컬러아이템 이름, 아이템 수
     public List<UserColorItem> colorItem = new List<UserColorItem>();
@@ -223,7 +228,7 @@ public class UserInfoManager : MonoBehaviour
         return new Color(randR, randG, randB , 1);
     }
 
-    Color StringToColor(string ColorString)
+    public Color StringToColor(string ColorString)
     {
         string tempString = ColorString;
         tempString = tempString.Remove(0, 5);
@@ -370,49 +375,68 @@ public class UserInfoManager : MonoBehaviour
         {
             tempSkinItem += skinItem[i].skinName + "-";
             tempSkinItem += skinItem[i].color_01 + "-";
-            tempSkinItem += skinItem[i].color_02 + "=";
+            tempSkinItem += skinItem[i].color_02 + "-";
+            tempSkinItem += skinItem[i].isEqip + "=";
         }
 
         Param saveSkinData = new Param();
         saveSkinData.Add("SkinItem", tempSkinItem);
 
-        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetMyPublicContents, "Profile", (callback) =>
         {
             // 이후 처리
-            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
-            string dataIndate = jsonData["inDate"]["S"].ToString();
-
-            BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "UserInfo", dataIndate, saveSkinData, (callback2) =>
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"];
+            if (jsonData.Count == 0)
             {
-                Debug.Log("성공했습니다");
-
-                // 이후 처리
-                if (action != null)
+                // 프로필 정보가 없다 
+                BackendAsyncClass.BackendAsync(Backend.GameInfo.Insert, "Profile", saveSkinData, (callback2) =>
                 {
+                    // 이후 처리
+                    if (action != null)
+                    {
 
-                    action();
-                }
-            });
+                        action();
+                    }
+                });
+            }
+            else 
+            {
+                string inDate = jsonData[0]["inDate"]["S"].ToString();
+                // 프로필 정보가 있다
+                BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "Profile", inDate, saveSkinData, (callback2) =>
+                {
+                    // 이후 처리
+                    if (action != null)
+                    {
+                        action();
+                    }
+                });
+
+            }
         });
     }
 
     public void LoadSkinItem(System.Action action = null)
     {
-        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetMyPublicContents, "Profile", (callback) =>
         {
             // 이후 처리
-            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
-            if (jsonData.Keys.Contains("SkinItem"))
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"];
+            if (jsonData.Count == 0)
             {
-                string tempSkinItem = jsonData["SkinItem"][0].ToString();
-                string[] SkinItemList = tempSkinItem.Split('=');
-                List<UserSkin> userSkinList = new List<UserSkin>();
-                for (int i = 0; i < SkinItemList.Length - 1; i++)
+                // 프로필 정보가 없다 
+                Debug.Log("해당 유저의 스킨정보가 없습니다.");
+            }
+            else
+            {
+                string[] skinDataList = jsonData[0]["SkinItem"][0].ToString().Split('=');
+                // 프로필 정보가 있다
+                skinItem.Clear();
+                for (int i = 0; i < skinDataList.Length - 1; i++)
                 {
-                    UserSkin tempUserSkin = new UserSkin(SkinItemList[i].Split('-')[0], StringToColor(SkinItemList[i].Split('-')[1]), StringToColor(SkinItemList[i].Split('-')[2]));
-                    userSkinList.Add(tempUserSkin);
+                    string[] skinData = skinDataList[i].Split('-');
+                    skinItem.Add(new UserSkin(skinData[0], StringToColor(skinData[1]), StringToColor(skinData[2]), bool.Parse(skinData[3])));
                 }
-                skinItem = userSkinList;
 
                 if (action != null)
                 {
@@ -420,64 +444,6 @@ public class UserInfoManager : MonoBehaviour
                 }
             }
         });
-    }
-
-    // 장착중인 스킨들 저장 
-    public void SaveUserEqip(string currentCharacter ,System.Action action = null)
-    {
-        string tempSkinItem = "";
-        for (int i = 0; i < skinItem.Count; i++)
-        {
-            tempSkinItem += skinItem[i].isEqip + "=";
-        }
-
-        Param saveSkinData = new Param();
-        saveSkinData.Add(currentCharacter + "Eqip", tempSkinItem);
-
-        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
-        {
-            // 이후 처리
-            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
-            string dataIndate = jsonData["inDate"]["S"].ToString();
-
-            BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "UserInfo", dataIndate, saveSkinData, (callback2) =>
-            {
-                Debug.Log("성공했습니다");
-
-                // 이후 처리
-                if (action != null)
-                {
-
-                    action();
-                }
-            });
-        });
-    }
-
-    public void LoadUserEqip(string currentCharacter ,System.Action action = null)
-    {
-        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPrivateContents, "UserInfo", (callback) =>
-        {
-            // 이후 처리
-            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"][0];
-            if (jsonData.Keys.Contains( currentCharacter + "Eqip"))
-            {
-                string tempUserEqip = jsonData[currentCharacter+ "Eqip"][0].ToString();
-                string[] tempUserEqipList = tempUserEqip.Split('=');
-
-                if (action != null)
-                {
-                    action();
-                }
-
-                for (int i = 0; i < tempUserEqipList.Length; i++)
-                {
-                    skinItem[i].isEqip = bool.Parse(tempUserEqipList[i]);
-                }
-               
-            }
-        });
-    
     }
 
     // 유저 재화 
@@ -735,6 +701,69 @@ public class UserInfoManager : MonoBehaviour
             callback();
         }
     }
+
+    public void SaveCurrentCharacter(System.Action action = null)
+    {
+        Param currentCharacterData = new Param();
+        currentCharacterData.Add("CurrentCharacter", currentCharacter);
+
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetMyPublicContents, "Profile", (callback) =>
+        {
+            // 이후 처리
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"];
+            if (jsonData.Count == 0)
+            {
+                // 프로필 정보가 없다 
+                BackendAsyncClass.BackendAsync(Backend.GameInfo.Insert, "Profile", currentCharacterData, (callback2) =>
+                {
+                    // 이후 처리
+                    if (action != null)
+                    {
+
+                        action();
+                    }
+                });
+            }
+            else
+            {
+                string inDate = jsonData[0]["inDate"]["S"].ToString();
+                // 프로필 정보가 있다
+                BackendAsyncClass.BackendAsync(Backend.GameInfo.Update, "Profile", inDate, currentCharacterData, (callback2) =>
+                {
+                    // 이후 처리
+                    if (action != null)
+                    {
+                        action();
+                    }
+                });
+
+            }
+        });
+    }
+    public void LoadCurrentCharacter(System.Action action = null)
+    {
+        BackendAsyncClass.BackendAsync(Backend.GameInfo.GetMyPublicContents, "Profile", (callback) =>
+        {
+            // 이후 처리
+            JsonData jsonData = callback.GetReturnValuetoJSON()["rows"];
+            if (jsonData.Count == 0)
+            {
+                // 프로필 정보가 없다 
+                Debug.Log("해당 유저의 스킨정보가 없습니다.");
+            }
+            else
+            {
+                // 프로필 정보가 있다
+                currentCharacter = jsonData[0]["CurrentCharacter"][0].ToString();
+                // 이후 처리
+                if (action != null)
+                {
+
+                    action();
+                }
+            }
+        });
+    }
 }
 
 public class UserSkin
@@ -752,12 +781,12 @@ public class UserSkin
         this.isEqip = false;
     }
 
-    public UserSkin(string skinName, Color color_01, Color color_02)
+    public UserSkin(string skinName, Color color_01, Color color_02, bool isEqip = false)
     {
         this.skinName = skinName;
         this.color_01 = color_01;
         this.color_02 = color_02;
-        this.isEqip = false;
+        this.isEqip = isEqip;
     }
 
     public void SetUserSkin(string skinName, Color color_01, Color color_02)
