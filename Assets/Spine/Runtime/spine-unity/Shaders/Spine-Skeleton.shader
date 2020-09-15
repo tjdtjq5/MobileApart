@@ -20,7 +20,7 @@ Shader "Spine/Skeleton" {
 		Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" "PreviewType"="Plane" }
 
 		Fog { Mode Off }
-		Cull Off
+		
 		ZWrite Off
 		Blend One OneMinusSrcAlpha
 		Lighting Off

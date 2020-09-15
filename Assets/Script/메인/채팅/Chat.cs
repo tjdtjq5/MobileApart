@@ -16,6 +16,7 @@ public class Chat : MonoBehaviour
 
     public GameObject textBtn;
     public GameObject characterBtn;
+    public Home home;
 
     [Header("말풍선프리팹")]
     public GameObject onChatPrepab;
@@ -73,6 +74,7 @@ public class Chat : MonoBehaviour
         {
             return;
         }
+        MyChatMessage("my Home으로 초대합니다.",Color.gray);
     }
 
     IEnumerator Poll()
@@ -116,7 +118,6 @@ public class Chat : MonoBehaviour
                 string uuid = "";
                 for (int i = 0; i < jsonData.Count; i++)
                 {
-                    Debug.Log(i + "번째 채널");
                     JsonData channelJsonData = jsonData[i];
                     uuid = channelJsonData["uuid"].ToString();
                     hostName = channelJsonData["serverHostName"].ToString();
@@ -192,6 +193,7 @@ public class Chat : MonoBehaviour
         }
 
         GameObject prepab = Instantiate(onChatPrepab, Vector3.zero, Quaternion.identity, chatContext);
+        OnChatBtnSet(prepab.GetComponent<Button>(), nickName, message);
         prepab.transform.Find("말풍선").Find("닉네임").GetComponent<Text>().text = "[" + nickName + "]";
         prepab.transform.Find("말풍선").Find("메세지").GetComponent<Text>().text = message;
 
@@ -211,12 +213,41 @@ public class Chat : MonoBehaviour
         }
 
         Color color = textColorImg.color;
-        message = Change_String_Color(message, color);
+     
 
         Backend.Chat.ChatToChannel(ChannelType.Public, message);
 
         GameObject prepab = Instantiate(myChatPrepab, Vector3.zero, Quaternion.identity, chatContext);
+        MyChatBtnSet(prepab.GetComponent<Button>(), message);
+
         prepab.transform.Find("말풍선").Find("닉네임").GetComponent<Text>().text = "[" + GameManager.instance.userInfoManager.nickname + "]";
+       
+        message = Change_String_Color(message, color);
+        prepab.transform.Find("말풍선").Find("메세지").GetComponent<Text>().text = message;
+
+        CheckMessageNumber();
+    }
+    public void MyChatMessage(string message, Color color)
+    {
+        if (message.Split('/').Length == 2)
+        {
+            switch (message.Split('/')[0])
+            {
+                case "운영자":
+                    message = message.Split('/')[1];
+                    Backend.Chat.ChatToGlobal(message);
+                    return;
+            }
+        }
+
+        Backend.Chat.ChatToChannel(ChannelType.Public, message);
+
+        GameObject prepab = Instantiate(myChatPrepab, Vector3.zero, Quaternion.identity, chatContext);
+        MyChatBtnSet(prepab.GetComponent<Button>(), message);
+
+        prepab.transform.Find("말풍선").Find("닉네임").GetComponent<Text>().text = "[" + GameManager.instance.userInfoManager.nickname + "]";
+
+        message = Change_String_Color(message, color);
         prepab.transform.Find("말풍선").Find("메세지").GetComponent<Text>().text = message;
 
         CheckMessageNumber();
@@ -227,6 +258,54 @@ public class Chat : MonoBehaviour
         prepab.transform.Find("말풍선").GetChild(0).GetComponent<Text>().text = message;
 
         CheckMessageNumber();
+    }
+
+    void MyChatBtnSet(Button btn, string message)
+    {
+        if (message == "my Home으로 초대합니다.")
+        {
+            btn.onClick.AddListener(() => {
+                home.HomeOpen(GameManager.instance.userInfoManager.nickname,GameManager.instance.userInfoManager.GetUserEqip());
+            });
+        }
+    }
+    void OnChatBtnSet(Button btn, string nickName, string message)
+    {
+        if (message.Contains("my Home으로 초대합니다."))
+        {
+            btn.onClick.AddListener(() => {
+                BackendAsyncClass.BackendAsync(Backend.Social.GetGamerIndateByNickname, nickName, (callback) =>
+                {
+                    string inDate = callback.GetReturnValuetoJSON()["rows"][0]["inDate"]["S"].ToString();
+                    Debug.Log("해당 유저의 inDate값");
+                    Debug.Log(inDate);
+                    BackendAsyncClass.BackendAsync(Backend.GameInfo.GetPublicContentsByGamerIndate, "Profile", inDate, (callback2) =>
+                    {
+                        JsonData jsonData = callback2.GetReturnValuetoJSON()["rows"];
+                        if (jsonData.Count == 0)
+                        {
+                            // 프로필 정보가 없다 
+                            Debug.Log("해당 유저의 스킨정보가 없습니다.");
+                        }
+                        else
+                        {
+                            string[] skinDataList = jsonData[0]["SkinItem"][0].ToString().Split('=');
+                            List<UserSkin> eqipSkin = new List<UserSkin>();
+                            for (int i = 0; i < skinDataList.Length - 1; i++)
+                            {
+                                string[] skinData = skinDataList[i].Split('-');
+                                if (bool.Parse(skinData[3]))
+                                {
+                                    eqipSkin.Add(new UserSkin(skinData[0], GameManager.instance.userInfoManager.StringToColor(skinData[1]), GameManager.instance.userInfoManager.StringToColor(skinData[2])));
+                                }
+                            }
+                            home.HomeOpen(nickName,GameManager.instance.userInfoManager.GetUserEqip());
+                        }
+                    });
+                });
+                
+            });
+        }
     }
 
     // 말풍선 수 체크 
@@ -243,8 +322,6 @@ public class Chat : MonoBehaviour
             }
         }
     }
- 
-
 
     ///
     //핸들러
